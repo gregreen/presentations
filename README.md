@@ -1,7 +1,7 @@
 Gregory Green's Presentations
 =============================
 
-Various presentations created by Gregory M. Green](http://greg.ory.gr).
+Various presentations created by [Gregory M. Green](http://greg.ory.gr).
 
 Table of Contents
 -----------------
