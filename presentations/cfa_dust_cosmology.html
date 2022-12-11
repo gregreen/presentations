@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Dust with Gaia</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="../revealjs/dist/reveal.css">
+    <link rel="stylesheet" href="../revealjs/dist/theme/night.css" id="theme">
+
+    <!-- Custom CSS files go here -->
+  </head>
+
+  <style>
+    /* Override theme variables */
+    :root {
+      --r-background-color: #000;
+    }
+
+    /* Stroke text */
+    .stroke-text-dark {
+      text-stroke: 1px black;
+      -webkit-text-stroke: 1px black;
+      paint-order: stroke fill;
+    }
+    .stroke-text-light {
+      text-stroke: 1px white rgba(255,255,255,0.3);
+      -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+      paint-order: stroke fill;
+    }
+    
+    /* Attribution text */
+    p.attribution {
+      font-size: 50%;
+      color: #aaa;
+      margin: calc(0.5 * var(--r-block-margin)) 0;
+    }
+    p.attribution a {
+      color: #ddf;
+    }
+
+    /* Compact */
+    .compact img, p, h4, h3, h2, h1 {
+      margin: calc(0.3 * var(--r-block-margin)) 0 !important;
+    }
+
+    /*
+    .medcompact img, p, h4, h3, h2, h1 {
+      margin: calc(0.5 * var(--r-block-margin)) 0 !important;
+    }
+    */
+
+    /* Footer (bottom of slide)
+       .footer only works if the slide is .full-height
+     */
+    section.full-height {
+      height: 100%;
+    }
+    div.footer {
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Vertically center content in container */
+    .vertical-center {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-direction: column;
+    }
+
+    /* Slide-specific vertical centering override */
+    .reveal .slides section[data-vertical-align-top]{
+      top: 0 !important;
+    }
+
+    /* Invert colors - useful for adapting graphics for dark slides. */
+    img.invert-colors, video.invert-colors {
+      filter: invert(1);
+    }
+
+    /* Image width */
+    img.half-width, video.half-width {
+      max-width: 50%;
+    }
+    img.limit-width, video.limit-width {
+      max-width: 70%;
+    }
+    img.full-width {
+      width: 100%;
+    }
+
+    /* Item placement in r-stack environment */
+    .reveal .r-stack .align-top {
+      margin: initial;
+    }
+
+    /* Basic slide layouts */
+    .multicol {
+      display: flex;
+      flex-direction: row;
+    }
+    .multicol.vcenter {
+      align-items: center;
+    }
+    .multicol div {
+      flex-basis: 50%;
+    }
+    .multicol div.wide {
+      flex-basis: 67%;
+    }
+    .multicol div.wider {
+      flex-basis: 100%;
+    }
+
+    .multicol.buffer div {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    /* Margins */
+    .space-top {
+      margin-top: calc(3 * var(--r-block-margin)) !important;
+    }
+
+    /* Text alignment */
+    .align-left {
+      text-align: left;
+    }
+
+    /* Text size */
+    .shrink-text {
+      font-size: 67%;
+    }
+
+    /* iframe borders */
+    iframe {
+      border: none;
+    }
+  </style>
+
+  <body>
+
+    <div class="reveal">
+      <div class="slides">
+
+        <section>
+          <h2>Dust with Gaia Spectrophotometry</h2>
+          <h4>CfA Dust/Cosmology, 12 December 2022</h4>
+          <h4 class="space-top">Gregory M. Green (MPIA)</h4>
+          <h4>Xiangyu Zhang (MPIA)</h4>
+        </section>
+
+        <section>
+          <section>
+            <h4>Gaia BP/RP spectrophotometry</h4>
+            <p>(&ldquo;XP spectra&rdquo;)</p>
+            <div class="multicol vcenter">
+              <div>
+                <ul class="shrink-text">
+                  <li>$R \sim 50-160$</li>
+                  <li>slitless spectroscopy</li>
+                  <li>optical (330&mdash;1050 nm)</li>
+                  <li>220 million stars</li>
+                </ul>
+              </div>
+              <div>
+                <img data-src="../media/bprp/optical_path.png" class=""></img>
+              </div>
+            </div>
+            <!--
+            <p>Blue Photometer (BP): 330&mdash;680 nm</p>
+            <p>Red Photometer (RP): 640&mdash;1050 nm</p>
+            -->
+          </section>
+
+          <section>
+            <h4>Comparison with LAMOST</h4>
+
+            <ul>
+              <li class="fragment">20&times; as many stars</li>
+              <li class="fragment">1/20<sup>th</sup> the resolution</li>
+              <li class="fragment">Flux-calibrated</li>
+              <li class="fragment">All-sky</li>
+            </ul>
+          </section>
+
+          <section>
+            <h4>How to extract astrophysical information from these spectra?</h4>
+            <ol class="space-top shrink-text">
+              <li class="fragment">Cross-match with higher-resolution spectra.</li>
+              <li class="fragment">Learn how to map from stellar type to $f_{\lambda} \left(\lambda\right)$.</li>
+              <li class="fragment">Use this model to infer stellar types, distances, extictions.</li>
+            </ol>
+          </section>
+
+          <section>
+            <h4>Gaia-LAMOST crossmatch</h4>
+            <div class="multicol vcenter buffer">
+              <div>
+                <img class="r-stretch" data-src="../media/bprp/crossmatch_kiel.svg" style="filter:invert(1) hue-rotate(180deg);"></img>
+              </div>
+              <div>
+              <div>
+                <p class="shrink-text">2.6 million matches.</p>
+                <p class="fragment space-top shrink-text">Bootstrap the 1% of BP/RP stars with LAMOST matches to determine types of the other 99%.</p>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Forward model</h3>
+            <p>
+              $$
+              \require{color}
+              \definecolor{star}{RGB}{200,140,90}
+              \definecolor{model}{RGB}{90,200,200}
+              f_{\lambda}\left(\lambda,{\color{star}\Theta}\right)
+              =
+              {\color{gray}
+              \underbrace{
+                \color{white}
+                F_{\lambda}\left(\lambda,{\color{star}\Theta};{\color{model}W}\right)
+              }_{\mathrm{neural\ net}}
+              }
+              {\color{star}\varpi^2}
+              e^{-{\color{star}E} {\color{model}R}\left(\lambda\right)}
+              $$
+            </p>
+            <div class="multicol shrink-text">
+              <div style="color:rgb(200,140,90);">
+                <p>Stellar parameters:</p>
+                <ul>
+                  <li>$\Theta =$ type (LAMOST)</li>
+                  <li>$\varpi =$ parallax (Gaia)</li>
+                  <li>$E =$ extinction (Bayestar19)</li>
+                </ul>
+              </div>
+              <div style="color:rgb(90,200,200);">
+                <p>Model parameters:</p>
+                <ul>
+                  <li>$W =$ neural net weights</li>
+                  <li>$R =$ extinction curve</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="compact">
+            <h4>Model structure</h4>
+            <img data-src="../media/bprp/bprp_nn_structure.svg" style="filter:invert(1) hue-rotate(0deg) saturate(2.0) contrast(1.0);"></img>
+          </section>
+
+          <section class="compact">
+            <h4>Model vs. Observations</h4>
+            <img class="r-stretch" data-src="../media/bprp/chi2_example.svg" style="filter:invert(1) hue-rotate(0deg) saturate(2.0) contrast(1.0);"></img>
+          </section>
+
+          <section class="compact">
+            <h4>Training the model</h4>
+            <div class="multicol vcenter">
+              <div class="wide">
+                <img data-src="../media/bprp/bprp_nn_structure.svg" style="filter:invert(1) hue-rotate(0deg) saturate(2.0) contrast(1.0);"></img>
+              </div>
+              <div>
+                <img data-src="../media/bprp/chi2_example.svg" style="filter:invert(1) hue-rotate(0deg) saturate(2.0) contrast(1.0);"></img>
+              </div>
+            </div>
+            <div class="r-stack">
+              <p class="fragment current-visible">Update <span style="color:rgb(90,200,200);">model</span>, holding <span style="color:rgb(200,140,90);">stellar parameters</span> fixed.</p>
+              <p class="fragment current-visible">Update <span style="color:rgb(200,140,90);">stellar parameters</span>, holding <span style="color:rgb(90,200,200);">model</span> fixed.</p>
+              <p class="fragment current-visible">Converge on optimal <span style="color:rgb(90,200,200);">model</span> and <span style="color:rgb(200,140,90);">stellar parameters</span>.</p>
+              <p class="fragment">Implemented in auto-differentiable framework (<em>TensorFlow</em>). &rArr; gradient descent.</p>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h4>Removing outliers with self-cleaning</h4>
+            <img class="r-stretch" data-src="../media/bprp/selfcleaning.svg" style="filter:invert(1) hue-rotate(180deg) saturate(1.0) contrast(1.0);"></img>
+            <p class="fragment">Binaries?</p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Trained model</h2>
+          </section>
+
+          <section data-transition="slide-in none-out">
+            <img class="r-stretch" data-src="../media/bprp/model_flux_vs_dwarfs_nolines.svg"></img>
+          </section>
+
+          <section data-transition="none-in none-out">
+            <img class="r-stretch" data-src="../media/bprp/model_flux_vs_dwarfs_hlines.svg"></img>
+          </section>
+
+          <section data-transition="none-in slide-out">
+            <img class="r-stretch" data-src="../media/bprp/model_flux_vs_dwarfs_metallines.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/ext_curve_vs_ccm_inv.svg"></img>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Inferring parameters of 220 million stars</h3>
+            <p class="fragment space-top">Maximum-likelihood parameters for all BP/RP stars.</p>
+            <p class="fragment shrink-text">&rArr; Priors from Gaia ($\varpi$), distribution of stellar types ($\Theta$)</p>
+            <p class="fragment space-top">$\left( T_{\mathrm{eff}}, \, [\mathrm{Fe/H}], \, \log g, \, E, \, \varpi \right)$ of each star.</p>
+            <!--
+              <p class="fragment space-top">Gradient descent optimization, with Gaussian estimate of uncertainties.</p>
+            -->
+          </section>
+
+          <section>
+            <div class="multicol vcenter">
+              <div class="wider">
+                <img class="full-width" data-src="../media/bprp/stellar_param_residuals_all.png" style="filter: invert(1) hue-rotate(160deg);"></img>
+              </div>
+              <div>
+                <p>Expected residuals, based on LAMOST validation data.</p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h4>Correlations in parameter uncertainties</h4>
+            <img class="r-stretch" data-src="../media/bprp/fisher_correlations.svg"></img>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>3D dust maps</h3>
+            <p>(<em>preliminary!</em>)</p>
+            
+            <p class="fragment space-top shrink-text">
+              Approximate extinction map:
+              $$
+              A \left(r, \ell, b \right) \approx \left< A_{\ast} \right>
+              $$
+              where the average is taken over stars in the vicinity of $\left(r, \ell, b \right)$.
+            </p>
+          </section>
+
+          <section class="compact" data-transition="slide-in none-out">
+            <p class="shrink-text">$0 < r < 0.4\,\mathrm{kpc}$</p>
+            <img class="r-stretch" data-src="../media/bprp/extinction_map_0.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <p class="shrink-text">$0.4\,\mathrm{kpc} < r < 1\,\mathrm{kpc}$</p>
+            <img class="r-stretch" data-src="../media/bprp/extinction_map_1.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <p class="shrink-text">$1\,\mathrm{kpc} < r < 2\,\mathrm{kpc}$</p>
+            <img class="r-stretch" data-src="../media/bprp/extinction_map_2.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in slide-out">
+            <p class="shrink-text">$2\,\mathrm{kpc} < r < 5\,\mathrm{kpc}$</p>
+            <img class="r-stretch" data-src="../media/bprp/extinction_map_3.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="slide-in slide-out">
+            <div class="multicol vcenter">
+              <div class="wider">
+                <img class="full-width" data-src="../media/bprp/extinction_birdseye_bprp_nolabels.svg"></img>
+              </div>
+              <div>
+                <p>Bird's-eye view</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="compact" data-transition="slide-in slide-out">
+            <p class="shrink-text">Bird's-eye view</p>
+            <img class="r-stretch" data-src="../media/bprp/extinction_birdseye_comparison.svg"></img>
+          </section>
+        </section>
+
+      </div> <!--slides-->
+    </div> <!--reveal-->
+
+    <script src="../revealjs/dist/reveal.js"></script>
+    <script src="../revealjs/plugin/math/math.js"></script>
+    <script>
+      Reveal.initialize({
+        history: true,
+        transition: 'linear',
+
+        math: {
+          // mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          TeX: {
+            Macros: {
+              R: '\\mathbb{R}',
+              set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+            }
+          }
+        },
+
+        plugins: [ RevealMath ]
+      });
+    </script>
+
+    <!-- jQuery -->
+    <script src="../js/jquery-3.6.1.min.js"></script>
+    <!-- d3 -->
+    <script src="../js/d3.min.js" charset="utf-8"></script>
+    <!-- Custom scripts go here -->
+
+  </body>
+</html>
