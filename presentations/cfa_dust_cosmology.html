@@ -43,9 +43,15 @@
     }
 
     /* Compact */
-    .compact * {
+    .compact img, p, h4, h3, h2, h1 {
       margin: calc(0.3 * var(--r-block-margin)) 0 !important;
     }
+
+    /*
+    .medcompact img, p, h4, h3, h2, h1 {
+      margin: calc(0.5 * var(--r-block-margin)) 0 !important;
+    }
+    */
 
     /* Footer (bottom of slide)
        .footer only works if the slide is .full-height
@@ -112,6 +118,11 @@
       flex-basis: 100%;
     }
 
+    .multicol.buffer div {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
     /* Margins */
     .space-top {
       margin-top: calc(3 * var(--r-block-margin)) !important;
@@ -143,6 +154,64 @@
           <h4>CfA Dust/Cosmology, 12 December 2022</h4>
           <h4 class="space-top">Gregory M. Green (MPIA)</h4>
           <h4>Xiangyu Zhang (MPIA)</h4>
+        </section>
+
+        <section>
+          <section>
+            <h4>Gaia BP/RP spectrophotometry</h4>
+            <p>(&ldquo;XP spectra&rdquo;)</p>
+            <div class="multicol vcenter">
+              <div>
+                <ul class="shrink-text">
+                  <li>$R \sim 50-160$</li>
+                  <li>slitless spectroscopy</li>
+                  <li>optical (330&mdash;1050 nm)</li>
+                  <li>220 million stars</li>
+                </ul>
+              </div>
+              <div>
+                <img data-src="../media/bprp/optical_path.png" class=""></img>
+              </div>
+            </div>
+            <!--
+            <p>Blue Photometer (BP): 330&mdash;680 nm</p>
+            <p>Red Photometer (RP): 640&mdash;1050 nm</p>
+            -->
+          </section>
+
+          <section>
+            <h4>Comparison with LAMOST</h4>
+
+            <ul>
+              <li class="fragment">20&times; as many stars</li>
+              <li class="fragment">1/20<sup>th</sup> the resolution</li>
+              <li class="fragment">Flux-calibrated</li>
+              <li class="fragment">All-sky</li>
+            </ul>
+          </section>
+
+          <section>
+            <h4>How to extract astrophysical information from these spectra?</h4>
+            <ol class="space-top shrink-text">
+              <li class="fragment">Cross-match with higher-resolution spectra.</li>
+              <li class="fragment">Learn how to map from stellar type to $f_{\lambda} \left(\lambda\right)$.</li>
+              <li class="fragment">Use this model to infer stellar types, distances, extictions.</li>
+            </ol>
+          </section>
+
+          <section>
+            <h4>Gaia-LAMOST crossmatch</h4>
+            <div class="multicol vcenter buffer">
+              <div>
+                <img class="r-stretch" data-src="../media/bprp/crossmatch_kiel.svg" style="filter:invert(1) hue-rotate(180deg);"></img>
+              </div>
+              <div>
+              <div>
+                <p class="shrink-text">2.6 million matches.</p>
+                <p class="fragment space-top shrink-text">Bootstrap the 1% of BP/RP stars with LAMOST matches to determine types of the other 99%.</p>
+              </div>
+            </div>
+          </section>
         </section>
 
         <section>
@@ -218,6 +287,107 @@
             <h4>Removing outliers with self-cleaning</h4>
             <img class="r-stretch" data-src="../media/bprp/selfcleaning.svg" style="filter:invert(1) hue-rotate(180deg) saturate(1.0) contrast(1.0);"></img>
             <p class="fragment">Binaries?</p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Trained model</h2>
+          </section>
+
+          <section data-transition="slide-in none-out">
+            <img class="r-stretch" data-src="../media/bprp/model_flux_vs_dwarfs_nolines.svg"></img>
+          </section>
+
+          <section data-transition="none-in none-out">
+            <img class="r-stretch" data-src="../media/bprp/model_flux_vs_dwarfs_hlines.svg"></img>
+          </section>
+
+          <section data-transition="none-in slide-out">
+            <img class="r-stretch" data-src="../media/bprp/model_flux_vs_dwarfs_metallines.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/ext_curve_vs_ccm_inv.svg"></img>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Inferring parameters of 220 million stars</h3>
+            <p class="fragment space-top">Maximum-likelihood parameters for all BP/RP stars.</p>
+            <p class="fragment shrink-text">&rArr; Priors from Gaia ($\varpi$), distribution of stellar types ($\Theta$)</p>
+            <p class="fragment space-top">$\left( T_{\mathrm{eff}}, \, [\mathrm{Fe/H}], \, \log g, \, E, \, \varpi \right)$ of each star.</p>
+            <!--
+              <p class="fragment space-top">Gradient descent optimization, with Gaussian estimate of uncertainties.</p>
+            -->
+          </section>
+
+          <section>
+            <div class="multicol vcenter">
+              <div class="wider">
+                <img class="full-width" data-src="../media/bprp/stellar_param_residuals_all.png" style="filter: invert(1) hue-rotate(160deg);"></img>
+              </div>
+              <div>
+                <p>Expected residuals, based on LAMOST validation data.</p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h4>Correlations in parameter uncertainties</h4>
+            <img class="r-stretch" data-src="../media/bprp/fisher_correlations.svg"></img>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>3D dust maps</h3>
+            <p>(<em>preliminary!</em>)</p>
+            
+            <p class="fragment space-top shrink-text">
+              Approximate extinction map:
+              $$
+              A \left(r, \ell, b \right) \approx \left< A_{\ast} \right>
+              $$
+              where the average is taken over stars in the vicinity of $\left(r, \ell, b \right)$.
+            </p>
+          </section>
+
+          <section class="compact" data-transition="slide-in none-out">
+            <p class="shrink-text">$0 < r < 0.4\,\mathrm{kpc}$</p>
+            <img class="r-stretch" data-src="../media/bprp/extinction_map_0.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <p class="shrink-text">$0.4\,\mathrm{kpc} < r < 1\,\mathrm{kpc}$</p>
+            <img class="r-stretch" data-src="../media/bprp/extinction_map_1.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <p class="shrink-text">$1\,\mathrm{kpc} < r < 2\,\mathrm{kpc}$</p>
+            <img class="r-stretch" data-src="../media/bprp/extinction_map_2.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in slide-out">
+            <p class="shrink-text">$2\,\mathrm{kpc} < r < 5\,\mathrm{kpc}$</p>
+            <img class="r-stretch" data-src="../media/bprp/extinction_map_3.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="slide-in slide-out">
+            <div class="multicol vcenter">
+              <div class="wider">
+                <img class="full-width" data-src="../media/bprp/extinction_birdseye_bprp_nolabels.svg"></img>
+              </div>
+              <div>
+                <p>Bird's-eye view</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="compact" data-transition="slide-in slide-out">
+            <p class="shrink-text">Bird's-eye view</p>
+            <img class="r-stretch" data-src="../media/bprp/extinction_birdseye_comparison.svg"></img>
           </section>
         </section>
 
