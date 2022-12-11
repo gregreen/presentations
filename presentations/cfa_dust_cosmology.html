@@ -117,6 +117,9 @@
     .multicol div.wider {
       flex-basis: 100%;
     }
+    .multicol div.widest {
+      flex-basis: 150%;
+    }
 
     .multicol.buffer div {
       margin-left: 10px;
@@ -149,7 +152,7 @@
     <div class="reveal">
       <div class="slides">
 
-        <section>
+        <section data-background-image="../media/bprp/extinction_map_bg_faded_dark.jpg">
           <h2>Dust with Gaia Spectrophotometry</h2>
           <h4>CfA Dust/Cosmology, 12 December 2022</h4>
           <h4 class="space-top">Gregory M. Green (MPIA)</h4>
@@ -186,7 +189,7 @@
               <li class="fragment">20&times; as many stars</li>
               <li class="fragment">1/20<sup>th</sup> the resolution</li>
               <li class="fragment">Flux-calibrated</li>
-              <li class="fragment">All-sky</li>
+              <li class="fragment">All-sky, uniform selection function</li>
             </ul>
           </section>
 
@@ -194,9 +197,11 @@
             <h4>How to extract astrophysical information from these spectra?</h4>
             <ol class="space-top shrink-text">
               <li class="fragment">Cross-match with higher-resolution spectra.</li>
-              <li class="fragment">Learn how to map from stellar type to $f_{\lambda} \left(\lambda\right)$.</li>
-              <li class="fragment">Use this model to infer stellar types, distances, extictions.</li>
+              <li class="fragment">Learn how to map from stellar type to BP/RP flux: $f_{\lambda} \left(\lambda\right)$.</li>
+              <li class="fragment">Use this model to infer stellar types, distances, extinctions.</li>
             </ol>
+
+            <p class="space-top shrink-text fragment">(Include NIR photometry from 2MASS &amp; WISE)</p>
           </section>
 
           <section>
@@ -222,13 +227,13 @@
               \require{color}
               \definecolor{star}{RGB}{200,140,90}
               \definecolor{model}{RGB}{90,200,200}
-              f_{\lambda}\left(\lambda,{\color{star}\Theta}\right)
+              f_{\lambda}\left(\lambda,{\color{star}\Theta,\varpi,E}\right)
               =
               {\color{gray}
               \underbrace{
                 \color{white}
                 F_{\lambda}\left(\lambda,{\color{star}\Theta};{\color{model}W}\right)
-              }_{\mathrm{neural\ net}}
+              }_{\mathrm{neural\ network}}
               }
               {\color{star}\varpi^2}
               e^{-{\color{star}E} {\color{model}R}\left(\lambda\right)}
@@ -284,14 +289,6 @@
 
         <section>
           <section>
-            <h4>Removing outliers with self-cleaning</h4>
-            <img class="r-stretch" data-src="../media/bprp/selfcleaning.svg" style="filter:invert(1) hue-rotate(180deg) saturate(1.0) contrast(1.0);"></img>
-            <p class="fragment">Binaries?</p>
-          </section>
-        </section>
-
-        <section>
-          <section>
             <h2>Trained model</h2>
           </section>
 
@@ -314,10 +311,29 @@
 
         <section>
           <section>
+            <div class="multicol vcenter">
+              <div class="widest">
+                <div class="r-stack">
+                  <img class="fragment fade-out full-width" data-fragment-index=0 data-src="../media/bprp/residual_trend_592nm_teff.svg" style="filter: invert(1) hue-rotate(125deg);"></img>
+                  <img class="fragment current-visible full-width" data-fragment-index=0 data-src="../media/bprp/residual_trends.svg" style="filter: invert(1) hue-rotate(125deg);"></img>
+                </div>
+              </div>
+              <div class="shrink-text">
+                <p>Flux residuals</p>
+                <p>vs.</p>
+                <p>stellar parameters</p>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
             <h3>Inferring parameters of 220 million stars</h3>
-            <p class="fragment space-top">Maximum-likelihood parameters for all BP/RP stars.</p>
+            <p class="fragment space-top">Maximum-posterior parameters for all BP/RP stars.</p>
+            <p class="fragment shrink-text">&rArr; Likelihood ($\chi^2$) from BP/RP flux, 2MASS and WISE</p>
             <p class="fragment shrink-text">&rArr; Priors from Gaia ($\varpi$), distribution of stellar types ($\Theta$)</p>
-            <p class="fragment space-top">$\left( T_{\mathrm{eff}}, \, [\mathrm{Fe/H}], \, \log g, \, E, \, \varpi \right)$ of each star.</p>
+            <p class="fragment space-top">Obtain $\left( T_{\mathrm{eff}}, \, [\mathrm{Fe/H}], \, \log g, \, E, \, \varpi \right)$ of each star.</p>
             <!--
               <p class="fragment space-top">Gradient descent optimization, with Gaussian estimate of uncertainties.</p>
             -->
@@ -337,6 +353,26 @@
           <section>
             <h4>Correlations in parameter uncertainties</h4>
             <img class="r-stretch" data-src="../media/bprp/fisher_correlations.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="slide-in none-out">
+            <p class="shrink-text">Flux residuals</p>
+            <img class="r-stretch" data-src="../media/bprp/chi_map_0.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <p class="shrink-text">Flux residuals</p>
+            <img class="r-stretch" data-src="../media/bprp/chi_map_1.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <p class="shrink-text">Flux residuals</p>
+            <img class="r-stretch" data-src="../media/bprp/chi_map_2.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in slide-out">
+            <p class="shrink-text">Flux residuals</p>
+            <img class="r-stretch" data-src="../media/bprp/chi_map_3.svg"></img>
           </section>
         </section>
 
@@ -388,6 +424,54 @@
           <section class="compact" data-transition="slide-in slide-out">
             <p class="shrink-text">Bird's-eye view</p>
             <img class="r-stretch" data-src="../media/bprp/extinction_birdseye_comparison.svg"></img>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Directions for future work</h3>
+          </section>
+
+          <section>
+            <h4>Extinction curve variation: $R\left(V\right)$</h4>
+            <div class="multicol vcenter">
+              <div>
+                <img class="full-width" data-src="../media/bprp/ext_curve_vs_ccm_inv.svg"></img>
+              </div>
+              <div>
+                <img class="full-width" data-src="../media/bprp/chi_map_3.svg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h4>&ldquo;Proper&rdquo; 3D dust mapping</h4>
+            <div class="multicol vcenter">
+              <div>
+                <img class="full-width" data-src="../media/bprp/extinction_birdseye_bprp_nolabels.svg"></img>
+              </div>
+              <div class="wide">
+                <img class="full-width" data-src="../media/bprp/extinction_map_0.svg"></img>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section data-background-image="../media/bprp/extinction_map_bg_faded_dark.jpg">
+          <p class="fragment">Gaia BP/RP spectra contain rich information about Milky Way dust.</p>
+          <p class="fragment space-top">We built a model of BP/RP spectra</p>
+          <p class="fragment">... and used it to infer stellar types, distances and extinctions for 220 million stars.</p>
+          <p class="fragment space-top">Gaia BP/RP spectra can still be mined for information about extinction curve variation.</p>
+        </section>
+
+        <section>
+        </section>
+
+        <section>
+          <section>
+            <h4>Removing outliers with self-cleaning</h4>
+            <img class="r-stretch" data-src="../media/bprp/selfcleaning.svg" style="filter:invert(1) hue-rotate(180deg) saturate(1.0) contrast(1.0);"></img>
+            <p class="fragment">Binaries?</p>
           </section>
         </section>
 
