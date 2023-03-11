@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
 
-    <title>Template</title>
+    <title>UVEX dust &amp; metallicity</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -21,10 +21,6 @@
     :root {
       --r-background-color: #000;
       --r-main-font-size: 16pt;
-      --r-heading1-size: 3.77em;
-      --r-heading2-size: 2.11em;
-      --r-heading3-size: 1.55em;
-      --r-heading4-size: 1em;
     }
 
     /* Stroke text */
@@ -43,7 +39,8 @@
     p.attribution {
       font-size: 70%;
       color: #aaa;
-      margin: calc(0.5 * var(--r-block-margin)) 0;
+      margin: 0;
+      /*margin: calc(0.5 * var(--r-block-margin)) 0;*/
     }
     p.attribution a {
       color: #ddf;
@@ -54,12 +51,16 @@
       margin: calc(0.3 * var(--r-block-margin)) 0 !important;
     }
 
+    .compact-p p {
+      margin: calc(0.3 * var(--r-block-margin)) 0 !important;
+    }
+
     /* Footer (bottom of slide)
-       .footer only works if the slide is .full-height
-     */
+       .footer only works if the slide is .full-height */
     section.full-height {
       height: 100%;
     }
+
     div.footer {
       position: absolute;
       bottom: 0px;
@@ -92,7 +93,7 @@
     img.limit-width, video.limit-width {
       max-width: 70%;
     }
-    img.full-width {
+    img.full-width, div.full-width {
       width: 100%;
     }
 
@@ -157,6 +158,33 @@
 
         <section>
           <section>
+            <h2>UVEX all-sky survey</h2>
+            <div class="r-stack">
+              <img data-src="../media/uvex/cartesian_xy.svg" class="invert-colors fragment fade-out full-width" data-fragment-index=0></img>
+              <div class="fragment full-width" data-fragment-index=0>
+                <img data-src="../media/uvex/cartesian_xz.svg" class="invert-colors full-width"></img>
+                <p>~300 million stars observed in NUV.</p>
+                <p>~25 million stars observed in FUV.</p>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Mapping dust extinction<h1>
+          </section>
+
+          <section>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Variation in dust properties<h1>
+          </section>
+
+          <section>
             <h2>Dust extinction curves (with photometry)</h2>
             <div class="multicol">
               <div class="vertical-center">
@@ -181,17 +209,86 @@
               </div>
               <div class="widest">
                 <div class="r-stack">
-                  <img data-src="../media/uvex/O9V_dust_zoom_0.svg" class="invert-colors fragment fade-out full-width" data-fragment-index=0></img>
-                  <img data-src="../media/uvex/O9V_dust_zoom_1.svg" class="invert-colors fragment full-width current-visible" data-fragment-index=0></img>
-                  <img data-src="../media/uvex/O9V_dust_zoom_2.svg" class="invert-colors fragment full-width current-visible" data-fragment-index=1></img>
-                  <img data-src="../media/uvex/O9V_dust_zoom_3.svg" class="invert-colors fragment full-width current-visible" data-fragment-index=2></img>
-                  <img data-src="../media/uvex/O9V_dust_zoom_4.svg" class="invert-colors fragment full-width current-visible" data-fragment-index=3></img>
+                  <img data-src="../media/uvex/O9V_dust_0.svg" class="invert-colors fragment fade-out full-width" data-fragment-index=0></img>
+                  <img data-src="../media/uvex/O9V_dust_1.svg" class="invert-colors fragment full-width current-visible" data-fragment-index=0></img>
+                  <img data-src="../media/uvex/O9V_dust_2.svg" class="invert-colors fragment full-width current-visible" data-fragment-index=1></img>
+                  <img data-src="../media/uvex/O9V_dust_3.svg" class="invert-colors fragment full-width current-visible" data-fragment-index=2></img>
+                  <img data-src="../media/uvex/O9V_dust_4.svg" class="invert-colors fragment full-width current-visible" data-fragment-index=3></img>
+                  <img data-src="../media/uvex/O9V_dust_zoom_4.svg" class="invert-colors fragment full-width current-visible" data-fragment-index=4></img>
                 </div>
               </div>
           </section>
         </section>
 
         <section>
+          <section>
+            <h1>Photometric metallicities</h1>
+          </section>
+
+          <section>
+            <div class="multicol">
+              <div class="vertical-center">
+                <h3>UV excess method</h3>
+                <p class="fragment">At fixed optical color, UV color correlates with metallicity.</p>
+                <p class="fragment">UV line blanketing: more metals &rArr; fainter UV.</p>
+              </div>
+              <div class="widest fragment">
+                <img data-src="../media/uvex/uv_excess_Wallerstein1960.png"></img>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/1960ApJ...132..276W/abstract">(Wallerstein &amp; Carlson 1960)</a></p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="multicol">
+              <div class="vertical-center">
+                <h3>SDSS Tomography</h3>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2008ApJ...684..287I/abstract">(Ivezić <em>et al.</em> 2008)</a></p>
+                <p class="fragment" data-fragment-index=0>Measured [Fe/H] using u-g color excess at fixed g-r.</p>
+                <p class="fragment" data-fragment-index=1>[Fe/H] uncertainty: ~0.2 dex.</p>
+                <p class="fragment" data-fragment-index=2>Compared to spectroscopy: larger uncertainties, more stars.</p>
+              </div>
+              <div class="wide r-stack">
+                <img data-src="../media/sdss/tomography_ii_feh_cc.png" class="fragment current-visible" data-fragment-index=0></img>
+                <img data-src="../media/sdss/tomography_ii_feh_Rz.png" class="fragment current-visible" data-fragment-index=3></img>
+                <img data-src="../media/sdss/tomography_ii_feh_z.jpg" class="fragment current-visible" data-fragment-index=4></img>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="multicol compact-p">
+              <div class="vertical-center">
+                <h3>NUV vs. u</h3>
+                <p>Precision of metallicity measurement:</p>
+                <p>
+                  $$
+                  \sigma_{\left[\mathrm{Fe/H}\right]}
+                  \sim
+                  \sigma_{\mathrm{color}}
+                  \left(
+                    \frac{\mathrm{d}\left(\mathrm{color}\right)}{\mathrm{d}\left[\mathrm{Fe/H}\right]}
+                  \right)^{-1}
+                  $$
+                </p>
+                <!--
+                <p class="fragment" data-fragment-index=2>
+                  $$
+                  \frac{\mathrm{d(NUV-g)}}{\mathrm{[Fe/H]}} \sim 0.46 \, \mathrm{mag \, dex}^{-1}
+                  $$
+                </p>
+                -->
+                <p class="fragment" data-fragment-index=1>NUV more sensitive to metallicity than u.</u>
+                <p class="fragment" data-fragment-index=2>More rigorous formalism: Fisher forecasting.</p>
+              </div>
+              <div class="widest">
+                <div class="r-stack full-width">
+                  <img data-src="../media/uvex/feh_NUVg_gr.svg" class="fragment fade-out full-width" data-fragment-index=0></img>
+                  <img data-src="../media/uvex/feh_ug_gr.svg" class="fragment full-width" data-fragment-index=0></img>
+                </div>
+              </div>
+          </section>
+
           <section>
             <div class="multicol">
               <div class="vertical-center">
@@ -211,30 +308,6 @@
                 </div>
               </div>
           </section>
-        </section>
-
-        <section>
-          <h3>Multicolumn slide</h3>
-          <div class="multicol">
-            <div style="background-color:blue">
-              <p>Left column</p>
-              <p class="attribution">Attribution: <a href="https://www.google.com">Prof. Google (1998)</a>.</p>
-            </div>
-            <div class="wide" style="background-color:red">
-              <p>Wide right column</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="compact">
-          <h3>Compact slide</h3>
-          <p>Paragraph 1</p>
-          <p>Paragraph 2</p>
-          <p>Paragraph 3</p>
-        </section>
-
-        <section data-transition="fade-in fade-out">
-          <h4>Slide with custom transition</h4>
         </section>
 
       </div> <!--slides-->
