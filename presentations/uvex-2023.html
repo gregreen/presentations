@@ -36,13 +36,13 @@
     }
     
     /* Attribution text */
-    p.attribution {
+    p.attribution, span.attribution {
       font-size: 70%;
       color: #aaa;
       margin-top: 0;
       /*margin: calc(0.5 * var(--r-block-margin)) 0;*/
     }
-    p.attribution a {
+    p.attribution a, span.attribution a {
       color: #ddf;
     }
 
@@ -66,6 +66,33 @@
       bottom: 0px;
       width: 100%;
       text-align: center;
+    }
+
+    div.abs-bottom-right {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+    }
+    div.abs-bottom-right * {
+      float: right;
+    }
+
+    div.abs-bottom-left {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+    }
+    div.abs-bottom-left * {
+      float: left;
+    }
+
+    /* .abs-vcenter only works if the slide is .full-height.
+       Use in slides that have .footer, to center rest of content.
+     */
+    div.abs-vcenter {
+      position: absolute;
+      top: 50%;
+      margin-top: -25%;
     }
 
     /* Vertically center content in container */
@@ -149,24 +176,53 @@
     <div class="reveal">
       <div class="slides">
 
-        <section>
-          <h1>Dust and metallicity with UVEX</h1>
-          <h3>UVEX Community Workshop, Caltech, 14 March 2023</h3>
-          <h3 class="space-top">Gregory M. Green</h3>
-          <p>(MPIA, Heidelberg)</p>
+        <!--<section class="full-height" data-background="linear-gradient(to bottom, #1c5eb5, #000000)">-->
+        <section class="full-height" data-background-image="../media/bprp/extinction_map_bg_faded_dark.jpg">
+          <div class="abs-vcenter">
+            <h1>Dust and metallicity with UVEX</h1>
+            <h3>UVEX Community Workshop, Caltech, 14 March 2023</h3>
+            <h3 class="space-top">Gregory M. Green</h3>
+            <p>(MPIA, Heidelberg)</p>
+          </div>
+          <div class="abs-bottom-right">
+            <img data-src="../media/logos/MPIA_horizontal.svg" class="half-width" style="filter:contrast(0.7) brightness(1.0);"></img>
+          </div>
+          <div class="abs-bottom-left">
+            <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="half-width" style="width:40%; filter:contrast(0.7) brightness(1.2);"></img>
+          </div>
         </section>
 
         <section>
           <section>
+            <h2>Broad areas</h2>
+            <div class="multicol space-top">
+              <div class="fragment">
+                <h3>Photometry:</h3>
+                <ul>
+                  <li>Sensitive maps of dust extinction.</li>
+                  <li>Metallicities of ~300&times;10<sup>6</sup> stars.</li>
+                </ul>
+              </div>
+              <div class="fragment">
+                <h3>Spectroscopy+Photometry:</h3>
+                <ul>
+                  <li>Variation in dust extinction curve.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+          
+          <section>
             <h2>UVEX all-sky survey</h2>
             <div class="r-stack">
-              <img data-src="../media/uvex/cartesian_xy.svg" class="invert-colors fragment fade-out full-width" data-fragment-index=0></img>
-              <div class="fragment full-width" data-fragment-index=0>
+              <div class="fragment fade-out full-width" data-fragment-index=0>
                 <img data-src="../media/uvex/cartesian_xz.svg" class="invert-colors full-width"></img>
                 <p>~300 million stars observed in NUV.</p>
                 <p>~25 million stars observed in FUV.</p>
               </div>
+              <img data-src="../media/uvex/cartesian_xy.svg" class="invert-colors fragment full-width" data-fragment-index=0></img>
             </div>
+            <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2021arXiv211115608K/abstract">(Kulkarni <em>et al.</em> 2022)</a></p>
           </section>
         </section>
 
@@ -265,7 +321,7 @@
                 <h3>Contamination from large-scale structure</h3>
                 <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...870..120C/abstract">(Chiang &amp; Ménard 2018)</a></p>
                 <p class="fragment space-top">FIR maps contaminated by emission from low-z galaxies.</p>
-                <p class="fragment">Star-based maps contaminated by z&nbsp;~&nbsp;2 QSOs, though careful cleaning can help.</p>
+                <p class="fragment">Star-based maps contaminated by z&nbsp;~&nbsp;2 QSOs, though careful cleaning can help <span class="attribution">(<em>e.g.</em>, <a href="https://ui.adsabs.harvard.edu/abs/2022arXiv221204514M/abstract">Mudur <em>et al.</em> 2022</a>)</span>.</p>
               </div>
             </div>
           </section>
@@ -399,7 +455,7 @@
                   $$
                 </p>
                 -->
-                <p class="fragment" data-fragment-index=1>NUV more sensitive to metallicity than u.</u>
+                <p class="fragment" data-fragment-index=1>NUV ~6&times; more sensitive to metallicity than u.</u>
                 <p class="fragment" data-fragment-index=2>More rigorous formalism: Fisher forecasting.</p>
               </div>
               <div class="widest">
@@ -408,6 +464,33 @@
                   <img data-src="../media/uvex/feh_ug_gr.svg" class="fragment full-width" data-fragment-index=0></img>
                 </div>
               </div>
+          </section>
+
+          <section>
+            <h3>Fisher forecasting</h3>
+            <p class="space-top">
+              $$
+              \frac{1}{\sigma_{\left[\mathrm{Fe/H}\right]}^2}
+              \sim
+              \frac{1}{\sigma_{\mathrm{color}}^2}
+              \left(
+                \frac{\mathrm{d}\left(\mathrm{color}\right)}{\mathrm{d}\left[\mathrm{Fe/H}\right]}
+              \right)^2
+              $$
+            </p>
+            <p class="fragment space-top">
+              $$
+              \Sigma_{\mathrm{stellar\ params}}^{-1}
+              \sim
+              \left(
+                \frac{\partial\left(\mathrm{colors}\right)}{\partial\left(\mathrm{stellar\ params}\right)}
+              \right)^T
+              \Sigma_{\mathrm{colors}}^{-1}
+              \left(
+                \frac{\partial\left(\mathrm{colors}\right)}{\partial\left(\mathrm{stellar\ params}\right)}
+              \right)
+              $$
+            </p>
           </section>
 
           <section>
@@ -442,6 +525,15 @@
                 <p class="fragment">UVEX NUV + LSST (South) or PS1 (North): ~300 million stars.</p>
               </div>
             </div>
+          </section>
+        </section>
+
+        <section>
+          <section data-background-image="../media/bprp/extinction_map_bg_faded_dark.jpg">
+            <h1>Summary</h1>
+            <h4 class="fragment space-top">Dust maps: high sensitivity at low extinction.</h4>
+            <h4 class="fragment">Variation in dust extinction curve.</h4>
+            <h4 class="fragment">Photometric metallicities of ~300 million stars using UV excess.</h4>
           </section>
         </section>
 
