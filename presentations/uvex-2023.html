@@ -110,16 +110,16 @@
     .multicol.vcenter {
       align-items: center;
     }
-    .multicol div {
+    .multicol > div {
       flex-basis: 50%;
     }
-    .multicol div.wide {
+    .multicol > div.wide {
       flex-basis: 67%;
     }
-    .multicol div.wider {
+    .multicol > div.wider {
       flex-basis: 100%;
     }
-    .multicol div.widest {
+    .multicol > div.widest {
       flex-basis: 120%;
     }
 
@@ -178,7 +178,63 @@
           <section>
             <div class="multicol">
               <div class="r-stack wide">
-                <img data-src="../media/dust/chiang_menard_dust_mapping_overview.svg" class="invert-colors full-width"></img>
+                <img data-src="../media/dust/chiang_menard_dust_mapping_overview.svg" style="filter:invert(1) hue-rotate(90deg);" class="full-width"></img>
+              </div>
+              <div>
+                <h3>Dust mapping methods</h3>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...870..120C/abstract">(Chiang &amp; Ménard 2018)</a></p>
+                <ol>
+                  <li>Thermal emission (FIR)</li>
+                  <li>Stellar extinction (Optical/NIR)</li>
+                  <li>HI emission (21 cm)</li>
+                </ol>
+              </div>
+            </div>
+          </section>
+
+          <section data-background-image="../media/dust/sfd-stretched.jpg">
+            <div class="multicol fragment" style="background:rgba(0,0,0,0.7);">
+              <div class="r-stack wider">
+                <img data-src="../media/dust/mbb_example.svg" class="invert-colors full-width"></img>
+              </div>
+              <div class="vertical-center">
+                <h3>FIR emission</h3>
+                <p>
+                  Model emission as modified blackbody:
+                  $$
+                  I_{\nu} \left( \nu , T , \beta \right)
+                  = \overbrace{\sigma}^{\mathrm{column}\\ \mathrm{density}}
+                    \!\!\!\!
+                    \underbrace{
+                      \kappa \left( \nu , \beta \right)
+                    }_{
+                      \mathrm{low-}\nu\ \mathrm{cutoff} \\
+                      \ \ \ \ (\kappa \ \propto \ v^{\beta})
+                    }
+                    \!
+                    \overbrace{B_{\nu} \left( \nu , T \right)}^{\mathrm{blackbody}}
+                  \, . \ 
+                  $$
+                </p>
+              </div>
+            </div>
+            <p class="attribution space-top"><a href="https://ui.adsabs.harvard.edu/abs/1998ApJ...500..525S/abstract" style="color:black;">(Schlegel, Finkbeiner &amp; Davis 1998)</a></p>
+          </section>
+
+          <section>
+            <h4>3D dust from 220 million stars with Gaia XP spectra</h4>
+            <div class="r-stack">
+              <img data-src="../media/dust/xp_dust_dist1.jpg" data-fragment-index=1 class="full-width fragment fade-out"></img>
+              <img data-src="../media/dust/xp_dust_dist2.jpg" data-fragment-index=1 class="full-width fragment current-visible"></img>
+              <img data-src="../media/dust/xp_dust_dist3.jpg" data-fragment-index=2 class="full-width fragment current-visible"></img>
+            </div>
+            <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
+          </section>
+
+          <section>
+            <div class="multicol">
+              <div class="r-stack wide">
+                <img data-src="../media/dust/chiang_menard_dust_mapping_overview.svg" style="filter:invert(1) hue-rotate(90deg);" class="full-width"></img>
               </div>
               <div class="vertical-center">
                 <h3>Dust mapping methods</h3>
@@ -191,29 +247,35 @@
                 <div class="fragment space-top">
                   <p>Advantages of stellar extinction method:</p>
                   <ul>
-                    <li>Directly measures what we want to know: extinction</li>
+                    <li>Directly measures what we want to know: extinction.</li>
                     <li>3D extinction: stars trace dust at different distances.</li>
                   </ul>
                 </div>
+                <p class="fragment space-top">Note: lack of UV photometry in stellar-based dust maps.</p>
               </div>
             </div>
           </section>
 
           <section>
             <div class="multicol">
-              <div class="r-stack wide">
+              <div class="r-stack wider">
                 <img data-src="../media/dust/chiang_menard_z_contamination.svg" class="invert-colors full-width"></img>
               </div>
-              <div>
+              <div class="vertical-center">
                 <h3>Contamination from large-scale structure</h3>
                 <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...870..120C/abstract">(Chiang &amp; Ménard 2018)</a></p>
+                <p class="fragment space-top">FIR maps contaminated by emission from low-z galaxies.</p>
+                <p class="fragment">Star-based maps contaminated by z&nbsp;~&nbsp;2 QSOs, though careful cleaning can help.</p>
               </div>
             </div>
           </section>
 
           <section>
-            <p>UV more sensitive to dust than optical/NIR.</p>
-            <p>&rArr; Map dust in low-extinction regions.</p>
+              <h4>Extragalactic astronomy: low-extinction regions</h4>
+              <img data-src="../media/dust/sfd_polar_dark.png" class="r-stretch"></img>
+              <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/1998ApJ...500..525S/abstract">(Schlegel, Finkbeiner &amp; Davis 1998)</a></p>
+              <p class="fragment">UV more sensitive to dust than optical/NIR.</p>
+              <p class="fragment">&rArr; UVEX will help most in low-extinction regions.</p>
           </section>
         </section>
 
@@ -244,6 +306,10 @@
                 <p>O9V spectrum</p>
                 <p class="fragment" data-fragment-index=0>... behind 0.5 mag of V-band extinction</p>
                 <p class="fragment" data-fragment-index=1>... in different environments</p>
+                <div class="compact">
+                  <p class="fragment" data-fragment-index=5>UVEX will add ~1000 UV spectra of O/B stars in low-metallicity environments (LMC/SMC).</p>
+                  <p class="fragment" data-fragment-index=6>(compare with ~hundreds now)</p>
+                </div>
               </div>
               <div class="widest">
                 <div class="r-stack">
@@ -252,7 +318,7 @@
                   <img data-src="../media/uvex/O9V_dust_2.svg" class="invert-colors fragment full-width current-visible" data-fragment-index=1></img>
                   <img data-src="../media/uvex/O9V_dust_3.svg" class="invert-colors fragment full-width current-visible" data-fragment-index=2></img>
                   <img data-src="../media/uvex/O9V_dust_4.svg" class="invert-colors fragment full-width current-visible" data-fragment-index=3></img>
-                  <img data-src="../media/uvex/O9V_dust_zoom_4.svg" class="invert-colors fragment full-width current-visible" data-fragment-index=4></img>
+                  <img data-src="../media/uvex/O9V_dust_zoom_4.svg" class="invert-colors fragment full-width" data-fragment-index=4></img>
                 </div>
               </div>
           </section>
@@ -264,13 +330,30 @@
           </section>
 
           <section>
+            <h3>Metallicity as a key to understanding galaxy formation history</h3>
+            <div class="multicol fragment">
+              <div class="wide compact">
+                <div class="r-stack">
+                  <img data-src="../media/gaia/gaia_sausage_1z3_fehm1.png" class="fragment invert-colors current-visible"></img>
+                  <img data-src="../media/gaia/gaia_sausage_1z3_fehm2.png" class="fragment invert-colors"></img>
+                </div>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2018MNRAS.478..611B/abstract">(Belokurov <em>et al.</em> 2018)</a></p>
+              </div>
+              <div class="vertical-center">
+                <h4>Gaia Enceladus (a.k.a. &ldquo;The Sausage&rdquo;)</h4>
+                <p>Highly radial population of stars &mdash; identified in kinematic &amp; metallicity space.</p>
+                <p class="fragment">Merger 8-11 Myr ago.</p>
+              </div>
+          </section>
+
+          <section>
             <div class="multicol">
               <div class="vertical-center">
                 <h3>UV excess method</h3>
-                <p class="fragment">At fixed optical color, UV color correlates with metallicity.</p>
-                <p class="fragment">UV line blanketing: more metals &rArr; fainter UV.</p>
+                <p class="fragment" data-fragment-index=1>At fixed optical color, UV color correlates with metallicity.</p>
+                <p class="fragment" data-fragment-index=2>UV line blanketing: more metals &rArr; fainter UV.</p>
               </div>
-              <div class="widest fragment">
+              <div class="widest fragment" data-fragment-index=1>
                 <img data-src="../media/uvex/uv_excess_Wallerstein1960.png"></img>
                 <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/1960ApJ...132..276W/abstract">(Wallerstein &amp; Carlson 1960)</a></p>
               </div>
@@ -282,7 +365,7 @@
               <div class="vertical-center">
                 <h3>SDSS Tomography</h3>
                 <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2008ApJ...684..287I/abstract">(Ivezić <em>et al.</em> 2008)</a></p>
-                <p class="fragment" data-fragment-index=0>Measured [Fe/H] using u-g color excess at fixed g-r.</p>
+                <p class="fragment" data-fragment-index=0>Measured [Fe/H] of ~2 million stars using u-g color excess at fixed g-r.</p>
                 <p class="fragment" data-fragment-index=1>[Fe/H] uncertainty: ~0.2 dex.</p>
                 <p class="fragment" data-fragment-index=2>Compared to spectroscopy: larger uncertainties, more stars.</p>
               </div>
@@ -345,6 +428,20 @@
                   <img data-src="../media/uvex/sigma_feh_fuv.svg" class="invert-colors fragment full-width current-visible" data-fragment-index=1></img>
                 </div>
               </div>
+          </section>
+
+          <section>
+            <div class="multicol">
+              <div class="wider">
+                <img data-src="../media/sdss/Galactic_Genesis_faceon.png" style="filter:invert(1) hue-rotate(90deg);"></img>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2017arXiv171103234K/abstract">(Kollmeier <em>et al.</em> 2017)</a></p>
+              </div>
+              <div>
+                <h3>Comparison with spectroscopic surveys</h3>
+                <p class="fragment">SDSS-V Galactic Genesis: ~6&times;10<sup>6</sup> high-resolution NIR spectra.</p>
+                <p class="fragment">UVEX NUV + LSST (South) or PS1 (North): ~300 million stars.</p>
+              </div>
+            </div>
           </section>
         </section>
 
