@@ -20,6 +20,7 @@
     /* Override theme variables */
     :root {
       --r-background-color: #000;
+      --r-main-font-size: 16pt;
     }
 
     /* Stroke text */
@@ -33,14 +34,15 @@
       -webkit-text-stroke: 1px rgba(255,255,255,0.3);
       paint-order: stroke fill;
     }
-    
+
     /* Attribution text */
-    p.attribution {
-      font-size: 50%;
+    p.attribution, span.attribution {
+      font-size: 70%;
       color: #aaa;
-      margin: calc(0.5 * var(--r-block-margin)) 0;
+      margin-top: 0;
+      /*margin: calc(0.5 * var(--r-block-margin)) 0;*/
     }
-    p.attribution a {
+    p.attribution a, span.attribution a {
       color: #ddf;
     }
 
@@ -49,17 +51,48 @@
       margin: calc(0.3 * var(--r-block-margin)) 0 !important;
     }
 
+    .compact-p p {
+      margin: calc(0.3 * var(--r-block-margin)) 0 !important;
+    }
+
     /* Footer (bottom of slide)
-       .footer only works if the slide is .full-height
-     */
+       .footer only works if the slide is .full-height */
     section.full-height {
       height: 100%;
     }
+
     div.footer {
       position: absolute;
       bottom: 0px;
       width: 100%;
       text-align: center;
+    }
+
+    div.abs-bottom-right {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+    }
+    div.abs-bottom-right * {
+      float: right;
+    }
+
+    div.abs-bottom-left {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+    }
+    div.abs-bottom-left * {
+      float: left;
+    }
+
+    /* .abs-vcenter only works if the slide is .full-height.
+       Use in slides that have .footer, to center rest of content.
+     */
+    div.abs-vcenter {
+      position: absolute;
+      top: 50%;
+      margin-top: -25%;
     }
 
     /* Vertically center content in container */
@@ -87,7 +120,7 @@
     img.limit-width, video.limit-width {
       max-width: 70%;
     }
-    img.full-width {
+    img.full-width, div.full-width {
       width: 100%;
     }
 
@@ -104,14 +137,17 @@
     .multicol.vcenter {
       align-items: center;
     }
-    .multicol div {
+    .multicol > div {
       flex-basis: 50%;
     }
-    .multicol div.wide {
+    .multicol > div.wide {
       flex-basis: 67%;
     }
-    .multicol div.wider {
+    .multicol > div.wider {
       flex-basis: 100%;
+    }
+    .multicol > div.widest {
+      flex-basis: 120%;
     }
 
     /* Margins */
@@ -141,13 +177,13 @@
       <div class="slides">
 
         <section>
-          <h2>Template</h2>
-          <h4>Venue, Date</h4>
-          <h4>Gregory M. Green</h4>
+          <h1>Template</h1>
+          <h2>Venue, Date</h2>
+          <h3>Gregory M. Green</h3>
         </section>
 
         <section>
-          <h3>Multicolumn slide</h3>
+          <h2>Multicolumn slide</h2>
           <div class="multicol">
             <div style="background-color:blue">
               <p>Left column</p>
@@ -157,17 +193,44 @@
               <p>Wide right column</p>
             </div>
           </div>
+          <div class="multicol">
+            <div style="background-color:green">
+              <p>Left column</p>
+              <p class="attribution">Attribution: <a href="https://www.google.com">Prof. Google (1998)</a>.</p>
+            </div>
+            <div class="wider" style="background-color:darkblue">
+              <p>Wider right column</p>
+            </div>
+          </div>
+          <div class="multicol">
+            <div style="background-color:blue">
+              <p>Left column</p>
+              <p class="attribution">Attribution: <a href="https://www.google.com">Prof. Google (1998)</a>.</p>
+            </div>
+            <div class="widest" style="background-color:red">
+              <p>Widest right column</p>
+            </div>
+          </div>
         </section>
 
-        <section class="compact">
-          <h3>Compact slide</h3>
-          <p>Paragraph 1</p>
-          <p>Paragraph 2</p>
-          <p>Paragraph 3</p>
+        <section>
+          <section class="compact" data-transition="slide-in none-out">
+            <h2>Compact slide</h2>
+            <p>Paragraph 1</p>
+            <p>Paragraph 2</p>
+            <p>Paragraph 3</p>
+          </section>
+
+          <section data-transition="none-in slide-out">
+            <h2>Compare with normal slide</h2>
+            <p>Paragraph 1</p>
+            <p>Paragraph 2</p>
+            <p>Paragraph 3</p>
+          </section>
         </section>
 
         <section data-transition="fade-in fade-out">
-          <h4>Slide with custom transition</h4>
+          <h2>Slide with custom transition</h2>
         </section>
 
       </div> <!--slides-->
@@ -175,6 +238,7 @@
 
     <script src="../revealjs/dist/reveal.js"></script>
     <script src="../revealjs/plugin/math/math.js"></script>
+    <script src="../revealjs/plugin/notes/notes.js"></script>
     <script>
       Reveal.initialize({
         history: true,
@@ -191,7 +255,7 @@
           }
         },
 
-        plugins: [ RevealMath ]
+        plugins: [ RevealMath, RevealNotes ]
       });
     </script>
 
