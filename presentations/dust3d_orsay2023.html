@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>3D dust / Deep Learning</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="../icon.ico">
+
+    <link rel="stylesheet" href="../revealjs/dist/reveal.css">
+    <link rel="stylesheet" href="../revealjs/dist/theme/night.css" id="theme">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../revealjs/plugin/highlight/monokai.css" id="highlight-theme">
+
+    <!-- Custom CSS files go here -->
+  </head>
+
+  <style>
+    /* Override theme variables */
+    :root {
+      --r-background-color: #000;
+      --r-main-font-size: 16pt;
+    }
+
+    /* Stroke text */
+    .stroke-text-dark {
+      text-stroke: 1px black;
+      -webkit-text-stroke: 1px black;
+      paint-order: stroke fill;
+    }
+    .stroke-text-light {
+      text-stroke: 1px white rgba(255,255,255,0.3);
+      -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+      paint-order: stroke fill;
+    }
+
+    /* Attribution text */
+    p.attribution, span.attribution {
+      font-size: 70%;
+      color: #aaa;
+      margin-top: 0;
+      /*margin: calc(0.5 * var(--r-block-margin)) 0;*/
+    }
+    p.attribution a, span.attribution a {
+      color: #ddf;
+    }
+
+    /* Compact */
+    .compact * {
+      margin: calc(0.3 * var(--r-block-margin)) 0 !important;
+    }
+
+    .compact-p p {
+      margin: calc(0.3 * var(--r-block-margin)) 0 !important;
+    }
+
+    .compact img {
+      max-width: 100%;
+    }
+
+    /* Footer (bottom of slide)
+       .footer only works if the slide is .full-height */
+    section.full-height {
+      height: 100%;
+    }
+
+    div.footer {
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      text-align: center;
+    }
+
+    div.abs-bottom-right {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+    }
+    div.abs-bottom-right * {
+      float: right;
+    }
+
+    div.abs-bottom-left {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+    }
+    div.abs-bottom-left * {
+      float: left;
+    }
+
+    /* .abs-vcenter only works if the slide is .full-height.
+       Use in slides that have .footer, to center rest of content.
+     */
+    div.abs-vcenter {
+      position: absolute;
+      top: 50%;
+      margin-top: -25%;
+    }
+
+    /* Vertically center content in container */
+    .vertical-center {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-direction: column;
+    }
+
+    /* Slide-specific vertical centering override */
+    .reveal .slides section[data-vertical-align-top]{
+      top: 0 !important;
+    }
+
+    /* Invert colors - useful for adapting graphics for dark slides. */
+    img.invert-colors, video.invert-colors {
+      filter: invert(1);
+    }
+
+    /* Image width */
+    img.half-width, video.half-width {
+      max-width: 50%;
+    }
+    img.limit-width, video.limit-width {
+      max-width: 70%;
+    }
+    img.full-width, div.full-width {
+      width: 100%;
+    }
+
+    /* Item placement in r-stack environment */
+    .reveal .r-stack .align-top {
+      margin: initial;
+    }
+
+    /* Basic slide layouts */
+    .multicol {
+      display: flex;
+      flex-direction: row;
+    }
+    .multicol.vcenter {
+      align-items: center;
+    }
+    .multicol > div {
+      flex-basis: 50%;
+    }
+    .multicol > div.wide {
+      flex-basis: 67%;
+    }
+    .multicol > div.wider {
+      flex-basis: 100%;
+    }
+    .multicol > div.widest {
+      flex-basis: 120%;
+    }
+
+    /* Margins */
+    .space-top {
+      margin-top: calc(3 * var(--r-block-margin)) !important;
+    }
+
+    /* Text alignment */
+    .align-left {
+      text-align: left;
+    }
+
+    /* Text size */
+    .shrink-text {
+      font-size: 67%;
+    }
+
+    /* iframe borders */
+    iframe {
+      border: none;
+    }
+  </style>
+
+  <body>
+
+    <div class="reveal">
+      <div class="slides">
+
+        <section class="full-height" data-background-image="../media/bprp/dust_495pc_dark_magma_q60.jpg">
+          <h1 class="space-top">3D dust mapping with Deep Learning tools</h1>
+          <h3>Interstellar Institute VI, Institut Pascal, 13 July 2023</h3>
+          <h3 class="space-top">Gregory M. Green</h3>
+          <p>(MPIA, Heidelberg)</p>
+          <div class="abs-bottom-right">
+            <img data-src="../media/logos/MPIA_horizontal.svg" class="half-width" style="filter:contrast(0.5) brightness(1.0);"></img>
+          </div>
+          <div class="abs-bottom-left">
+            <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="half-width" style="width:40%; filter:contrast(0.5) brightness(1.2);"></img>
+          </div>
+        </section>
+
+        <section>
+          <section>
+            <h1>Gaia XP reddenings</h1>
+            <h3 class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z">Zhang, Green &amp; Rix (2023)</a></h3>
+          </section>
+
+          <section>
+            <h2>Clean distances and reddenings</h2>
+            <h3>(of ~100 million stars)</h3>
+          </section>
+
+          <section>
+            <h2>Data is available online</h2>
+            <p>Full dataset on <a href="https://zenodo.org/record/7692680">Zenodo</a>.</p>
+            <p class="fragment">Also available &ldquo;on TAP&rdquo; using ADQL.</p>
+            <div class="fragment">
+            <p>Query distances and reddenings of stars along one sightline:</p>
+            <pre><code class="language-sql" data-noescape data-trim data-line-numbers>
+              SELECT
+                source_id,
+                ra, dec,
+                ext, err_ext,
+                mod_parallax,
+                err_mod_parallax,
+                quality_flags,
+                teff_confidence,
+                chi2_opt
+              FROM xpparams.main
+              WHERE
+                    quality_flags < 16
+                AND teff_confidence > 0.5
+                AND chi2_opt/61 < 5
+                AND mod_parallax / err_mod_parallax > 8
+                AND distance(ra, dec, 86.3362, -1.5407) < 0.5
+            </code></pre>
+            <p>(Data available through the <a href="https://dc.zah.uni-heidelberg.de/tableinfo/xpparams.main">German Astrophysical Virtual Observatory</a>)</p>
+            </div>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/los_extinction_OrionB.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/los_extinction_MonocerosR2.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/los_extinction_Vela.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/los_extinction_Taurus.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/los_extinction_Perseus.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/los_extinction_Maddalena.svg"></img>
+          </section>
+
+          <section>
+            <h2>All-sky results from binning and averaging stars</h2>
+          </section>
+
+          <section>
+            <video class="r-stretch" data-autoplay loop data-src="../media/simple_dust23/allsky_multires.mp4"></video>
+          </section>
+
+          <section>
+            <video class="r-stretch" data-autoplay loop data-src="../media/simple_dust23/allsky_multires_diff.mp4"></video>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/GalCen500pc.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/Ophiuchus.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/Orion.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/PerTaurCali.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/AquilaSouth.svg"></img>
+          </section>
+        </section>
+
+
+        <section>
+          <section>
+            <h2>Deep Learning tools</h2>
+          </section>
+
+          <section>
+            <h3>Auto-differentiation (&ldquo;autodiff&rdquo;)</h3>
+            <div class="fragment space-top">
+              <h4>What is it?</h4>
+              <p class="fragment">Automatically calculate derivatives of complicated functions.</p>
+              <p class="fragment">
+                $$
+                f\big(\vec{\theta}\big) \longrightarrow \nabla_{\vec{\theta}} f\big(\vec{\theta}\big)
+                $$
+              </p>
+            </div>
+            <div class="fragment space-top">
+              <h4>Why is it useful?</h4>
+              <p class="fragment">Maximizing/minimizing functions: $\mathcal{L}\big(\vec{\theta}\big)$.</p>
+              <p class="fragment">
+                Gradient descent:
+                $\vec{\theta} \leftarrow -\eta \, \nabla_{\vec{\theta}} \mathcal{L}\big(\vec{\theta}\big)$
+              </p>
+            </div>
+            <div class="fragment space-top">
+              <h4>What it is <em>not</em>&thinsp;: the finite difference method:</h4>
+              <p>
+                $$
+                \frac{\partial f}{\partial \theta}
+                \simeq
+                \frac{
+                  f\left(\theta+\delta\theta\right) - f\left(\theta\right)
+                }{
+                  \delta\theta
+                }
+                $$
+              </p>
+              <p class="fragment space-top">&rArr; Noisy, and gradients require one calculation per dimension.</p>
+            </div>
+          </section>
+
+          <section>
+            <h3>Basic idea: model dust density in an auto-differentiable way</h3>
+            <p class="fragment">&rArr; Use gradient descent to optimize the dust density field, so that it matches the distance &amp; extinction constraints from the stars.</p>
+            <h3 class="fragment space-top">What this is <em>not</em> : <span class="fragment">a black box.</span></h3>
+          </section>
+
+          <section>
+            <h3>Likelihood of a star in a 3D dust density field</h3>
+            <img class="r-stretch" data-src="../media/neural_ode_dust3d/los_method.svg" style="filter:invert(1);"></img>
+          </section>
+
+          <section>
+            <h3>Extinction $A$ depends on dust density $\rho$.</h3>
+            <h3 class="fragment">Likelihood $\mathcal{L}$ depends on extinction $A$.</h3>
+            <div class="fragment">
+              <h3>Coupled differential equation (in distance $s$):</h3>
+              <p>
+                $$
+                \frac{\mathrm{d}A}{\mathrm{d}s}
+                  = \rho\left(
+                        \mathrm{distance}=s
+                      \mid
+                        \mathrm{dust\ parameters}
+                    \right)
+                  \\
+                \frac{\mathrm{d}\mathcal{L}}{\mathrm{d}s}
+                  = p\left(
+                      \mathrm{data}
+                    \mid
+                      \mathrm{distance}=s,\ 
+                      \mathrm{extinction}=A
+                    \right)
+                    p\left(\mathrm{distance}=s\right)
+                $$
+              </p>
+              <p>Integrate from $s = 0$ to $\infty$ to obtain the stellar likelihood $\mathcal{L}$.</p>
+            </div>
+            <div class="fragment space-top">
+              <p>Maximize likelihood &rArr; Need gradients w.r.t. dust parameters: $\mathrm{d}\mathcal{L} / \mathrm{d}\left(\mathrm{dust\ parameters}\right)$.</p>
+              <p class="fragment">&rArr; Neural ordinary differential equations (<a href="https://arxiv.org/abs/1806.07366">Chen+2018</a>).</p>
+            </div>
+          </section>
+
+          <section>
+            <h3>Model the dust density in Fourier space:</h3>
+            <p>
+              $$
+              \ln\rho\left(\vec{x}\right)
+              =
+              \sum_{\vec{k}} \left[
+                  a_{\vec{k}} \, \cos \left( \vec{k} \cdot \vec{x} \right)
+                + b_{\vec{k}} \, \sin \left( \vec{k} \cdot \vec{x} \right)
+              \right]
+              $$
+            </p>
+            <p class="fragment">&ldquo;dust parameters&rdquo; = Fourier coefficients = $\left\{ a_{\vec{k}},b_{\vec{k}} \right\}$</p>
+            <div class="fragment space-top">
+              <h3>Power-spectrum prior:</h3>
+              <p>
+                $$
+                \mathrm{penalty} =
+                \sum_{\vec{k}} \left| a_{\vec{k}} \right|^2 k^{\gamma},
+                $$
+                $\gamma$ = power-spectrum slope.
+              </p>
+              <p class="fragment">Larger $\gamma$ &rArr; less small-scale structure.</p>
+            </div>
+
+            <aside class="notes">
+              <ul>
+                <li>Easily differentiable.</li>
+                <li>Amplitudes related to power spectrum &rarr; physically meaningful priors.</li>
+                <li>Truncate the series at order corresponding to some spatial resolution.</li>
+                <li>Periodic boundary conditions &rarr; expand box.</li>
+              </ul>
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section class="compact">
+            <div class="multicol">
+              <div class="widest r-stack">
+                <img class="fragment fade-out" data-fragment-index=1 data-src="../media/neural_ode_dust3d/onion_gamma36to18_w15/ln_rho_true_nostars.png"></img>
+                <img class="fragment" data-fragment-index=1 data-src="../media/neural_ode_dust3d/onion_gamma36to18_w15/ln_rho_true.png"></img>
+              </div>
+              <div>
+                <h3 class="space-top">Mock data</h3>
+                <div class="r-stack">
+                  <div class="fragment fade-out" data-fragment-index=1>
+                    <p>Dust density field</p>
+                  </div>
+                  <div class="fragment" data-fragment-index=1>
+                    <p>Stellar extinctions</p>
+                    <p>(observer sits at origin)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="compact">
+            <h3>Training (dust density field)</h3>
+            <video data-src="../media/neural_ode_dust3d/onion_gamma36to18_w15/training_rho_tpad.mp4" class="r-stretch" controls data-autoplay loop></video>
+          </section>
+
+          <section class="compact">
+            <div class="multicol">
+              <div class="widest r-stack">
+                <img class="fragment fade-out" data-fragment-index=1 data-src="../media/neural_ode_dust3d/onion_gamma36to18_w15/rho_true_nostars.png"></img>
+                <img class="fragment current-visible" data-fragment-index=1 data-src="../media/neural_ode_dust3d/onion_gamma36to18_w15/rho_fit_nostars.png"></img>
+                <img class="fragment" data-fragment-index=2 data-src="../media/neural_ode_dust3d/onion_gamma36to18_w15/rho_diff_nostars_step14336.png"></img>
+              </div>
+              <div>
+                <h3 class="space-top">Dust density</h3>
+                <div class="r-stack">
+                  <h4 class="fragment fade-out" data-fragment-index=1>Truth</h4>
+                  <h4 class="fragment current-visible" data-fragment-index=1>Fit</h4>
+                  <h4 class="fragment" data-fragment-index=2>Residuals</h4>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="compact">
+            <h3>Training (stellar extinctions)</h3>
+            <video data-src="../media/neural_ode_dust3d/onion_gamma36to18_w15/training_stars_tpad.mp4" class="r-stretch" controls data-autoplay loop></video>
+          </section>
+
+          <section class="compact">
+            <div class="multicol">
+              <div class="widest r-stack">
+                <img class="fragment fade-out" data-fragment-index=1 data-src="../media/neural_ode_dust3d/onion_gamma36to18_w15/ln_rho_true.png"></img>
+                <img class="fragment current-visible" data-fragment-index=1 data-src="../media/neural_ode_dust3d/onion_gamma36to18_w15/ln_rho_diff_obs.png"></img>
+                <img class="fragment" data-fragment-index=2 data-src="../media/neural_ode_dust3d/onion_gamma36to18_w15/ln_rho_diff_true.png"></img>
+              </div>
+              <div>
+                <h3 class="space-top">Stellar extinctions</h3>
+                <div class="r-stack">
+                  <h4 class="fragment fade-out" data-fragment-index=1>Truth</h4>
+                  <h4 class="fragment current-visible" data-fragment-index=1>Residuals vs. observations</h4>
+                  <h4 class="fragment" data-fragment-index=2>Residuals vs. truth</h4>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="compact">
+            <h3>Training (Fourier modes)</h3>
+            <video data-src="../media/neural_ode_dust3d/onion_gamma36to18_w15/training_fourier_tpad.mp4" class="r-stretch" controls data-autoplay loop></video>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Additional ideas</h3>
+          </section>
+          <section>
+            <p>Smooth background density:</p>
+            <p>
+              $$
+                \ln \rho \left( \vec{x} \mid \theta_{s} ,\, \theta_{\delta} \right)
+                =
+                \underbrace{
+                  \ln \rho_{s} \left( \vec{x} \mid \theta_{s} \right)
+                }_{
+                  \substack{
+                    \mathrm{smooth\ model}\\
+                    \mathrm{(few\ parameters)}
+                  }
+                }
+                +
+                \underbrace{
+                  \delta \ln \rho \left( \vec{x} \mid \theta_{\delta} \right)
+                }_{
+                  \substack{
+                    \mathrm{deviations}\\
+                    \mathrm{(many\ parameters)}
+                  }
+                }
+                \, .
+              $$
+            </p>
+            <p class="fragment">E.g., exponential disk + Fourier series.</p>
+          </section>
+          <section>
+            <p>Gaussian uncertainty estimate (Laplace's method):</p>
+            <p>
+              $$
+              \left. \frac{\partial^2 \mathcal{\ln L}}{\partial \theta^2} \right|_{\theta=\theta_0}
+              , \\
+              \theta_0 = \mathrm{best\ fit\ parameters} \, .
+              $$
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <section data-background-image="../media/bprp/dust_495pc_dark_magma_q60.jpg">
+            <h1>Summary</h1>
+            <h4 class="fragment space-top">~100 million exquisite stellar distances &amp; extinctions inferred from Gaia XP spectra.</h4>
+            <h4 class="fragment">Deep Learning tools have great potential in 3D dust mapping.</h4>
+          </section>
+        </section>
+
+      </div> <!--slides-->
+    </div> <!--reveal-->
+
+    <script src="../revealjs/dist/reveal.js"></script>
+    <script src="../revealjs/plugin/math/math.js"></script>
+    <script src="../revealjs/plugin/notes/notes.js"></script>
+    <script src="../revealjs/plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        history: true,
+        transition: 'linear',
+
+        math: {
+          // mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          TeX: {
+            Macros: {
+              R: '\\mathbb{R}',
+              set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+            }
+          }
+        },
+
+        plugins: [ RevealMath, RevealNotes, RevealHighlight ]
+      });
+    </script>
+
+    <!-- jQuery -->
+    <script src="../js/jquery-3.6.1.min.js"></script>
+    <!-- d3 -->
+    <script src="../js/d3.min.js" charset="utf-8"></script>
+    <!-- Custom scripts go here -->
+
+  </body>
+</html>
