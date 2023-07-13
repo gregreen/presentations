@@ -308,9 +308,11 @@
 
           <section>
             <h3>Auto-differentiation (&ldquo;autodiff&rdquo;)</h3>
-            <div class="fragment space-top">
-              <h4>What is it?</h4>
-              <p class="fragment">Automatically calculate derivatives of complicated functions.</p>
+            <div class="fragment">
+              <div class="compact">
+                <h4>What is it?</h4>
+                <p class="fragment">Automatically calculate derivatives of complicated functions.</p>
+              </div>
               <p class="fragment">
                 $$
                 f\big(\vec{\theta}\big) \longrightarrow \nabla_{\vec{\theta}} f\big(\vec{\theta}\big)
@@ -318,7 +320,9 @@
               </p>
             </div>
             <div class="fragment space-top">
-              <h4>Why is it useful?</h4>
+              <div class="compact">
+                <h4>Why is it useful?</h4>
+              </div>
               <p class="fragment">Maximizing/minimizing functions: $\mathcal{L}\big(\vec{\theta}\big)$.</p>
               <p class="fragment">
                 Gradient descent:
@@ -338,7 +342,7 @@
                 }
                 $$
               </p>
-              <p class="fragment space-top">&rArr; Noisy, and gradients require one calculation per dimension.</p>
+              <p class="fragment">&rArr; Noisy, and gradients require one calculation per dimension.</p>
             </div>
           </section>
 
@@ -569,6 +573,8 @@
             }
           }
         },
+
+        pdfMaxPagesPerSlide: 1,
 
         plugins: [ RevealMath, RevealNotes, RevealHighlight ]
       });
