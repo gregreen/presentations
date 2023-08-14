@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Extinction / Gaia XP</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="../icon.ico">
+
+    <link rel="stylesheet" href="../revealjs/dist/reveal.css">
+    <link rel="stylesheet" href="../revealjs/dist/theme/night.css" id="theme">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../revealjs/plugin/highlight/monokai.css" id="highlight-theme">
+
+    <!-- Custom CSS files go here -->
+  </head>
+
+  <style>
+    /* Override theme variables */
+    :root {
+      --r-background-color: #000;
+      --r-main-font-size: 16pt;
+    }
+
+    /* Stroke text */
+    .stroke-text-dark {
+      text-stroke: 1px black;
+      -webkit-text-stroke: 1px black;
+      paint-order: stroke fill;
+    }
+    .stroke-text-light {
+      text-stroke: 1px white rgba(255,255,255,0.3);
+      -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+      paint-order: stroke fill;
+    }
+
+    /* Attribution text */
+    p.attribution, span.attribution {
+      font-size: 70%;
+      color: #aaa;
+      margin-top: 0;
+      /*margin: calc(0.5 * var(--r-block-margin)) 0;*/
+    }
+    p.attribution a, span.attribution a {
+      color: #ddf;
+    }
+
+    /* Compact */
+    .compact * {
+      margin: calc(0.3 * var(--r-block-margin)) 0 !important;
+    }
+
+    .compact-p p {
+      margin: calc(0.3 * var(--r-block-margin)) 0 !important;
+    }
+
+    .compact img {
+      max-width: 100%;
+    }
+
+    /* Footer (bottom of slide)
+       .footer only works if the slide is .full-height */
+    section.full-height {
+      height: 100%;
+    }
+
+    div.footer {
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      text-align: center;
+    }
+
+    div.abs-bottom-right {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+    }
+    div.abs-bottom-right * {
+      float: right;
+    }
+
+    div.abs-bottom-left {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+    }
+    div.abs-bottom-left * {
+      float: left;
+    }
+
+    /* .abs-vcenter only works if the slide is .full-height.
+       Use in slides that have .footer, to center rest of content.
+     */
+    div.abs-vcenter {
+      position: absolute;
+      top: 50%;
+      margin-top: -25%;
+    }
+
+    /* Vertically center content in container */
+    .vertical-center {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-direction: column;
+    }
+
+    /* Slide-specific vertical centering override */
+    .reveal .slides section[data-vertical-align-top]{
+      top: 0 !important;
+    }
+
+    /* Invert colors - useful for adapting graphics for dark slides. */
+    img.invert-colors, video.invert-colors {
+      filter: invert(1);
+    }
+
+    /* Image width */
+    img.half-width, video.half-width {
+      max-width: 50%;
+    }
+    img.limit-width, video.limit-width {
+      max-width: 70%;
+    }
+    img.full-width, div.full-width {
+      width: 100%;
+    }
+
+    /* Item placement in r-stack environment */
+    .reveal .r-stack .align-top {
+      margin: initial;
+    }
+
+    /* Basic slide layouts */
+    .multicol {
+      display: flex;
+      flex-direction: row;
+    }
+    .multicol.vcenter {
+      align-items: center;
+    }
+    .multicol > div {
+      flex-basis: 50%;
+    }
+    .multicol > div.wide {
+      flex-basis: 67%;
+    }
+    .multicol > div.wider {
+      flex-basis: 100%;
+    }
+    .multicol > div.widest {
+      flex-basis: 120%;
+    }
+
+    /* Margins */
+    .space-top {
+      margin-top: calc(3 * var(--r-block-margin)) !important;
+    }
+
+    /* Text alignment */
+    .align-left {
+      text-align: left;
+    }
+
+    /* Text size */
+    .shrink-text {
+      font-size: 67%;
+    }
+
+    /* iframe borders */
+    iframe {
+      border: none;
+    }
+  </style>
+
+  <body>
+
+    <div class="reveal">
+      <div class="slides">
+
+        <section class="full-height" data-background-image="../media/bprp/dust_495pc_dark_magma_q60.jpg">
+          <h1 class="space-top">Dust Extinction with Gaia XP Spectra</h1>
+          <h3>Cosmic Dust 13, 北九州市 (Kitakyushu), 11 August 2023</h3>
+          <h3 class="space-top">Gregory M. Green, Xiangyu Zhang (张翔宇)</h3>
+          <p>(MPIA, Heidelberg)</p>
+          <div class="abs-bottom-right">
+            <img data-src="../media/logos/MPIA_horizontal.svg" class="half-width" style="filter:contrast(0.5) brightness(1.0);"></img>
+          </div>
+          <div class="abs-bottom-left">
+            <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="half-width" style="width:40%; filter:contrast(0.5) brightness(1.2);"></img>
+          </div>
+        </section>
+
+        <section>
+          <section>
+            <h3>Gaia BP/RP spectrophotometry</h3>
+            <h4 class="fragment">(&ldquo;XP spectra&rdquo;)</h4>
+            <div class="multicol vcenter fragment">
+              <div>
+                <ul>
+                  <li>$R \sim 50-160$</li>
+                  <li>slitless spectroscopy</li>
+                  <li>optical (330&mdash;1050 nm)</li>
+                  <li>220 million stars (in DR3)</li>
+                </ul>
+              </div>
+              <div class="wider">
+                <img data-src="../media/bprp/optical_path.png" class=""></img>
+              </div>
+            </div>
+            <!--
+            <p>Blue Photometer (BP): 330&mdash;680 nm</p>
+            <p>Red Photometer (RP): 640&mdash;1050 nm</p>
+            -->
+          </section>
+
+          <section data-transition="slide-in none-out">
+            <h3>Example XP spectra</h3>
+            <img data-src="../media/bprp/example_XP_spectrum_0.svg" class="r-stretch"></img>
+          </section>
+          <section data-transition="none-in none-out">
+            <h3>Example XP spectra</h3>
+            <img data-src="../media/bprp/example_XP_spectrum_1.svg" class="r-stretch"></img>
+          </section>
+          <section data-transition="none-in slide-out">
+            <h3>Example XP spectra</h3>
+            <img data-src="../media/bprp/example_XP_spectrum_2.svg" class="r-stretch"></img>
+          </section>
+
+          <section>
+            <h2>Comparison with LAMOST</h2>
+
+            <ul>
+              <li class="fragment">20&times; as many stars</li>
+              <li class="fragment">1/20<sup>th</sup> the resolution</li>
+              <li class="fragment">Flux-calibrated</li>
+              <li class="fragment">All-sky, uniform selection function</li>
+            </ul>
+          </section>
+
+          <section data-transition="slide-in none-out">
+            <h4>How to extract astrophysical information from these spectra?</h4>
+            <img class="r-stretch" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_0.svg"></img>
+          </section>
+          <section data-transition="none-in none-out">
+            <h4>How to extract astrophysical information from these spectra?</h4>
+            <img class="r-stretch" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_1.svg"></img>
+          </section>
+          <section data-transition="none-in slide-out">
+            <h4>How to extract astrophysical information from these spectra?</h4>
+            <img class="r-stretch" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_2.svg"></img>
+          </section>
+
+          <section>
+            <h4>How to extract astrophysical information from these spectra?</h4>
+            <div class="multicol">
+              <div>
+                <ol class="space-top">
+                  <li class="fragment">Cross-match with higher-resolution spectra.</li>
+                  <li class="fragment">Learn how to map from stellar type to BP/RP flux: $f_{\lambda} \left(\lambda\right)$.</li>
+                  <li class="fragment">Use this model to infer stellar types, distances, extinctions.</li>
+                </ol>
+                <p class="space-top fragment">(Include NIR photometry from 2MASS &amp; WISE)</p>
+              </div>
+              <div>
+                <img class="full-width" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_2.svg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h4>Gaia-LAMOST crossmatch</h4>
+            <div class="multicol vcenter buffer">
+              <div>
+                <img class="r-stretch" data-src="../media/bprp/crossmatch_kiel.svg" style="filter:invert(1) hue-rotate(180deg);"></img>
+              </div>
+              <div>
+              <div>
+                <p>2.6 million matches.</p>
+                <p class="fragment space-top">Bootstrap the 1% of BP/RP stars with LAMOST matches to determine types of the other 99%.</p>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Forward model</h3>
+            <p>
+              $$
+              \require{color}
+              \definecolor{star}{RGB}{200,140,90}
+              \definecolor{model}{RGB}{90,200,200}
+              f_{\lambda}\left(\lambda,{\color{star}\Theta,\varpi,E}\right)
+              =
+              {\color{gray}
+              \underbrace{
+                \color{white}
+                F_{\lambda}\left(\lambda,{\color{star}\Theta};{\color{model}W}\right)
+              }_{\mathrm{neural\ network}}
+              }
+              {\color{star}\varpi^2}
+              e^{-{\color{star}E} {\color{model}R}\left(\lambda\right)}
+              $$
+            </p>
+            <div class="multicol shrink-text">
+              <div style="color:rgb(200,140,90);">
+                <p>Stellar parameters:</p>
+                <ul>
+                  <li>$\Theta =$ type (LAMOST)</li>
+                  <li>$\varpi =$ parallax (Gaia)</li>
+                  <li>$E =$ extinction (Bayestar19)</li>
+                </ul>
+              </div>
+              <div style="color:rgb(90,200,200);">
+                <p>Model parameters:</p>
+                <ul>
+                  <li>$W =$ neural net weights</li>
+                  <li>$R =$ extinction curve</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="compact">
+            <h4>Model structure</h4>
+            <img data-src="../media/bprp/bprp_nn_structure_dark.svg"></img>
+          </section>
+
+          <section class="compact">
+            <h4>Model vs. Observations</h4>
+            <img class="r-stretch" data-src="../media/bprp/chi2_example.svg" style="filter:invert(1) hue-rotate(0deg) saturate(2.0) contrast(1.0);"></img>
+          </section>
+
+          <section class="compact">
+            <h4>Training the model</h4>
+            <div class="multicol vcenter">
+              <div class="wide">
+                <img data-src="../media/bprp/bprp_nn_structure_dark.svg"></img>
+              </div>
+              <div>
+                <img data-src="../media/bprp/chi2_example.svg" style="filter:invert(1) hue-rotate(0deg) saturate(2.0) contrast(1.0);"></img>
+              </div>
+            </div>
+            <div class="r-stack">
+              <p class="fragment current-visible">Update <span style="font-weight:bold; color:#ff5555;">model</span>, holding <span style="font-weight:bold; color:#6397caff;">stellar parameters</span> fixed.</p>
+              <p class="fragment current-visible">Update <span style="font-weight:bold; color:#6397caff;">stellar parameters</span>, holding <span style="font-weight:bold; color:#ff5555;">model</span> fixed.</p>
+              <p class="fragment current-visible">Converge on optimal <span style="font-weight:bold; color:#ff5555;">model</span> and <span style="font-weight:bold; color:#6397caff;">stellar parameters</span>.</p>
+              <p class="fragment">Implemented in auto-differentiable framework (<em>TensorFlow</em>). &rArr; gradient descent.</p>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Learned stellar models of Gaia XP spectra</h3>
+            <div class="r-stack">
+              <img class="full-width fragment fade-out" data-fragment-index=0 data-src="../media/bprp/model_flux_vs_dwarfs_nolines.svg"></img>
+              <img class="full-width fragment current-visible" data-fragment-index=0 data-src="../media/bprp/model_flux_vs_dwarfs_hlines.svg"></img>
+              <img class="full-width fragment" data-fragment-index=1 data-src="../media/bprp/model_flux_vs_dwarfs_metallines.svg"></img>
+            </div>
+            <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
+          </section>
+
+          <section>
+            <h3>Learned extinction curve</h3>
+            <img class="r-stretch" data-src="../media/bprp/ext_curve_vs_ccm_inv.svg"></img>
+            <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Gaia XP reddenings</h1>
+            <h3 class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z">Zhang, Green &amp; Rix (2023)</a></h3>
+          </section>
+
+          <section>
+            <h2>Clean distances and reddenings</h2>
+            <h3>(of ~100 million stars)</h3>
+          </section>
+
+          <section>
+            <h2>Data is available online</h2>
+            <p>Full dataset on <a href="https://zenodo.org/record/7692680">Zenodo</a>.</p>
+            <p class="fragment">Also available &ldquo;on TAP&rdquo; using ADQL.</p>
+            <div class="fragment">
+            <p>Query distances and reddenings of stars along one sightline:</p>
+            <pre><code class="language-sql" data-noescape data-trim data-line-numbers>
+              SELECT
+                source_id,
+                ra, dec,
+                ext, err_ext,
+                mod_parallax,
+                err_mod_parallax,
+                quality_flags,
+                teff_confidence,
+                chi2_opt
+              FROM xpparams.main
+              WHERE
+                    quality_flags < 16
+                AND teff_confidence > 0.5
+                AND chi2_opt/61 < 5
+                AND mod_parallax / err_mod_parallax > 8
+                AND distance(ra, dec, 86.3362, -1.5407) < 0.5
+            </code></pre>
+            <p>(Data available through the <a href="https://dc.zah.uni-heidelberg.de/tableinfo/xpparams.main">German Astrophysical Virtual Observatory</a>)</p>
+            </div>
+          </section>
+
+          <section>
+            <h2>Extinction along individual sightlines</h2>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/los_extinction_OrionB.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/los_extinction_MonocerosR2.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/los_extinction_Vela.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/los_extinction_Taurus.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/los_extinction_Perseus.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/los_extinction_Maddalena.svg"></img>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Extinction in 3D</h1>
+            <h2 class="fragment">All-sky results from binning and averaging stars</h2>
+          </section>
+
+          <section>
+            <video class="r-stretch" data-autoplay loop data-src="../media/simple_dust23/allsky_multires.mp4"></video>
+          </section>
+
+          <section>
+            <video class="r-stretch" data-autoplay loop data-src="../media/simple_dust23/allsky_multires_diff.mp4"></video>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/GalCen500pc.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/Ophiuchus.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/AquilaSouth.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/GalAntiCen2000pc.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/Orion.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/PerTaurCali.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/CepheusPolaris.svg"></img>
+          </section>
+
+          <section>
+            <div class="multicol">
+              <div class="wider">
+                <img class="full-width" data-src="../media/bprp/extinction_birdseye_bprp_zhang23_dark.svg"></img>
+              </div>
+              <div class="vertical-center">
+                <h3>Bird's-eye view of the Galactic plane</h3>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
+              </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Extinction curve variation</h1>
+          </section>
+
+          <section class="compact">
+            <h4>Flux residuals (model - observed)</h4>
+            <img class="r-stretch" data-src="../media/bprp/flux_residuals_map.svg"></img>
+          </section>
+
+          <section data-transition="slide-in none-out">
+            <h4>Update model: extinction curve variation</h4>
+            <img class="r-stretch" data-src="../media/bprp/bprp_nn_structure_dark.svg"></img>
+          </section>
+          <section data-transition="none-in slide-out">
+            <h4>Update model: extinction curve variation</h4>
+            <img class="r-stretch" data-src="../media/bprp/bprp_nn_structure_xi_dark.svg"></img>
+          </section>
+
+          <section>
+            <div class="multicol">
+              <div>
+                <h3>Old model</h3>
+                <p>
+                  $$
+                    \vec{A} = {\color{#6397caff}E} \, \exp\left(
+                      {\color{#ff5555} \ln\vec{R}}
+                    \right)
+                  $$
+                </p>
+              </div>
+              <div>
+                <h3>New model</h3>
+                <p>
+                  $$
+                    \vec{A} = {\color{#6397caff}E} \, \exp\left(
+                      {\color{#ff5555} \ln\vec{R}_0}
+                      + {\color{#6397caff}\xi}
+                        \,{\color{#ff5555} \Delta\ln\vec{R}}
+                    \right)
+                  $$
+                </p>
+              </div>
+            </div>
+            <p class="space-top fragment">
+            $\color{#6397caff}\xi$ plays the role of $R(V)$.
+            </p>
+            <p class="space-top">
+            Key:
+              $$
+              {\color{#6397caff} \mathrm{stellar\ parameters}} \\
+              {\color{#ff5555} \mathrm{model\ parameters}}
+              $$
+            </p>
+          </section>
+
+          <section>
+            <h3>Train the new model ...</h3>
+          </section>
+
+          <section>
+            <div class="r-stack">
+              <img class="full-width fragment fade-out" data-fragment-index=1 data-src="../media/xp_rv/extcurve_comp_zxy_G23.svg"></img>
+              <img class="full-width fragment current-visible" data-fragment-index=1 data-src="../media/xp_rv/extcurve_comp_zxy_F19.svg"></img>
+              <img class="full-width fragment current-visible" data-fragment-index=2 data-src="../media/xp_rv/extcurve_comp_zxy_F99.svg"></img>
+              <img class="full-width fragment" data-fragment-index=3 data-src="../media/xp_rv/extcurve_comp_zxy_CCM89.svg"></img>
+            </div>
+          </section>
+
+          <section>
+            <h3>Infer $\xi$ for every star ...</h3>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/xp_rv/RV_allsky.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/xp_rv/RV_Orion_A.svg"></img>
+          </section>
+          <section>
+            <img class="r-stretch" data-src="../media/xp_rv/RV_Taurus.svg"></img>
+          </section>
+          <section>
+            <img class="r-stretch" data-src="../media/xp_rv/RV_Pipe.svg"></img>
+          </section>
+          <section>
+            <img class="r-stretch" data-src="../media/xp_rv/RV_Perseus.svg"></img>
+          </section>
+          <section>
+            <img class="r-stretch" data-src="../media/xp_rv/RV_Ophiuchus.svg"></img>
+          </section>
+
+          <section>
+            <h3>Plenty of work to do to explain these variations.</h3>
+            <h3 class="space-top fragment">A few ideas:</h3>
+            <ul>
+              <li class="fragment">Interstellar radiation field</li>
+              <li class="fragment">Molecular gas</li>
+              <li class="fragment">Star-forming regions</li>
+              <li class="fragment">...</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section data-background-image="../media/bprp/dust_495pc_dark_magma_q60.jpg">
+            <h1>Summary</h1>
+            <h4 class="fragment space-top">~100 million exquisite stellar distances &amp; extinctions inferred from Gaia XP spectra.</h4>
+            <h4 class="fragment">Extinction curve variation - both large- and small-scale variations.</h4>
+            <h4 class="fragment">This is just the beginning: plenty of work to do to explore/explain variations in dust properties.</h4>
+          </section>
+        </section>
+
+      </div> <!--slides-->
+    </div> <!--reveal-->
+
+    <script src="../revealjs/dist/reveal.js"></script>
+    <script src="../revealjs/plugin/math/math.js"></script>
+    <script src="../revealjs/plugin/notes/notes.js"></script>
+    <script src="../revealjs/plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        history: true,
+        transition: 'linear',
+
+        math: {
+          // mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          TeX: {
+            Macros: {
+              R: '\\mathbb{R}',
+              set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+            }
+          }
+        },
+
+        pdfMaxPagesPerSlide: 1,
+
+        plugins: [ RevealMath, RevealNotes, RevealHighlight ]
+      });
+    </script>
+
+    <!-- jQuery -->
+    <script src="../js/jquery-3.6.1.min.js"></script>
+    <!-- d3 -->
+    <script src="../js/d3.min.js" charset="utf-8"></script>
+    <!-- Custom scripts go here -->
+
+  </body>
+</html>
