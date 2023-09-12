@@ -1,0 +1,1043 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Distances in Astronomy</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="../icon.ico">
+
+    <link rel="stylesheet" href="../revealjs/dist/reveal.css">
+    <link rel="stylesheet" href="../revealjs/dist/theme/night.css" id="theme">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../revealjs/plugin/highlight/monokai.css" id="highlight-theme">
+
+    <!-- Custom CSS files go here -->
+  </head>
+
+  <style>
+    /* Override theme variables */
+    :root {
+      --r-background-color: #000;
+      --r-main-font-size: 16pt;
+    }
+
+    /* Stroke text */
+    .stroke-text-dark {
+      text-stroke: 1px black;
+      -webkit-text-stroke: 1px black;
+      paint-order: stroke fill;
+    }
+    .stroke-text-light {
+      text-stroke: 1px white rgba(255,255,255,0.3);
+      -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+      paint-order: stroke fill;
+    }
+
+    /* Translation in parentheses */
+    .translation {
+      color: #888;
+    }
+
+    /* Attribution text */
+    p.attribution, span.attribution {
+      font-size: 70%;
+      color: #aaa;
+      margin-top: 0;
+      /*margin: calc(0.5 * var(--r-block-margin)) 0;*/
+    }
+    p.attribution a, span.attribution a {
+      color: #ddf;
+    }
+
+    /* Compact */
+    .compact * {
+      margin: calc(0.3 * var(--r-block-margin)) 0 !important;
+    }
+
+    .compact-p p {
+      margin: calc(0.3 * var(--r-block-margin)) 0 !important;
+    }
+
+    .compact img {
+      max-width: 100%;
+    }
+
+    /* Ultra-compact */
+    .ultracompact * {
+      margin: 0 0 !important;
+    }
+
+    .ultracompact-p p {
+      margin: 0 0 !important;
+    }
+
+    .ultracompact img {
+      max-width: 100%;
+    }
+
+    /* Footer (bottom of slide)
+       .footer only works if the slide is .full-height */
+    section.full-height {
+      height: 100%;
+    }
+
+    div.footer {
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      text-align: center;
+    }
+
+    div.abs-bottom-right {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+    }
+    div.abs-bottom-right * {
+      float: right;
+    }
+
+    div.abs-bottom-left {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+    }
+    div.abs-bottom-left > * {
+      float: left;
+    }
+
+    /* .abs-vcenter only works if the slide is .full-height.
+       Use in slides that have .footer, to center rest of content.
+     */
+    div.abs-vcenter {
+      position: absolute;
+      top: 50%;
+      margin-top: -25%;
+    }
+
+    /* Vertically center content in container */
+    .vertical-center {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-direction: column;
+    }
+
+    /* Slide-specific vertical centering override */
+    .reveal .slides section[data-vertical-align-top]{
+      top: 0 !important;
+    }
+
+    /* Invert colors - useful for adapting graphics for dark slides. */
+    img.invert-colors, video.invert-colors {
+      filter: invert(1);
+    }
+
+    /* Image width */
+    img.half-width, video.half-width {
+      max-width: 50%;
+    }
+    img.limit-width, video.limit-width {
+      max-width: 70%;
+    }
+    img.full-width, div.full-width {
+      width: 100%;
+    }
+
+    /* Item placement in r-stack environment */
+    .reveal .r-stack .align-top {
+      margin: initial;
+    }
+
+    /* Basic slide layouts */
+    .multicol {
+      display: flex;
+      flex-direction: row;
+    }
+    .multicol.vcenter {
+      align-items: center;
+    }
+    .multicol > div {
+      flex-basis: 50%;
+      margin-left: calc(0.5 * var(--r-block-margin));
+      margin-right: calc(0.5 * var(--r-block-margin));
+    }
+    .multicol > div.wide {
+      flex-basis: 67%;
+    }
+    .multicol > div.wider {
+      flex-basis: 100%;
+    }
+    .multicol > div.widest {
+      flex-basis: 120%;
+    }
+
+    .multirow {
+      display: flex;
+      flex-direction: column;
+    }
+    .multirow.vcenter {
+      align-items: center;
+    }
+    .multirow > div {
+      flex-basis: 50%;
+      margin-top: calc(0.5 * var(--r-block-margin));
+      margin-bottom: calc(0.5 * var(--r-block-margin));
+    }
+    .multirow > div.tall {
+      flex-basis: 80%;
+    }
+    .multirow > div.taller {
+      flex-basis: 120%;
+    }
+    .multirow > div.tallest {
+      flex-basis: 200%;
+    }
+
+    /* Margins */
+    .space-top {
+      margin-top: calc(3 * var(--r-block-margin)) !important;
+    }
+    .more-space-top {
+      margin-top: calc(12 * var(--r-block-margin)) !important;
+    }
+
+    /* Text alignment */
+    .align-left {
+      text-align: left;
+    }
+
+    /* Text size */
+    .shrink-text {
+      font-size: 67%;
+    }
+
+    /* iframe borders */
+    iframe {
+      border: none;
+    }
+
+    .reveal .slides section .fragment.moveaway {
+      opacity: 1;
+      visibility: inherit;
+      will-change: transform opacity;
+      transition: all 1.0s ease;
+    }
+    .reveal .slides section .fragment.moveaway.visible {
+      opacity: 0.3;
+      transform: scale(0.3);
+    }
+
+    /* Special case: summary slide */
+    .summary-slide > div {
+      height: 25%;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      border-style: solid;
+      border-color: #222;
+      border-width: medium;
+      box-sizing: border-box;
+    }
+
+    .summary-slide > div > div > img,
+    .summary-slide > div > div > video
+    {
+      height: 100%;
+      max-height: 100%;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .summary-slide > div > div {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-direction: column;
+      flex-wrap: wrap;
+    }
+
+    .summary-slide > div > div > img,
+    .summary-slide > div > div > video
+    {
+      height: fit-content;
+      width: fit-content;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  </style>
+
+  <body>
+
+    <div class="reveal">
+      <div class="slides">
+
+        <section class="full-height" data-background-image="../media/decaps/DECam-silhouette-lg.jpg">
+          <h1 class="space-top">Distances in Astronomy</h1>
+          <h3>SCIE, 深圳 (Shēnzhèn), 6 September 2023</h3>
+          <h3 class="more-space-top">Gregory M. Green</h3>
+          <p>(Max Planck Institute for Astronomy, Heidelberg, Germany)</p>
+          <div class="abs-bottom-right">
+            <img data-src="../media/logos/MPIA_horizontal.svg" class="half-width" style="filter:contrast(0.5) brightness(1.0);"></img>
+          </div>
+          <div class="abs-bottom-left">
+            <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="half-width" style="width:40%; filter:contrast(0.5) brightness(1.2);"></img>
+          </div>
+        </section>
+
+        <section>
+          <section data-background-video="../media/bayestar/Galactic_anticenter_in_Bayestar2019.mp4" data-background-video-loop="true" class="full-height">
+            <h3>Interstellar Dust in the Milky Way <span class="translation">(银河系尘埃)</span></h3>
+            <div class="footer">
+              <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...887...93G">(Green <em>et al</em> 2019)</a></p>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Distances</h2>
+            <div class="space-top">
+              <p class="fragment">&ldquo;The Sun is 150 million kilometers from Earth.&rdquo;</p>
+              <p class="fragment">&ldquo;The Andromeda galaxy <span class="translation">(仙女星系)</span> is 2.5 million light-years <span class="translation">(光年)</span> from Earth.&rdquo;</p>
+            </div>
+            <div class="space-top">
+              <h3 class="fragment">How do we know how far away anything is?</h3>
+            </div>
+            <aside class="notes">
+              <ul>
+                <li>When we say Andromeda is 2.5 Mly away, how do we know that?</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <div class="multicol">
+              <div class="widest compact">
+                <img data-src="../media/distances/voyager-positions-nature.jpg"></img>
+                <p class="attribution"><a href="https://www.nature.com/articles/497424a">(image credit: Nik Spencer, <em>Nature</em>)</a></p>
+              </div>
+              <div class="vertical-center">
+                <p class="fragment">The farthest human-made probe (Voyager 1): 0.002 light-years from Earth.</p>
+                <p class="fragment">Only 0.0000001% of the way to Andromeda!</p>
+              </div>
+            </div>
+          </section>
+
+          <!--
+          <section data-background="../media/distances/voyager-positions-nature.jpg" data-background-size="contain" class="full-height">
+            <div class="abs-bottom-left">
+              <p class="attribution"><a href="https://www.nature.com/articles/497424a">(image credit: Nik Spencer, <em>Nature</em>)</a></p>
+            </div>
+            <aside class="notes">
+              <ul>
+                <li>We've never traveled to Andromeda.</li>
+                <li>The farthest we've ever sent any probe is 146 AU = 0.002 ly = 20 light hours ~ 1e-9 distance to M31 (Voyager 1)</li>
+              </ul>
+            </aside>
+          </section>
+          -->
+        </section>
+
+        <section>
+          <section>
+            <h2>Size of the Earth</h2>
+          </section>
+
+          <section>
+            <h3>Eratosthenes Measures the Earth (~240 BC)</h3>
+            <div class="multicol r-stretch">
+              <div class="wider ultracompact">
+                <img style="height:90%;" data-src="../media/distances/Eratosthenes_portrait.jpg"></img>
+                <p class="attribution"><a href="https://commons.wikimedia.org/wiki/File:Eratosthenes.jpg"></a>(image credit: Wikimedia)</p>
+              </div>
+              <div class="multirow fragment">
+                <div class="compact">
+                  <p>No shadow at noon in Syene one day of the year.</p>
+                  <p class="fragment">Measure shadow length in Alexandria at same time.</p>
+                </div>
+                <div class="tallest compact">
+                  <img style="height:80%;" data-src="../media/distances/Eratosthenes_Egypt_map.svg"></img>
+                  <p class="attribution"><a href="https://commons.wikimedia.org/wiki/File:Eratosthenes_measure_of_Earth_circumference.svg"></a>(image credit: Wikimedia / cmglee, David Monniaux, jimht)</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h3>Eratosthenes Measures the Earth</h3>
+            <div class="multicol">
+              <div class="wider">
+                <img class="full-width" data-src="../media/distances/Eratosthenes_Measurement_of_Earth.svg"></img>
+                <p class="attribution"><a href="https://commons.wikimedia.org/wiki/File:Eratosthenes-Erdmessung.svg"></a>(image adapted from: Wikimedia / Mrmw)</p>
+              </div>
+              <div>
+                <p class="fragment">
+                  Calculate Earth's circumference:
+                  $$
+                    C = \frac{2\pi}{\gamma} \Delta G
+                  $$
+                </p>
+                <div class="fragment">
+                  <p>Eratosthenes' measurements:</p>
+                  <ul>
+                    <li>$\Delta G = 5000\,\mathrm{stadia}$</li>
+                    <li>$\gamma = 2\pi / 50$</li>
+                  </ul>
+                </div>
+                <p class="fragment">
+                  &rArr; Circumference = 250,000 stadia
+                </p>
+                <p class="fragment">How accurate was Eratosthenes' measurement?</p>
+                <p class="fragment">Maybe better than 1%, but we don't know how long a stadion was!</p>
+              </div>
+          </section>
+
+          <section>
+            <h3>How to measure distances on Earth accurately?</h3>
+            <img class="r-stretch" data-src="../media/distances/Eratosthenes_Egypt_map.svg"></img>
+            <p class="attribution"><a href="https://commons.wikimedia.org/wiki/File:Eratosthenes_measure_of_Earth_circumference.svg"></a>(image credit: Wikimedia / cmglee, David Monniaux, jimht)</p>
+            <aside class="notes">
+              <ul>
+                <li>The most difficult part of Eratosthenes' measurement was measuring the distance from Alexandria to Syene accurately.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h3>Measuring distances with Trigonometry <span class="translation">(三角学)</span></h3>
+            <div class="multicol">
+              <div>
+                <img class="full-width" data-src="../media/distances/Law_of_sines_(simple).svg" style="filter: hue-rotate(300deg) brightness(2.0);"></img>
+                <p class="attribution"><a href="https://commons.wikimedia.org/wiki/File:Law_of_sines_(simple).svg">(image credit: Wikimedia / Mliu92)</a></p>
+              </div>
+              <div class="vertical-center wide fragment" style="align-items:center;">
+                <div class="fragment">
+                  <h4>Law of Sines <span class="translation">(正弦定理)</span>:</h4>
+                  <p style="filter: hue-rotate(300deg) brightness(2.0);">
+                    $$
+                    \require{color}
+                      {\color{red}   \frac{\sin{\alpha}}{a}}
+                    = {\color{green} \frac{\sin{\beta}}{b}}
+                    = {\color{blue}  \frac{\sin{\gamma}}{c}}
+                    $$
+                  </p>
+                </div>
+                <ol class="space-top" style="filter: hue-rotate(300deg) brightness(2.0);">
+                  <li class="fragment">Measure one side (<span style="color:red;">$a$</span>).</li>
+                  <li class="fragment">Measure the angles (<span style="color:red;">$\alpha$</span>, <span style="color:green;">$\beta$</span>, <span style="color:blue;">$\gamma$</span>).</li>
+                  <li class="fragment">Calculate the other sides (<span style="color:green;">$b$</span>, <span style="color:blue;">$c$</span>).</li>
+                </ol>
+              </div>
+            </div>
+          </section>
+          
+          <section>
+            <div class="r-stretch">
+              <div class="multicol" style="height:100%;">
+                <div class="ultracompact" style="height:100%;">
+                  <img height="height:90%;" data-src="../media/distances/RamsdenRS_theodolite_of_1787.jpg"></img>
+                  <p class="attribution"><a href="https://en.wikipedia.org/wiki/File:RamsdenRS_theodolite_of_1787.jpg"></a>(image credit: William Row / Wikimedia)</p>
+                </div>
+                <div class="vertical-center">
+                  <div class="compact">
+                    <h3>Anglo-French Survey of 1784</h3>
+                    <p>London to Paris</p>
+                  </div>
+                  <p class="fragment space-top">Instrument with swiveling telescope to measure angles precisely: &ldquo;theodolite&rdquo;</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <section data-background="../media/distances/Anglo-French_start_of_survey_inverted.jpg" class="full-height" data-transition="slide-in none-out">
+            <div class="abs-bottom-left">
+              <p class="attribution"><a href="https://commons.wikimedia.org/wiki/File:Anglo-French_start_of_survey.jpg">(image credit: Wikimedia / William Roy)</a></p>
+            </div>
+          </section>
+
+          <section data-background="../media/distances/Anglo-French_start_of_survey_baseline.jpg" class="full-height" data-transition="none-in none-out">
+            <div class="abs-bottom-left">
+              <p class="attribution"><a href="https://commons.wikimedia.org/wiki/File:Anglo-French_start_of_survey.jpg">(image credit: Wikimedia / William Roy)</a></p>
+            </div>
+            <aside class="notes">
+              Measure one baseline very carefully first.
+            </aside>
+          </section>
+
+          <section data-background="../media/distances/Anglo-French_start_of_survey_triangle1.jpg" class="full-height" data-transition="none-in none-out">
+            <div class="abs-bottom-left">
+              <p class="attribution"><a href="https://commons.wikimedia.org/wiki/File:Anglo-French_start_of_survey.jpg">(image credit: Wikimedia / William Roy)</a></p>
+            </div>
+            <aside class="notes">
+              Measure angles of first triangle &rarr; obtain two more distances.
+            </aside>
+          </section>
+
+          <section data-background="../media/distances/Anglo-French_start_of_survey_triangle2.jpg" class="full-height" data-transition="none-in slide-out">
+            <div class="abs-bottom-left">
+              <p class="attribution"><a href="https://commons.wikimedia.org/wiki/File:Anglo-French_start_of_survey.jpg">(image credit: Wikimedia / William Roy)</a></p>
+            </div>
+            <aside class="notes">
+              Measure angles of next triangle &rarr; obtain more distances.
+            </aside>
+          </section>
+
+          <section data-background="../media/distances/Anglo-French_survey_of_1784-1790_Proposed_mesh_inverted.jpg" data-background-size="contain" class="full-height" data-transition="slide-in slide-out">
+            <div class="abs-bottom-left">
+              <p class="attribution"><a href="https://commons.wikimedia.org/wiki/File:Anglo-French_survey_of_1784-1790_Proposed_mesh.jpg">(image credit: Wikimedia / William Roy)</a></p>
+            </div>
+            <aside class="notes">
+              Keep going and going &rarr; an entire mesh of distances, based on the original baseline.
+            </aside>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Size of the Solar System <span class="translation">(太阳系)</span></h2>
+          </section>
+
+          <section>
+            <h3>Kepler and the Solar System <span class="translation">(太阳系)</span></h3>
+            <img data-src="../media/distances/Solar_system_1920px.jpg" class="r-stretch">
+            <p class="attribution">(courtesy of Wikimedia / Datumizer)</p>
+            <aside class="notes">
+              <ul>
+                <li>Kepler figured out the orbits of the planets.</li>
+                <li>Overall scale of the Solar system undetermined.</li>
+                <li>Can scale all the orbits without changing angles between objects on sky.</li>
+                <li>How far is an AU, in terms of distances we can measure on Earth?</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h3>Kepler and the Solar System <span class="translation">(太阳系)</span></h3>
+            <img data-src="../media/distances/Solar_system_scale_full.jpg" class="r-stretch"></img>
+            <p class="attribution"><a href="https://commons.wikimedia.org/wiki/File:Solar-system.png">(image credit: Wikimedia / Dave Jarvis)</a></p>
+            <div class="space-top">
+              <p class="fragment"><em>Relative</em> distances of planets determined. <span class="fragment">Venus is 72% as far from the Sun as Earth is.</span></p>
+              <p class="fragment"><em>Absolute</em> distances undetermined. <span class="fragment">How many kilometers is Venus from the Sun?</span></p>
+            </div>
+            <aside class="notes">
+              <ul>
+                <li>Kepler figured out the orbits of the planets.</li>
+                <li>Overall scale of the Solar system undetermined.</li>
+                <li>Can scale all the orbits without changing angles between objects on sky.</li>
+                <li>How far is an AU, in terms of distances we can measure on Earth?</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="compact">
+            <h3>Earth-Sun Distance: The Transit of Venus <span class="translation">(金星掠日)</span></h3>
+            <img data-src="../media/distances/Venus_transit_SDO.jpg" class="r-stretch"></img>
+            <p class="attribution">(courtesy of NASA / Solar Dynamics Observatory)</p>
+            <aside class="notes">
+              <ul>
+                <li>Venus travels across face of Sun over the course of a few hours.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="compact">
+            <h3>Earth-Sun Distance: The Transit of Venus</h3>
+            <img data-src="../media/distances/Venus_transit_parallax.svg" class="r-stretch"></img>
+            <p class="attribution">(courtesy of Wikimedia / Vermeer, Duckysmokton, Ilia)</p>
+            <aside class="notes">
+              <ul>
+                <li>Scottish mathematician/astronomer James Gregory proposed using transit of Venus to measure the Astronomical Unit.</li>
+                <li>Parallax measurement. Projection of Venus onto the Sun from two points on Earth.</li>
+                <li>Link an angle to a distance we can measure on Earth.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="compact">
+            <h3>Earth-Sun Distance: The Transit of Venus</h3>
+            <img data-src="../media/distances/Venus_transit_paths_parallax.jpg" class="r-stretch"></img>
+            <p class="attribution">(courtesy of NASA / Solar Dynamics Observatory)</p>
+            <aside class="notes">
+              <ul>
+                <li>Imagine looking at Venus in front of Sun, and moving your head up and down.</li>
+                <li>In reality, the difference in angles is very small, so difficult to detect.</li>
+                <li>But the time of transit changes as you move the path up or down along the Sun.</li>
+                <li>The difference is a few minutes, which is measurable.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="compact">
+            <h3>Earth-Sun Distance: The Transit of Venus</h3>
+            <img data-src="../media/distances/Cook_Tahiti.jpg" class="r-stretch"></img>
+            <p class="attribution">(map from Wikimedia / AlexiusHoratius)</p>
+            <aside class="notes">
+              <ul>
+                <li>Edmund Halley proposed observing transit from many places on Earth.</li>
+                <li>One pair of transits approximately every century.</li>
+                <li>1761 and 1769.</li>
+                <li>People traveled all over the world to observe the transit. Captain Cook was sent to Tahiti in 1769.</li>
+                <li>The astronomical unit was measured to be 153 million km - better than 1% accuracy!</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Earth-Sun Distance</h2>
+            <h3 class="space-top">1 Astronomical Unit (AU, <span class="translation">天文单位</span>) ≃ 149,597,871 kilometers<h3>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Distances to the Stars</h2>
+            <img data-src="../media/distances/nearest_stars.png" class="r-stretch"></img>
+            <p class="attribution"><a href="https://photojournal.jpl.nasa.gov/catalog/PIA18003">(image credit: NASA/Penn State University)</a></p>
+          </section>
+
+          <section class="compact">
+            <h3>Distances to Stars: Stellar Parallax <span class="translation">(恒星视差)</span></h3>
+            <div class="multicol r-stretch">
+              <div class="ultracompact">
+                <img data-src="../media/distances/Stellar_parallax_diagram.svg" style="height:95%;">
+                <p class="attribution" style="margin-top">(image credit: Wikimedia / Srain)</p>
+              </div>
+              <div class="vertical-center">
+                <p class="fragment">1 parsec (pc, <span class="translation">秒差距</span>) ≃ 206264 AU</p>
+                <p class="fragment">≃ 3.086×10<sup>13</sup> km</p>
+                <p class="fragment">≃ 3.26 light years</p>
+                <p class="fragment space-top">Astronomers like to use parsecs.</p>
+              </div>
+            </div>
+            <aside class="notes">
+              <ul>
+                <li>As we orbit the Sun, our vantage point moves.</li>
+                <li>Stars appear to go around loops on sky.</li>
+                <li>The closer the star, the larger the loop.</li>
+                <li>Parallax gives us a distance, tied to the Earth-Sun distance. This is tied to observations of the transit of Venus, which is tied to distances measured on the Earth, and ultimately to the length of some king's foot! A complete chain of measurements.</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-background-video="../media/gaia/esa_parallax.mp4" data-background-video-loop="true" class="full-height">
+            <div class="footer">
+              <p class="attribution"><a href="https://sci.esa.int/s/A1Yp2qA">(video credit: ESA/Gaia/DPAC)</a></p>
+            </div>
+          </section>
+
+          <section>
+            <div class="multicol">
+              <div>
+                <img data-src="../media/distances/friedrich_bessel_stamp.jpg"></img>
+                <p class="attribution"><a href="https://blog.mpifr-bonn.mpg.de/karlmenten/?p=1821">(image credit: BMF / Hermann Schwahn / Johann Eduard Wolff)</a></p>
+              </div>
+              <div class="vertical-center">
+                <h3>First published parallax measurement (1838)</h3>
+                <p>61 Cygni: 0.314 arcsec</p>
+                <p class="fragment">
+                  $$
+                  \mathrm{distance} = \frac{1\,\mathrm{parsec}}{\mathrm{parallax} / \mathrm{arcsec}} = 3.2\,\mathrm{parsec}
+                  $$
+                </p>
+                <p class="fragment">(correct value: 0.286 arcsec, 3.5 parsec)</p>
+              </div>
+            </div>
+            <aside class="notes">
+              <ul>
+                <li>Three different astronomers all measured parallaxes around the same time: Friedrich Bessel, Wilhelm Struve and Thomas Henderson.</li>
+                <li>Bessel published first. This happens often in science.</li>
+                <li>Required many very careful measurements of apparent separations between stars over the course of years.</li>
+                <li>Bessel's measurement was accurate to ~10%. Pretty good!</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section data-background-video="../media/gaia/gaia_orbit.webm" data-background-video-loop="true" class="full-height">
+            <h3>Gaia</h3>
+            <div class="footer">
+              <p class="attribution"><a href="https://sci.esa.int/s/8kqENMw">(video credit: ESA - C. Carreau/ATG medialab)</a></p>
+            </div>
+          </section>
+
+          <section data-background-video="../media/gaia/gaia_camera_500kbps.webm" data-background-video-loop="true" class="full-height">
+            <h3>Gaia</h3>
+            <div class="footer">
+              <p class="attribution"><a href="https://sci.esa.int/s/AqqX6zA">(video credit: ESA - C. Carreau)</a></p>
+            </div>
+          </section>
+
+          <section class="compact">
+            <h3>Accuracy over time</h3>
+            <img data-src="../media/distances/astrometric_accuracy_history.png" class="r-stretch"></img>
+            <p class="attribution"><a href="https://sci.esa.int/s/ABq2J28">(image credit: ESA)</a></p>
+          </section>
+
+          <section class="compact">
+            <h3>Gaia's range</h3>
+            <img data-src="../media/gaia/milky_way_gaia_range.jpg" class="r-stretch"></img>
+            <p class="attribution"><a href="https://www.nasa.gov/feature/clumpy-recycled-gas-from-stars-surrounds-milky-way">(image credit: NASA/JPL-Caltech/R. Hurt)</a></p>
+          </section>
+        </section>
+
+        <section>
+          <section class="compact">
+            <h3>What if parallax is too small to measure?</h3>
+            <div class="multicol">
+              <div class="r-stretch">
+                <div class="fragment">
+                  <img data-src="../media/distances/HRDiagram.png" style="height:90%;"></img>
+                  <p class="attribution"><a href="">(image credit: Wikimedia / Richard Powell)</a></p>
+                </div>
+              </div>
+              <div class="vertical-center">
+                <p class="fragment">Using our knowledge of the distances to stars, we can learn about their properties.</p>
+                <p class="fragment space-top">Herzsprung-Russell Diagram: stellar&nbsp;temperature&nbsp;<span class="translation">(温度)</span> vs. luminosity&nbsp;<span class="translation">(光度)</span></p>
+                <p class="fragment space-top">Types of stars: main-sequence stars, giants, white dwarfs, ...</p>
+              </div>
+            </div>
+            <aside class="notes">
+              <ul>
+                <li>What about when stars are so far away that we can't measure parallax?</li>
+                <li>Can find patterns in properties of nearby stars with parallax distances.<li>
+                <li>Use these properties to determine distances of more distant stars.<li>
+                <li>Surface temperature vs. Luminosity: Hertzsprung-Russell Diagram.<li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="compact">
+            <h3>Cepheid Variable Stars <span class="translation">(变亮星)</span>: 𝜷 Doradus</h3>
+            <img data-src="../media/distances/cepheid_betador.svg" class="r-stretch"></img>
+            <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2021ApJS..253...11P/abstract">(data: Plachy <em>et al</em> 2021)</a></p>
+          </section>
+
+          <section>
+            <h3>Period-Luminosity Relation <span class="translation">(周期亮度比例)</span></h3>
+            <div class="multicol">
+              <div class="r-stretch">
+                <img data-src="../media/distances/Cepheid_PL_Shapley_full.png" style="height:95%;"></img>
+                <p class="attribution"><a href="https://www.jstor.org/stable/3143269">(figure: Shapley 1949)</a></p>
+              </div>
+              <div class="vertical-center">
+                <div class="compact">
+                  <p class="fragment">Brighter stars have longer periods.</p>
+                  <p class="fragment">&rArr; Can measure distance from period and apparent brightness of Cepheid.</p>
+                </div>
+                <div class="fragment compact space-top">
+                  <p>Discovered by Henrietta Leavitt in 1912:</p>
+                  <img data-src="../media/distances/Leavitt_henrietta_b1.jpg"></img>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section data-transition="slide-in fade-out">
+            <h3>&ldquo;Standard Candle&rdquo; <span class="translation">(标准烛光)</span></h3>
+            <div class="multicol">
+              <div class="vertical-center">
+                <p data-fragment-index=0 class="fragment">
+                  $$
+                    \mathrm{apparent\ brightness} = \frac{\mathrm{luminosity}}{\mathrm{distance}^2}
+                  $$
+                </p>
+                <p data-fragment-index=2 class="fragment">
+                  $$
+                  \implies
+                  \mathrm{distance} = \sqrt{\frac{\mathrm{luminosity}}{\mathrm{apparent\ brightness}}}
+                  $$
+                </p>
+              </div>
+              <div>
+                <img data-fragment-index=1 class="fragment custom moveaway" style="width:30%;" data-src="../media/distances/candle.jpg"></img>
+                <p class="attribution"><a href="https://commons.wikimedia.org/wiki/File:Candle.jpg">(image based on Wikimedia / BGN-WMCO)</a></p>
+              </div>
+            </div>
+          </section>
+
+          <section data-transition="fade-in slide-out">
+            <h3>&ldquo;Standard Candle&rdquo; <span class="translation">(标准烛光)</span></h3>
+            <div class="multicol">
+              <div class="vertical-center">
+                <p>
+                  $$
+                    \mathrm{apparent\ brightness} = \frac{\mathrm{luminosity}}{\mathrm{distance}^2}
+                  $$
+                </p>
+                <p>
+                  $$
+                  \implies
+                  \mathrm{distance} = \sqrt{\frac{\mathrm{luminosity}}{\mathrm{apparent\ brightness}}}
+                  $$
+                </p>
+              </div>
+              <div>
+                <img class="fragment custom moveaway" style="width:60%;" data-src="../media/distances/cepheid_pulsation.gif"></img>
+                <p class="attribution"><a href="http://www.phys.ufl.edu/~buchler/ceph/anim.html">(image credit: J. Robert Buchler)</a></p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h3 class="compact">&ldquo;The Great Debate&rdquo; &mdash; How large is the Universe?</h3>
+            <div class="r-stack">
+              <img data-src="../media/distances/star_field.jpg" class="fragment current-visible limit-width"></img>
+              <img data-src="../media/distances/M33.jpg" class="fragment current-visible half-width"></img>
+              <img data-src="../media/distances/M88.jpg" class="fragment current-visible half-width"></img>
+              <img data-src="../media/distances/M101.jpg" class="fragment current-visible half-width"></img>
+              <img data-src="../media/distances/M104.jpg" class="fragment current-visible limit-width"></img>
+            </div>
+            <p class="attribution">(image credit: <a href="https://en.wikipedia.org/wiki/File:Cr399.jpg">1. Petr Novák</a>, <a href="https://commons.wikimedia.org/wiki/File:M33.jpg">2. NASA/JPL-Caltech</a>, <a href="https://commons.wikimedia.org/wiki/File:M88_Block.jpg">3. Adam Block</a>, <a href="https://commons.wikimedia.org/wiki/File:M101_hires_STScI-PRC2006-10a.jpg">4. ESA &amp; NASA</a>, <a href="https://commons.wikimedia.org/wiki/File:M104_ngc4594_sombrero_galaxy_hi-res.jpg">5. NASA/ESA and The Hubble Heritage Team, STScI/AURA</a>)
+          </section>
+
+          <section class="compact">
+            <img class="r-stretch" data-src="../media/distances/HV1_M31_zoom_in.jpg"></img>
+            <p class="attribution"><a href="https://esahubble.org/images/opo1115d/">(image credit: NASA, ESA, Z. Levay (STScI), the Hubble Heritage Team (STScI/AURA))</a></p>
+          </section>
+
+          <section>
+            <div class="multicol">
+              <div class="r-stretch">
+                <img data-src="../media/distances/HV1-anim-500.gif"></img>
+                <p class="attribution"><a href="https://www.aavso.org/cepheid-variable-m31v1-hubbles-first-cepheid">(image credit: NASA, ESA, and the Hubble Heritage Team, STScI/AURA)</a></p>
+              </div>
+              <div>
+                <h3>Cepheid in Andromeda</h3>
+                <div class="compact fragment">
+                  <p>Discovered by Edwin Hubble in 1923.</p>
+                  <img data-src="../media/distances/Edwin_Hubble_portrait.jpg" class="half-width"></img>
+                  <p class="attribution"><a href="https://commons.wikimedia.org/wiki/File:Studio_portrait_photograph_of_Edwin_Powell_Hubble.JPG">(image credit: Johan Hagemeyer / Wikimedia)</a></p>
+                </div>
+              </div>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/distances/HV1_light_curve_on_M31.jpg"></img>
+            <p class="attribution"><a href="https://esahubble.org/images/opo1115e/">(image credit: NASA, ESA and Z. Levay / STScI)</a></p>
+          </section>
+
+          <section>
+            <h3>The Local Group</h3>
+            <img data-src="../media/distances/Local_Group_cropped.jpg" class="r-stretch"></img>
+            <p class="attribution"><a href="https://supernova.eso.org/germany/exhibition/images/0106E_Local_Group/">(image credit: ESO/Andrew Z. Colvin/N. Bartmann)</a></p>
+          </section>
+
+        </section>
+
+        <section>
+          <section>
+            <h3>Distance ladder</h3>
+            <p class="fragment space-top">Measure short distance.</p>
+            <p class="fragment">Use that to measure larger distance.</p>
+            <p class="fragment">Use that to measure larger distance.</p>
+            <p class="fragment">...</p>
+          </section>
+
+          <section>
+            <div class="r-stretch summary-slide">
+              <!-- Earth -->
+              <div class="multicol fragment">
+                <div class="vertical-center">
+                  <h3>Earth</h3>
+                </div>
+                <div>
+                  <img data-src="../media/distances/Law_of_sines_(simple).svg" style="filter: hue-rotate(300deg) brightness(2.0);"></img>
+                </div>
+                <div>
+                  <img data-src="../media/distances/Anglo-French_start_of_survey_triangle2.jpg"></img>
+                </div>
+              </div>
+              <!-- Solar System -->
+              <div class="multicol fragment">
+                <div class="vertical-center">
+                  <h3>Solar System</h3>
+                </div>
+                <div>
+                  <img data-src="../media/distances/Venus_transit_paths_parallax.jpg"></img>
+                </div>
+                <div>
+                  <img data-src="../media/distances/Solar_system_scale_full.jpg"></img>
+                </div>
+              </div>
+              <!-- Stars -->
+              <div class="multicol fragment">
+                <div class="vertical-center">
+                  <h3>Stars / Milky Way</h3>
+                </div>
+                <div>
+                  <video loop data-autoplay src="../media/gaia/esa_parallax.mp4"></video>
+                </div>
+                <div>
+                  <img data-src="../media/gaia/milky_way_gaia_range.jpg"></img>
+                </div>
+              </div>
+              <!-- Galaxies -->
+              <div class="multicol fragment">
+                <div class="vertical-center">
+                  <h3>Galaxies</h3>
+                </div>
+                <div>
+                  <img data-src="../media/distances/cepheid_pulsation.gif"></img>
+                  <img data-src="../media/distances/cepheid_betador.svg"></img>
+                </div>
+                <div>
+                  <!--<img data-src="../media/distances/M101.jpg"></img>-->
+                  <img data-src="../media/distances/Local_Group_cropped_tight.jpg"></img>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section data-background-video="../media/bayestar/Galactic_anticenter_in_Bayestar2019.mp4" data-background-video-loop="true" class="full-height">
+            <h3>Mapping Dust in 3D in the Milky Way <span class="translation">(银河系尘埃3D结构)</span></h3>
+            <div class="footer">
+              <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...887...93G">(Green <em>et al</em> 2019)</a></p>
+            </div>
+          </section>
+
+          <section data-background-video="../media/decaps/dust_cloud_zoomin_postprocessed.webm" data-background-video-loop="true" class="full-height">
+            <h3 style="backdrop-filter: blur(5px); background: #0008;">Zooming in on Dust Cloud in Milky Way <span class="translation">(拉近银河系尘埃云)</span></h3>
+          </section>
+
+          <section id="grain-plot-slide" data-state="grain-plot-slide">
+            <h4>Dust grains <span class="translation">(尘埃)</span></h4>
+            <div style="display:none;">
+              <img data-src="../media/dust/interplanetary-grain.png" id="grain-img">
+              <img data-src="../media/misc/hubble-cutout.png" id="telescope-img">
+            </div>
+            <div class="r-stack">
+              <span id="grain-initialize" class="fragment"></span>
+              <span id="grain-absorbed" class="fragment current-visible">Absorption <span class="translation">(辐射吸收)</span></span>
+              <span id="grain-scattered" class="fragment current-visible">Scattering <span class="translation">(辐射散射)</span></span>
+              <span id="grain-transmitted" class="fragment current-visible">Transmitted <span class="translation">(透射)</span> &rarr; observable <span class="translation">(可测量)</span></span>
+              <span id="grain-fade-unseen" class="fragment current-visible">Absorbed &amp; scattered light &rarr; unseen</span>
+              <span id="grain-redden-star" class="fragment current-visible">&ldquo;Reddening&rdquo; of background objects</span>
+              <span id="grain-emit" class="fragment current-visible">Thermal radiation <span class="translation">(热辐射)</span></span>
+              <span id="grain-fade-emitted" class="fragment"></span>
+            </div>
+            <div id="grain-plot-container" style="aspect-ratio:2/1; width:90%; margin-left:5%;" class="space-top"></div>
+            <p class="attribution space-top">(dust grain image credit: D. Brownlee & E. Jessberger)</p>
+          </section>
+          
+          <section class="compact" data-transition="slide-in none-out">
+            <h3>Mapping dust along one sightline <span class="translation">(视线)</span></h3>
+            <img class="r-stretch" data-src="../media/bayestar/reddening_vs_distance_explanation_0.jpg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <h3>Mapping dust along one sightline <span class="translation">(视线)</span></h3>
+            <img class="r-stretch" data-src="../media/bayestar/reddening_vs_distance_explanation_1.jpg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <h3>Mapping dust along one sightline <span class="translation">(视线)</span></h3>
+            <img class="r-stretch" data-src="../media/bayestar/reddening_vs_distance_explanation_2.jpg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <h3>Mapping dust along one sightline <span class="translation">(视线)</span></h3>
+            <img class="r-stretch" data-src="../media/bayestar/reddening_vs_distance_explanation_3.jpg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <h3>Mapping dust along one sightline <span class="translation">(视线)</span></h3>
+            <img class="r-stretch" data-src="../media/bayestar/reddening_vs_distance_explanation_4.jpg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <h3>Mapping dust along one sightline <span class="translation">(视线)</span></h3>
+            <img class="r-stretch" data-src="../media/bayestar/reddening_vs_distance_explanation_5.jpg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <h3>Mapping dust along one sightline <span class="translation">(视线)</span></h3>
+            <img class="r-stretch" data-src="../media/bayestar/reddening_vs_distance_explanation_6.jpg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <h3>Mapping dust along one sightline <span class="translation">(视线)</span></h3>
+            <img class="r-stretch" data-src="../media/bayestar/reddening_vs_distance_explanation_7.jpg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <h3>Mapping dust along one sightline <span class="translation">(视线)</span></h3>
+            <img class="r-stretch" data-src="../media/bayestar/reddening_vs_distance_explanation_8.jpg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <h3>Mapping dust along one sightline <span class="translation">(视线)</span></h3>
+            <img class="r-stretch" data-src="../media/bayestar/reddening_vs_distance_explanation_9.jpg"></img>
+          </section>
+
+          <section>
+            <div class="multicol">
+              <div class="wider">
+                <img class="full-width" data-src="../media/bprp/extinction_birdseye_bprp_zhang23_dark.svg"></img>
+              </div>
+              <div class="vertical-center">
+                <h3>Bird's-eye view of the Galactic plane</h3>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
+              </div>
+          </section>
+
+          <section data-background-video="../media/bayestar/Galactic_anticenter_in_Bayestar2019.mp4" data-background-video-loop="true" class="full-height">
+            <h3>Interstellar Dust in the Milky Way <span class="translation">(银河系尘埃)</span></h3>
+            <div class="footer">
+              <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...887...93G">(Green <em>et al</em> 2019)</a></p>
+            </div>
+          </section>
+
+        </section>
+
+        <section>
+          <section data-background-image="../media/bprp/dust_495pc_dark_magma_q60.jpg">
+            <h1>Questions?</h1>
+          </section>
+        </section>
+
+      </div> <!--slides-->
+    </div> <!--reveal-->
+
+    <script src="../revealjs/dist/reveal.js"></script>
+    <script src="../revealjs/plugin/math/math.js"></script>
+    <script src="../revealjs/plugin/notes/notes.js"></script>
+    <script src="../revealjs/plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        history: true,
+        transition: 'linear',
+
+        math: {
+          // mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          TeX: {
+            Macros: {
+              R: '\\mathbb{R}',
+              set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+            }
+          }
+        },
+
+        pdfMaxPagesPerSlide: 1,
+
+        plugins: [ RevealMath, RevealNotes, RevealHighlight ]
+      });
+    </script>
+
+    <!-- jQuery -->
+    <script src="../js/jquery-3.6.1.min.js"></script>
+    <!-- d3 -->
+    <script src="../js/d3.v3.min.js" charset="utf-8"></script>
+    <!-- Custom scripts go here -->
+    <!-- Scripts to draw plots -->
+    <script src="js/grainplot.js"></script>
+
+  </body>
+</html>
