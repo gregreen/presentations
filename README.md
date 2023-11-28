@@ -12,6 +12,8 @@ Table of Contents
 * [Interstellar Institute 6 - 3D Dust with Deep Learning Tools](presentations/dust3d_orsay2023.html): Introduces high-quality distances & extinctions derived from Gaia BP/RP spectra, and presents a new method for mapping dust in 3D, which makes use of tools from Deep Learning.
 * [Shenzhen SCIE - Distances](presentations/distance_shenzhen2023.html): A public talk about how astronomical distances have been measured, from the Greeks to the Gaia space telescope.
 * [KIPAC@20 - Mapping Milky Way Dust](presentations/kipac_at_20.html): Mapping dust, modeling extinction-curve variation and determining R(V) for 220 million stars using Gaia BP/RP spectra.
+* [Heidelberg Surgery - Statistics](presentations/heidelberg_surgery_stats.html): A talk on statistics and the Milky Way for a statistics conference held at the Heidelberg University Clinic.
+* [ITA Star Formation Group - Deep Potential](presentations/ita_deep_potential_2023y11m.html): Deep potential - inferring the gravitational potential from a snapshot of stellar kinematics.
 
 Initial setup
 -------------
