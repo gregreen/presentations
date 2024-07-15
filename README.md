@@ -14,6 +14,7 @@ Table of Contents
 * [KIPAC@20 - Mapping Milky Way Dust](presentations/kipac_at_20.html): Mapping dust, modeling extinction-curve variation and determining R(V) for 220 million stars using Gaia BP/RP spectra.
 * [Heidelberg Surgery - Statistics](presentations/heidelberg_surgery_stats.html): A talk on statistics and the Milky Way for a statistics workshop held at the Heidelberg University Clinic.
 * [ITA Star Formation Group - Deep Potential](presentations/deep_potential_ita_2023y11m.html): Deep potential - inferring the gravitational potential from a snapshot of stellar kinematics.
+* [Ringberg Milky Way Methods - Deep Potential](presentations/deep_potential_ringberg_2024y07m.html): Deep potential - inferring the gravitational potential from a snapshot of stellar kinematics.
 
 Initial setup
 -------------
