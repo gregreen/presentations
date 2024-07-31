@@ -15,6 +15,7 @@ Table of Contents
 * [Heidelberg Surgery - Statistics](presentations/heidelberg_surgery_stats.html): A talk on statistics and the Milky Way for a statistics workshop held at the Heidelberg University Clinic.
 * [ITA Star Formation Group - Deep Potential](presentations/deep_potential_ita_2023y11m.html): Deep potential - inferring the gravitational potential from a snapshot of stellar kinematics.
 * [Ringberg Milky Way Methods - Deep Potential](presentations/deep_potential_ringberg_2024y07m.html): Deep potential - inferring the gravitational potential from a snapshot of stellar kinematics.
+* [Cosmic Dust 14 - R(V) in 3D](presentations/cosmic_dust_14.html): Mapping dust extinction curve variation in 3D.
 
 Initial setup
 -------------
