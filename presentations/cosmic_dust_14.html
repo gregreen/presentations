@@ -170,6 +170,9 @@
     .space-top {
       margin-top: calc(3 * var(--r-block-margin)) !important;
     }
+    .space-top-slight {
+      margin-top: calc(2 * var(--r-block-margin)) !important;
+    }
 
     /* Text alignment */
     .align-left {
@@ -211,8 +214,8 @@
 
         <section class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
           <h1 class="space-top">Mapping dust extinction curve variation in 3D</h1>
-r         <h3>Cosmic Dust 14, 名古屋市 (Nagoya), 9 August 2024</h3>
-          <div class="space-top compact">
+          <h3 class="space-top-slight">Cosmic Dust 14, 名古屋市 (Nagoya), 9 August 2024</h3>
+          <div class="space-top-slight compact">
             <h3>Gregory M. Green, Xiangyu Zhang (张翔宇)</h3>
             <p>(MPIA, Heidelberg)</p>
           </div>
@@ -793,8 +796,8 @@ r         <h3>Cosmic Dust 14, 名古屋市 (Nagoya), 9 August 2024</h3>
         </section>
 
         <section>
-          <section>
-            <h2>Patterns in the data</h2>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+            <h2 class="stroke-text-dark">Patterns in the data</h2>
           </section>
 
           <section data-auto-animate>
@@ -814,7 +817,7 @@ r         <h3>Cosmic Dust 14, 名古屋市 (Nagoya), 9 August 2024</h3>
                   <img data-fragment-index=2 class="full-width fragment current-visible" data-src="../media/xp_rv/Rv_vs_E_Taurus.svg"></img>
                   <img data-fragment-index=3 class="full-width fragment" data-src="../media/xp_rv/Rv_vs_E_rhoOph.svg"></img>
                 </div>
-                <p class="fragment" data-fragment-index=3>ρ Ophiuchus is an outlier.</p>
+                <p class="fragment" data-fragment-index=3>ρ Ophiuchus is different.</p>
               </div>
           </section>
 
@@ -864,6 +867,22 @@ r         <h3>Cosmic Dust 14, 名古屋市 (Nagoya), 9 August 2024</h3>
             <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2018MNRAS.478.2851M/abstract">McKinnon+ (2018)</a></p>
           </section>
 
+          <section data-auto-animate class="compact">
+            <h2>Dust-grain evolution</h2>
+            <div class="multicol vcenter">
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/galaxy_schematic_McKinnon_etal_2018.png"></img>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2018MNRAS.478.2851M/abstract">McKinnon+ (2018)</a></p>
+              </div>
+              <div>
+                <p>Grain-size distribution: $\frac{\mathrm{d}n}{\mathrm{d}a}$
+                  <span class="fragment" data-fragment-index=1>$\propto a^{-3.5}$</span>
+                  <span class="attribution fragment" data-fragment-index=1>(<a href="https://ui.adsabs.harvard.edu/abs/1977ApJ...217..425M/abstract">MRN 1977</a>).</span>
+                </p>
+              </div>
+            </div>
+          </section>
+
           <section data-auto-animate data-auto-animate-restart class="compact">
             <h4>Accretion and R(V)</h4>
             <video class="r-stretch" data-autoplay loop data-src="../media/dust/accretion.mp4"></video>
@@ -907,8 +926,8 @@ r         <h3>Cosmic Dust 14, 名古屋市 (Nagoya), 9 August 2024</h3>
               </div>
               <div>
                 <ul>
-                  <li class="fragment">Accretion lowers R(V) at intermediate densities.</li>
-                  <li class="fragment">Coagulation increases R(V) at high densities.</li>
+                  <li class="fragment">Accretion reduces R(V) at intermediate densities <span style="color:gray">(steeper exinction curve)</span>.</li>
+                  <li class="fragment">Coagulation increases R(V) at high densities <span style="color:gray">(flatter extinction curve)</span>.</li>
                 </ul>
               </div>
             </div>
@@ -1023,9 +1042,9 @@ r         <h3>Cosmic Dust 14, 名古屋市 (Nagoya), 9 August 2024</h3>
                 <video class="full-width" data-autoplay loop data-src="../media/dust/PAH_scaling_optical.mp4"></video>
               </div>
               <div>
-                <p>As PAH mass increases, optical extinction becomes steeper.</p>
-                <p class="fragment">&rArr; $R(V)$ decreases.</p>
-                <p class="fragment">Requires less mass to change $R(V)$ than accretion onto silicates.</p>
+                <p>As PAH mass increases, optical extinction becomes steeper <span style="color:gray;">(R(V) decreases)</span>.</p>
+                <p class="fragment">Requires less mass to change R(V) than accretion onto silicates.</p>
+                <p class="fragment">Importance of 2175 Å bump.</p>
               </div>
           </section>
         </section>
