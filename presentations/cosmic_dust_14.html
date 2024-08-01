@@ -423,6 +423,7 @@
                 </ul>
               </div>
             </div>
+            <p class="fragment space-top">Note: universal extinction curve: <span style="font-size:80%;">$\require{color} \definecolor{star}{RGB}{200,140,90} \definecolor{model}{RGB}{90,200,200} A\left(\lambda\right) = {\color{star}E}\,{\color{model}R\left(\lambda\right)}$</span>.</p>
           </section>
 
           <section class="compact">
@@ -471,15 +472,15 @@
             <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
           </section>
 
-          <section>
-            <h3>Learned extinction curve</h3>
-            <img class="r-stretch" data-src="../media/bprp/ext_curve_vs_ccm_inv.svg"></img>
+          <section class="compact">
+            <h3>Learned (universal) extinction curve</h3>
+            <img class="r-stretch" data-src="../media/bprp/ext_curve_vs_ccm_inv_zgr23_smalltext_annotated.svg"></img>
             <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
           </section>
         </section>
 
         <section>
-          <section>
+          <section data-background-image="../media/bprp/dust_495pc_dark_magma_q60.jpg">
             <h1>Gaia XP reddenings</h1>
             <h3 class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z">Zhang, Green &amp; Rix (2023)</a></h3>
           </section>
@@ -601,7 +602,7 @@
         </section>
 
         <section>
-          <section>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
             <h1>Extinction curve variation</h1>
             <h3 class="attribution"><a href="https://arxiv.org/abs/2407.14594">(Zhang &amp; Green 2024)</a></h3>
           </section>
@@ -618,7 +619,8 @@
                 <img class="" data-src="../media/bprp/flux_residuals_map.svg"></img>
               </div>
               <div>
-                <p>Shape of extinction curve $A\left(\lambda\right)$ can change:</p>
+                <p>Shape of extinction curve $A\left(\lambda\right)$ can change: <span style="font-size:70%;">$R(V) = A(V)/[A(B)-A(V)]$</span>.</p>
+                <!--
                 <p>
                   $$
                     R\left(V\right) \equiv \frac{
@@ -628,6 +630,8 @@
                     }
                   $$
                 </p>
+                -->
+                <img class="space-top full-width" data-src="../media/bprp/ext_curve_vs_ccm_inv_zgr23_smalltext_annotated.svg"></img>
               </div>
             </div>
           </section>
@@ -712,7 +716,7 @@
             <h3>Infer $\xi$ for every star ...</h3>
             <p class="fragment">Remove stars with bad $\chi^2/\mathrm{dof}$, low extinction, ...</p>
             <div class="fragment compact">
-              <p>~130 million R(V) measurements with XP (Zhang &amp; Green 2024)</p>
+              <p>~130 million R(V) measurements with XP (<span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green 2024</a></span>)</p>
               <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_ZG24.svg"></img>
             </div>
           </section>
