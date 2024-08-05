@@ -56,6 +56,9 @@
     p.attribution a, span.attribution a {
       color: #ddf;
     }
+    h1 span.attribution, h2 span.attribution, h3 span.attribution, h4 span.attribution {
+      font-size: 100%;
+    }
 
     /* Compact */
     .compact *:not(.MathJax_Display *, .MathJax *)
@@ -131,6 +134,7 @@
 
     /* Image width */
     img.half-width, video.half-width {
+      width: 50%;
       max-width: 50%;
     }
     img.limit-width, video.limit-width {
@@ -204,6 +208,15 @@
          1px -1px 0 #000,
         -1px  1px 0 #000,
          1px  1px 0 #000;
+    }
+
+    .star-color {
+      /*color: rgb(116,211,255);*/
+      color: #99ccff;
+    }
+    .model-color {
+      /*color: rgb(255,130,116);*/
+      color: #ff6767;
     }
   </style>
 
@@ -388,26 +401,35 @@
 
         <section>
           <section>
-            <h3>Forward model</h3>
-            <p>
+            <h3>Forward model of stellar spectrum</h3>
+            <span class="fragment" data-fragment-index=1></span>
+            <span class="fragment" data-fragment-index=2></span>
+            <span class="fragment" data-fragment-index=3></span>
+            <p style="font-size:150%;">
               $$
-              \require{color}
-              \definecolor{star}{RGB}{200,140,90}
-              \definecolor{model}{RGB}{90,200,200}
-              f_{\lambda}\left(\lambda,{\color{star}\Theta,\varpi,E}\right)
-              =
-              {\color{gray}
-              \underbrace{
-                \color{white}
-                F_{\lambda}\left(\lambda,{\color{star}\Theta};{\color{model}W}\right)
-              }_{\mathrm{neural\ network}}
-              }
-              {\color{star}\varpi^2}
-              e^{-{\color{star}E} {\color{model}R}\left(\lambda\right)}
+              f_{\lambda}\left(\lambda,\class{star-color}{\Theta,\varpi,E}\right)
+              \class{fragment}{\data{fragment-index=1}{
+                =
+                {\color{gray}
+                \underbrace{
+                  \color{white}
+                  \ 
+                  F_{\lambda}\left(\lambda,\class{star-color}{\Theta};\class{model-color}{W}\right)
+                }_{
+                  \mathrm{neural\ network}
+                }
+                }
+              }}
+              \class{fragment}{\data{fragment-index=2}{
+                \, \class{star-color}{\varpi^2}
+              }}
+              \class{fragment}{\data{fragment-index=3}{
+                \, e^{-\class{star-color}{E} \class{model-color}{R}\left(\lambda\right)}
+              }}
               $$
             </p>
-            <div class="multicol shrink-text">
-              <div style="color:rgb(200,140,90);">
+            <div class="multicol">
+              <div class="star-color fragment" data-fragment-index=0>
                 <p>Stellar parameters:</p>
                 <ul>
                   <li>$\Theta =$ type (LAMOST)</li>
@@ -415,15 +437,15 @@
                   <li>$E =$ extinction (Bayestar19)</li>
                 </ul>
               </div>
-              <div style="color:rgb(90,200,200);">
+              <div class="model-color fragment" data-fragment-index=1>
                 <p>Model parameters:</p>
                 <ul>
                   <li>$W =$ neural net weights</li>
-                  <li>$R =$ extinction curve</li>
+                  <li class="fragment" data-fragment-index=3>$R =$ extinction curve</li>
                 </ul>
               </div>
             </div>
-            <p class="fragment space-top">Note: universal extinction curve: <span style="font-size:80%;">$\require{color} \definecolor{star}{RGB}{200,140,90} \definecolor{model}{RGB}{90,200,200} A\left(\lambda\right) = {\color{star}E}\,{\color{model}R\left(\lambda\right)}$</span>.</p>
+            <p class="fragment space-top" data-fragment-index=5>Note: universal extinction curve: <span style="font-size:90%;">$A\left(\lambda\right) = \class{star-color}{E}\,\class{model-color}{R\left(\lambda\right)}$</span>.</p>
           </section>
 
           <section class="compact">
@@ -636,6 +658,22 @@
             </div>
           </section>
 
+          <section>
+            <h3>Forward model of stellar spectrum</h3>
+            <span class="fragment" data-fragment-index=0></span>
+            <p style="font-size:150%;">
+              $$
+              f_{\lambda}\left(\lambda,{\class{star-color}{\Theta,\varpi,E}}\right)
+              =
+              F_{\lambda}\left(\lambda,{\class{star-color}{\Theta}};{\class{model-color}{W}}\right)
+              \, {\class{star-color}\varpi^2}
+              \, e^{-{\class{star-color}{E}} {\class{model-color}{R}}\left(\lambda\class{fragment}{\data{fragment-index=0}{,\,{\class{star-color}{\xi}}}}\right)}
+              $$
+            </p>
+            <p><span class="star-color">Stellar parameters</span>, <span class="model-color"> model parameters</span></p>
+            <p class="fragment" data-fragment-index=1"><span style="color:rgb(200,140,90);">$\xi$</span> controls the shape of the extinction curve.</p>
+          </section>
+
           <section data-transition="slide-in none-out">
             <h4>Update model: extinction curve variation</h4>
             <img class="r-stretch" data-src="../media/bprp/bprp_nn_structure_dark.svg"></img>
@@ -651,39 +689,40 @@
                 <h3>Old model</h3>
                 <p>
                   $$
-                    \vec{A} = {\color{#6397caff}E} \, \exp\left(
-                      {\color{#ff5555} \ln\vec{R}}
+                    \vec{A} = \class{star-color}{E} \, \exp\left(
+                      \class{model-color}{\ln\vec{R}}
                     \right)
                   $$
                 </p>
-                <p class="fragment">Universal extinction curve: ${\color{#ff5555} \vec{R}}$</p>
+                <p class="fragment">Universal extinction curve: $\class{model-color}{\vec{R}}$</p>
               </div>
               <div class="fragment">
                 <h3>New model</h3>
                 <p>
                   $$
-                    \vec{A} = {\color{#6397caff}E} \, \exp\left(
-                      {\color{#ff5555} \ln\vec{R}_0}
-                      + {\color{#6397caff}\xi}
-                        \,{\color{#ff5555} \Delta\ln\vec{R}}
+                    \vec{A} = \class{star-color}{E} \, \exp\left(
+                        \class{\model-color}{\ln\vec{R}_0}
+                      + \class{star-color}{\xi}
+                      \,\class{model-color}{\Delta\ln\vec{R}}
                     \right)
                   $$
-                  <p class="fragment">Variation in extinction curve: ${\color{#ff5555} \Delta\ln\vec{R}}$</p>
-                  <p class="fragment">$\color{#6397caff}\xi$ plays the role of $R(V)$.</p>
+                  <p class="fragment">Variation in extinction curve: $\class{model-color}{\Delta\ln\vec{R}}$</p>
+                  <p class="fragment">$\class{star-color}{\xi}$ plays the role of $R(V)$.</p>
                 </p>
               </div>
             </div>
             <p class="space-top">
             Key:
               $$
-              {\color{#6397caff} \mathrm{stellar\ parameters}} \\
-              {\color{#ff5555} \mathrm{model\ parameters}}
+              \class{star-color}{\mathrm{stellar\ parameters}} \\
+              \class{model-color}{\mathrm{model\ parameters}}
               $$
             </p>
           </section>
 
           <section>
             <h3>Train the new model ...</h3>
+            <p style="color:gray;">(on the same data)</p>
           </section>
 
           <!--
@@ -726,23 +765,47 @@
           </section>
 
           <section class="compact" data-transition="slide-in none-out">
-            <p>100s of R(V) measurements with O/B-stars (Gordon+23, Valencic+04)</p>
+            <h4>100s of R(V) measurements with O/B-stars (Gordon+23, Valencic+04)</h4>
             <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_G23_V04.svg"></img>
           </section>
 
           <section class="compact" data-transition="none-in none-out">
-            <p>~37,000 R(V) measurements with APOGEE/PS1 (Schlafly+16)</p>
+            <h4>~37,000 R(V) measurements with APOGEE/PS1 <span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2016ApJ...821...78S/abstract">(Schlafly+2016)</a></span></h4>
             <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_S16.svg"></img>
           </section>
 
           <section class="compact" data-transition="none-in none-out">
-            <p>~1 million R(V) measurements with LAMOST/XP (Zhang+23)</p>
+            <h4>~1 million R(V) measurements with LAMOST/XP <span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023ApJS..269....6Z/abstract">(Zhang+2023)</a></span></h4>
             <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_ZYC23.svg"></img>
           </section>
 
           <section class="compact" data-transition="none-in slide-out">
-            <p>~130 million R(V) measurements with XP (Zhang &amp; Green 2024)</p>
+            <h4>~130 million R(V) measurements with XP (Zhang &amp; Green 2024)</h4>
             <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_ZG24.svg"></img>
+          </section>
+
+          <section data-transition="none-out slide-in">
+            <div class="multicol vcenter">
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/s16_comparison_xi_x_Egt0p1.svg"></img>
+              </div>
+              <div class="wide">
+                <h3>Comparison with <span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2016ApJ...821...78S/abstract">Schlafly+ (2016)</a></span></h3>
+                <p>One-to-one relation between our extinction-curve measures</p>
+              </div>
+            </div>
+          </section>
+
+          <section data-transition="none-in slide-out">
+            <div class="multicol vcenter">
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/xp_zry_lamost_hist2d_Egt0p1.svg"></img>
+              </div>
+              <div class="wide">
+                <h3>Comparison with <span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023ApJS..269....6Z/abstract">Zhang+ (2023)</a></span></h3>
+                <p>One-to-one relation between our extinction-curve measures</p>
+              </div>
+            </div>
           </section>
 
           <section>
@@ -750,22 +813,22 @@
           </section>
 
           <section class="compact" data-transition="slide-in none-out">
-            <p>100s of R(V) measurements with O/B-stars (Gordon+23, Valencic+04)</p>
+            <h4>100s of R(V) measurements with O/B-stars (Gordon+23, Valencic+04)</h4>
             <img class="r-stretch" data-src="../media/xp_rv/birdseyeplot_Rv_G23_V04.svg"></img>
           </section>
 
           <section class="compact" data-transition="none-in none-out">
-            <p>~37,000 R(V) measurements with APOGEE/PS1 (Schlafly+16)</p>
+            <h4>~37,000 R(V) measurements with APOGEE/PS1 <span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2016ApJ...821...78S/abstract">(Schlafly+2016)</a></span></h4>
             <img class="r-stretch" data-src="../media/xp_rv/birdseyeplot_Rv_S16.svg"></img>
           </section>
 
           <section class="compact" data-transition="none-in none-out">
-            <p>~1 million R(V) measurements with LAMOST/XP (Zhang+23)</p>
+            <h4>~1 million R(V) measurements with LAMOST/XP <span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023ApJS..269....6Z/abstract">(Zhang+2023)</a></span></h4>
             <img class="r-stretch" data-src="../media/xp_rv/birdseyeplot_Rv_ZYC23.svg"></img>
           </section>
 
           <section class="compact" data-transition="none-in slide-out">
-            <p>~130 million R(V) measurements with XP (Zhang &amp; Green 2024)</p>
+            <h4>~130 million R(V) measurements with XP (Zhang &amp; Green 2024)</h4>
             <img class="r-stretch" data-src="../media/xp_rv/birdseyeplot_Rv_ZG24.svg"></img>
           </section>
 
@@ -1081,6 +1144,7 @@
         history: true,
         transition: 'linear',
 
+        /*
         math: {
           // mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
           config: 'TeX-AMS_HTML-full',
@@ -1091,10 +1155,18 @@
             }
           }
         },
+        */
+        mathjax3: {
+          mathjax: "https://cdn.jsdelivr.net/npm/mathjax@4.0.0-alpha.1/es5/tex-mml-chtml.js",
+          loader: {load: ['[tex]/html']},
+          tex: {packages: {'[+]': ['html']}},
+        },
+
+        sortFragmentsOnSync: false,
 
         pdfMaxPagesPerSlide: 1,
 
-        plugins: [ RevealMath, RevealNotes, RevealHighlight ]
+        plugins: [ RevealMath.MathJax3, RevealNotes, RevealHighlight ]
       });
     </script>
 
