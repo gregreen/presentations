@@ -40,9 +40,25 @@
       paint-order: stroke fill;
     }
 
+    .stroke-text-dark-thick {
+      text-stroke: 2.5px black;
+      -webkit-text-stroke: 2.5px black;
+      paint-order: stroke fill;
+    }
+    h1.stroke-text-dark-thick, h2.stroke-text-dark-thick {
+      text-stroke: 4px black;
+      -webkit-text-stroke: 4px black;
+      paint-order: stroke fill;
+    }
+
     .stroke-text-light {
-      text-stroke: 1px white rgba(255,255,255,0.3);
-      -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+      text-stroke: 1px white rgba(255,255,255,0.7);
+      -webkit-text-stroke: 1px rgba(255,255,255,0.7);
+      paint-order: stroke fill;
+    }
+    .stroke-text-light-thick {
+      text-stroke: 2.5px white rgba(255,255,255,0.8);
+      -webkit-text-stroke: 2.5px rgba(255,255,255,0.8);
       paint-order: stroke fill;
     }
 
@@ -289,15 +305,15 @@
             </div>
           </section>
           <section data-auto-animate class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background.jpg">
-            <h1 class="stroke-text-dark">Dust mapping</h1>
+            <h1 class="stroke-text-dark-thick">Dust mapping</h1>
             <div class="footer">
-              <p style="padding-bottom:50pt;" class="stroke-text-dark">Varying extinction curve.</p>
+              <p style="padding-bottom:50pt;color:black;" class="stroke-text-light-thick">Varying extinction curve.</p>
             </div>
           </section>
           <section data-auto-animate class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background.jpg">
-            <h1 class="stroke-text-dark">Dust mapping</h1>
+            <h1 class="stroke-text-dark-thick">Dust mapping</h1>
             <div class="compact space-top">
-              <p class="stroke-text-dark">Varying extinction curve.</p>
+              <p style="color:black;" class="stroke-text-light-thick">Varying extinction curve.</p>
               <img style="background: #00000077; display: inline-block; box-shadow: 0px 0px 25px #000;" class="r-stretch" data-src="../media/xp_rv/extcurve_zxy.svg"></img>
             </div>
           </section>
