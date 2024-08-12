@@ -24,6 +24,7 @@
     :root {
       --r-background-color: #000;
       --r-main-font-size: 16pt;
+      --r-heading2-size: 2.50em;
       --r-link-color: #f3d7ac;
       --r-link-color-hover: #ffcc7d;
     }
@@ -242,11 +243,13 @@
       <div class="slides">
 
         <section class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
-          <h1 class="space-top">Mapping dust extinction curve variation in 3D</h1>
-          <h3 class="space-top-slight">Cosmic Dust 14, 名古屋 (Nagoya), 9 August 2024</h3>
-          <div class="space-top-slight compact">
-            <h3>Gregory M. Green, Xiangyu Zhang (张翔宇)</h3>
-            <p>(MPIA, Heidelberg)</p>
+          <div style="position:absolute; top:45%; transform:translateY(-50%);" class="stroke-text-dark">
+            <h2>Mapping dust extinction curve variation in 3D with Gaia XP</h2>
+            <h3 class="space-top-slight">Stellar parameter determination workshop, NAOC, 15&nbsp;August&nbsp;2024</h3>
+            <div class="space-top-slight compact">
+              <h3>Gregory M. Green, Xiangyu Zhang (张翔宇)</h3>
+              <p>(MPIA, Heidelberg)</p>
+            </div>
           </div>
           <div class="abs-bottom-right">
             <img data-src="../media/logos/MPIA_horizontal.svg" class="half-width" style="filter:contrast(0.5) brightness(1.0);"></img>
@@ -287,43 +290,43 @@
           <section data-auto-animate class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
             <h1>Dust mapping</h1>
             <div class="compact space-top">
-              <p>Universal extinction curve: $A\left(\lambda\right) / A\left(\lambda_0\right)$.</p>
+              <p class="stroke-text-dark">Universal extinction curve: $A\left(\lambda\right) / A\left(\lambda_0\right)$.</p>
               <img style="background: #00000077; display: inline-block; box-shadow: 0px 0px 25px #000;" class="r-stretch" data-src="../media/dust/extinction_curve_hensley_draine_2003.svg"></img>
             </div>
           </section>
           <section data-auto-animate data-auto-animate-duration=0 class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
             <h1>Dust mapping</h1>
             <div class="compact space-top">
-              <p>Universal extinction curve: $A\left(\lambda\right) / A\left(\lambda_0\right)$.</p>
+              <p class="stroke-text-dark">Universal extinction curve: $A\left(\lambda\right) / A\left(\lambda_0\right)$.</p>
               <img style="background: #00000077; display: inline-block; box-shadow: 0px 0px 25px #000;" class="r-stretch" data-src="../media/dust/extinction_curve_hensley_draine_2003_wRv.svg"></img>
             </div>
           </section>
           <section data-auto-animate class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
             <h1>Dust mapping</h1>
             <div class="footer">
-              <p style="padding-bottom:40pt;">Universal extinction curve: $A\left(\lambda\right) / A\left(\lambda_0\right)$.</p>
+              <p class="stroke-text-dark" style="padding-bottom:40pt;">Universal extinction curve: $A\left(\lambda\right) / A\left(\lambda_0\right)$.</p>
             </div>
           </section>
           <section data-auto-animate class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background.jpg">
             <h1 class="stroke-text-dark-thick">Dust mapping</h1>
             <div class="footer">
-              <p style="padding-bottom:50pt;color:black;" class="stroke-text-light-thick">Varying extinction curve.</p>
+              <h4 style="padding-bottom:50pt;color:black;" class="stroke-text-light-thick">Varying extinction curve.</h4>
             </div>
           </section>
           <section data-auto-animate class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background.jpg">
             <h1 class="stroke-text-dark-thick">Dust mapping</h1>
             <div class="compact space-top">
-              <p style="color:black;" class="stroke-text-light-thick">Varying extinction curve.</p>
+              <h4 style="color:black;" class="stroke-text-light-thick">Varying extinction curve.</h4>
               <img style="background: #00000077; display: inline-block; box-shadow: 0px 0px 25px #000;" class="r-stretch" data-src="../media/xp_rv/extcurve_zxy.svg"></img>
             </div>
           </section>
         </section>
 
-        <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted.jpg">
-          <h1 class="stroke-text-dark">Method</h1>
-        </section>
-
         <section>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted.jpg">
+            <h1 class="stroke-text-dark">Data</h1>
+          </section>
+
           <section>
             <h3>Gaia BP/RP spectrophotometry</h3>
             <h4 class="fragment">(&ldquo;XP spectra&rdquo;)</h4>
@@ -368,6 +371,12 @@
               <li class="fragment">Flux-calibrated</li>
               <li class="fragment">All-sky, uniform selection function</li>
             </ul>
+          </section>
+        </section>
+
+        <section>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted.jpg">
+            <h1 class="stroke-text-dark">Modeling approach</h1>
           </section>
 
           <section data-transition="slide-in none-out">
@@ -423,7 +432,13 @@
             <span class="fragment" data-fragment-index=3></span>
             <p style="font-size:150%;">
               $$
-              f_{\lambda}\left(\lambda,\class{star-color}{\Theta,\varpi,E}\right)
+              f_{\lambda}\left(
+                \lambda
+                \class{fragment}{\data{fragment-index=0}{
+                  ,\class{star-color}{\Theta,\varpi,E,\xi}
+                  }
+                }
+              \right)
               \class{fragment}{\data{fragment-index=1}{
                 =
                 {\color{gray}
@@ -440,17 +455,18 @@
                 \, \class{star-color}{\varpi^2}
               }}
               \class{fragment}{\data{fragment-index=3}{
-                \, e^{-\class{star-color}{E} \class{model-color}{R}\left(\lambda\right)}
+              \, e^{-\class{star-color}{E} \class{model-color}{R}\left(\lambda,\,\class{star-color}{\xi}\right)}
               }}
               $$
             </p>
             <div class="multicol">
-              <div class="star-color fragment" data-fragment-index=0>
+              <div class="star-color fragment wide" data-fragment-index=0>
                 <p>Stellar parameters:</p>
                 <ul>
                   <li>$\Theta =$ type (LAMOST)</li>
                   <li>$\varpi =$ parallax (Gaia)</li>
                   <li>$E =$ extinction (Bayestar19)</li>
+                  <li>$\xi =$ extinction curve shape (universal at first)</li>
                 </ul>
               </div>
               <div class="model-color fragment" data-fragment-index=1>
@@ -461,12 +477,42 @@
                 </ul>
               </div>
             </div>
-            <p class="fragment space-top" data-fragment-index=5>Note: universal extinction curve: <span style="font-size:90%;">$A\left(\lambda\right) = \class{star-color}{E}\,\class{model-color}{R\left(\lambda\right)}$</span>.</p>
+            <p class="fragment space-top" data-fragment-index=4><span class="star-color">$\xi$</span> plays the role of $R(V)$.</p>
+            <p class="fragment" data-fragment-index=5>Model structure reflects the physics of $f_{\lambda}$.</p>
+          </section>
+
+          <section>
+            <div class="multicol">
+              <div>
+                <h3>Extinction model</h3>
+                <p style="font-size:130%;">
+                  $$
+                    \vec{A} = \class{star-color}{E} \, \exp\left(
+                        \class{model-color}{\ln\vec{R}_0}
+                      + \class{star-color}{\xi}
+                      \,\class{model-color}{\Delta\ln\vec{R}}
+                    \right)
+                  $$
+                </p>
+                <p class="fragment space-top">Mean extinction curve: $\class{model-color}{\ln\vec{R}_0}$</p>
+                <p class="fragment">Variation in extinction curve: $\class{model-color}{\Delta\ln\vec{R}}$</p>
+                <p class="fragment">$\class{star-color}{\xi}$ plays the role of $R(V)$.</p>
+              </div>
+              <div>
+                <p class="space-top">
+                Key:
+                  $$
+                  \class{star-color}{\mathrm{stellar\ parameters}} \\
+                  \class{model-color}{\mathrm{model\ parameters}}
+                  $$
+                </p>
+              </div>
+            </div>
           </section>
 
           <section class="compact">
             <h4>Model structure</h4>
-            <img data-src="../media/bprp/bprp_nn_structure_dark.svg"></img>
+            <img data-src="../media/bprp/bprp_nn_structure_xi_dark.svg"></img>
           </section>
 
           <section class="compact">
@@ -479,11 +525,11 @@
             <div class="multicol vcenter">
               <div class="wide">
                 <div class="r-stack">
-                  <img class="fragment fade-out" data-fragment-index=1 data-src="../media/bprp/bprp_nn_structure_dark.svg"></img>
-                  <img class="fragment current-visible" data-fragment-index=1 data-src="../media/bprp/bprp_nn_structure_dark_highlightmodelparams.svg"></img>
-                  <img class="fragment current-visible" data-fragment-index=2 data-src="../media/bprp/bprp_nn_structure_dark_highlightstellarparams.svg"></img>
-                  <img class="fragment current-visible" data-fragment-index=3 data-src="../media/bprp/bprp_nn_structure_dark_highlightparams.svg"></img>
-                  <img class="fragment" data-fragment-index=4 data-src="../media/bprp/bprp_nn_structure_dark.svg"></img>
+                  <img class="fragment fade-out" data-fragment-index=1 data-src="../media/bprp/bprp_nn_structure_xi_dark.svg"></img>
+                  <img class="fragment current-visible" data-fragment-index=1 data-src="../media/xp_rv/bprp_nn_structure_xi_dark_highlightmodelparams.svg"></img>
+                  <img class="fragment current-visible" data-fragment-index=2 data-src="../media/xp_rv/bprp_nn_structure_xi_dark_highlightstellarparams.svg"></img>
+                  <img class="fragment current-visible" data-fragment-index=3 data-src="../media/xp_rv/bprp_nn_structure_xi_dark_highlightparams.svg"></img>
+                  <img class="fragment" data-fragment-index=4 data-src="../media/bprp/bprp_nn_structure_xi_dark.svg"></img>
                 </div>
               </div>
               <div>
@@ -497,9 +543,7 @@
               <p class="fragment" data-fragment-index=4>Implemented in auto-differentiable framework (<em>TensorFlow</em>). &rArr; gradient descent.</p>
             </div>
           </section>
-        </section>
 
-        <section>
           <section>
             <h3>Learned stellar models of Gaia XP spectra</h3>
             <div class="r-stack">
@@ -509,250 +553,6 @@
             </div>
             <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
           </section>
-
-          <section class="compact">
-            <h3>Learned (universal) extinction curve</h3>
-            <img class="r-stretch" data-src="../media/bprp/ext_curve_vs_ccm_inv_zgr23_smalltext_annotated.svg"></img>
-            <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
-          </section>
-        </section>
-
-        <section>
-          <section data-background-image="../media/bprp/dust_495pc_dark_magma_q60.jpg">
-            <h1>Gaia XP reddenings</h1>
-            <h3 class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z">Zhang, Green &amp; Rix (2023)</a></h3>
-          </section>
-
-          <section>
-            <h2>Clean distances and reddenings</h2>
-            <h3>(of ~100 million stars)</h3>
-          </section>
-
-          <section>
-            <h2>Data is available online</h2>
-            <p>Full dataset on <a href="https://zenodo.org/record/7692680">Zenodo</a>.</p>
-            <p class="fragment">Also available &ldquo;on TAP&rdquo; using ADQL.</p>
-            <div class="fragment">
-            <p>Query distances and reddenings of stars along one sightline:</p>
-            <pre><code class="language-sql" data-noescape data-trim data-line-numbers>
-              SELECT
-                source_id,
-                ra, dec,
-                ext, err_ext,
-                mod_parallax,
-                err_mod_parallax,
-                quality_flags,
-                teff_confidence,
-                chi2_opt
-              FROM xpparams.main
-              WHERE
-                    quality_flags < 16
-                AND teff_confidence > 0.5
-                AND chi2_opt/61 < 5
-                AND mod_parallax / err_mod_parallax > 8
-                AND distance(ra, dec, 86.3362, -1.5407) < 0.5
-            </code></pre>
-            <p>(Data available through the <a href="https://dc.zah.uni-heidelberg.de/tableinfo/xpparams.main">German Astrophysical Virtual Observatory</a>)</p>
-            </div>
-          </section>
-
-          <section>
-            <h2>Extinction along individual sightlines</h2>
-          </section>
-
-          <section>
-            <img class="r-stretch" data-src="../media/bprp/los_extinction_OrionB.svg"></img>
-          </section>
-
-          <section>
-            <img class="r-stretch" data-src="../media/bprp/los_extinction_MonocerosR2.svg"></img>
-          </section>
-
-          <section>
-            <img class="r-stretch" data-src="../media/bprp/los_extinction_Vela.svg"></img>
-          </section>
-
-          <section>
-            <img class="r-stretch" data-src="../media/bprp/los_extinction_Taurus.svg"></img>
-          </section>
-
-          <section>
-            <img class="r-stretch" data-src="../media/bprp/los_extinction_Perseus.svg"></img>
-          </section>
-
-          <section>
-            <img class="r-stretch" data-src="../media/bprp/los_extinction_Maddalena.svg"></img>
-          </section>
-        </section>
-
-        <section>
-          <section>
-            <h1>Extinction in 3D</h1>
-            <h2 class="fragment">All-sky results from binning and averaging stars</h2>
-          </section>
-
-          <section>
-            <video class="r-stretch" data-autoplay loop data-src="../media/simple_dust23/allsky_multires.mp4"></video>
-          </section>
-
-          <section>
-            <video class="r-stretch" data-autoplay loop data-src="../media/simple_dust23/allsky_multires_diff.mp4"></video>
-          </section>
-
-          <section>
-            <img class="r-stretch" data-src="../media/simple_dust23/GalCen500pc.svg"></img>
-          </section>
-
-          <section>
-            <img class="r-stretch" data-src="../media/simple_dust23/Ophiuchus.svg"></img>
-          </section>
-
-          <section>
-            <img class="r-stretch" data-src="../media/simple_dust23/AquilaSouth.svg"></img>
-          </section>
-
-          <section>
-            <img class="r-stretch" data-src="../media/simple_dust23/GalAntiCen2000pc.svg"></img>
-          </section>
-
-          <section>
-            <img class="r-stretch" data-src="../media/simple_dust23/Orion.svg"></img>
-          </section>
-
-          <section>
-            <img class="r-stretch" data-src="../media/simple_dust23/PerTaurCali.svg"></img>
-          </section>
-
-          <section>
-            <img class="r-stretch" data-src="../media/simple_dust23/CepheusPolaris.svg"></img>
-          </section>
-
-          <section>
-            <div class="multicol">
-              <div class="wider">
-                <img class="full-width" data-src="../media/bprp/extinction_birdseye_bprp_zhang23_dark.svg"></img>
-              </div>
-              <div class="vertical-center">
-                <h3>Bird's-eye view of the Galactic plane</h3>
-                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
-              </div>
-          </section>
-        </section>
-
-        <section>
-          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
-            <h1>Extinction curve variation</h1>
-            <h3 class="attribution"><a href="https://arxiv.org/abs/2407.14594">(Zhang &amp; Green 2024)</a></h3>
-          </section>
-
-          <section class="compact" data-auto-animate>
-            <h4>Flux residuals (model - observed)</h4>
-            <img class="r-stretch" data-src="../media/bprp/flux_residuals_map.svg"></img>
-          </section>
-
-          <section class="compact" data-auto-animate>
-            <div class="multicol vcenter">
-              <div class="wider">
-                <h4>Flux residuals (model - observed)</h4>
-                <img class="" data-src="../media/bprp/flux_residuals_map.svg"></img>
-              </div>
-              <div>
-                <p>Shape of extinction curve $A\left(\lambda\right)$ can change: <span style="font-size:70%;">$R(V) = A(V)/[A(B)-A(V)]$</span>.</p>
-                <!--
-                <p>
-                  $$
-                    R\left(V\right) \equiv \frac{
-                      A\left(V\right)
-                    }{
-                      A\left(B\right) - A\left(V\right)
-                    }
-                  $$
-                </p>
-                -->
-                <img class="space-top full-width" data-src="../media/bprp/ext_curve_vs_ccm_inv_zgr23_smalltext_annotated.svg"></img>
-              </div>
-            </div>
-          </section>
-
-          <section>
-            <h3>Forward model of stellar spectrum</h3>
-            <span class="fragment" data-fragment-index=0></span>
-            <p style="font-size:150%;">
-              $$
-              f_{\lambda}\left(\lambda,{\class{star-color}{\Theta,\varpi,E\class{fragment}{\data{fragment-index=0}{,\xi}}}}\right)
-              =
-              F_{\lambda}\left(\lambda,{\class{star-color}{\Theta}};{\class{model-color}{W}}\right)
-              \, {\class{star-color}\varpi^2}
-              \, e^{-{\class{star-color}{E}} {\class{model-color}{R}}\left(\lambda\class{fragment}{\data{fragment-index=0}{,\,{\class{star-color}{\xi}}}}\right)}
-              $$
-            </p>
-            <p><span class="star-color">Stellar parameters</span>, <span class="model-color"> model parameters</span></p>
-            <p class="fragment" data-fragment-index=1"><span class="star-color">$\xi$</span> controls the shape of the extinction curve.</p>
-          </section>
-
-          <section data-transition="slide-in none-out">
-            <h4>Update model: extinction curve variation</h4>
-            <img class="r-stretch" data-src="../media/bprp/bprp_nn_structure_dark.svg"></img>
-          </section>
-          <section data-transition="none-in slide-out">
-            <h4>Update model: extinction curve variation</h4>
-            <img class="r-stretch" data-src="../media/bprp/bprp_nn_structure_xi_dark.svg"></img>
-          </section>
-
-          <section>
-            <div class="multicol">
-              <div>
-                <h3>Old model</h3>
-                <p>
-                  $$
-                    \vec{A} = \class{star-color}{E} \, \exp\left(
-                      \class{model-color}{\ln\vec{R}}
-                    \right)
-                  $$
-                </p>
-                <p class="fragment">Universal extinction curve: $\class{model-color}{\vec{R}}$</p>
-              </div>
-              <div class="fragment">
-                <h3>New model</h3>
-                <p>
-                  $$
-                    \vec{A} = \class{star-color}{E} \, \exp\left(
-                        \class{model-color}{\ln\vec{R}_0}
-                      + \class{star-color}{\xi}
-                      \,\class{model-color}{\Delta\ln\vec{R}}
-                    \right)
-                  $$
-                  <p class="fragment">Variation in extinction curve: $\class{model-color}{\Delta\ln\vec{R}}$</p>
-                  <p class="fragment">$\class{star-color}{\xi}$ plays the role of $R(V)$.</p>
-                </p>
-              </div>
-            </div>
-            <p class="space-top">
-            Key:
-              $$
-              \class{star-color}{\mathrm{stellar\ parameters}} \\
-              \class{model-color}{\mathrm{model\ parameters}}
-              $$
-            </p>
-          </section>
-
-          <section>
-            <h3>Train the new model ...</h3>
-            <p style="color:gray;">(on the same data)</p>
-          </section>
-
-          <!--
-          <section class="compact">
-            <div class="r-stack">
-              <p class="fragment fade-out" data-fragment-index=1>$R\left(V\right)$-dependent extinction curve</p>
-              <p class="fragment current-visible" data-fragment-index=1>Comparison to Gordon+(2023) extinction-curve family</p>
-            </div>
-            <div class="r-stack">
-              <img class="full-width fragment fade-out" data-fragment-index=1 data-src="../media/xp_rv/extcurve_zxy.svg"></img>
-              <img class="full-width fragment current-visible" data-fragment-index=1 data-src="../media/xp_rv/extcurve_comp_zxy_G23.svg"></img>
-            </div>
-          </section>
-          -->
 
           <section class="compact" data-transition="slide-in none-out">
             <img class="r-stretch" data-src="../media/xp_rv/extcurve_comp_v2_vs_G23_panelA.svg"></img>
@@ -765,8 +565,13 @@
           </section>
         </section>
 
-
         <section>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
+            <h2 class="stroke-text-dark">Learned stellar parameters</h2>
+            <h4 class="fragment stroke-text-dark">Use XP spectra, NIR photometry &amp; Gaia parallaxes to learn parameters of 220 million stars.</h4>
+            <h4 class="fragment stroke-text-dark">LAMOST spectra <em>not</em> used for parameter inference.</h4>
+          </section>
+
           <section data-auto-animate>
             <h3>Infer $\xi$ for every star ...</h3>
             <p class="fragment">Remove stars with bad $\chi^2/\mathrm{dof}$, low extinction, ...</p>
@@ -774,30 +579,6 @@
           </section>
           <section data-auto-animate class="compact">
             <p>~130 million R(V) measurements with XP (<span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green 2024</a></span>)</p>
-            <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_ZG24.svg"></img>
-          </section>
-
-          <section>
-            <h3>Compare with previous catalogs of R(V) ...</h3>
-          </section>
-
-          <section class="compact" data-transition="slide-in none-out">
-            <h4>100s of R(V) measurements with O/B-stars (Gordon+23, Valencic+04)</h4>
-            <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_G23_V04.svg"></img>
-          </section>
-
-          <section class="compact" data-transition="none-in none-out">
-            <h4>~37,000 R(V) measurements with APOGEE/PS1 <span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2016ApJ...821...78S/abstract">(Schlafly+2016)</a></span></h4>
-            <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_S16.svg"></img>
-          </section>
-
-          <section class="compact" data-transition="none-in none-out">
-            <h4>~1 million R(V) measurements with LAMOST/XP <span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023ApJS..269....6Z/abstract">(Zhang+2023)</a></span></h4>
-            <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_ZYC23.svg"></img>
-          </section>
-
-          <section class="compact" data-transition="none-in slide-out">
-            <h4>~130 million R(V) measurements with XP (<span class="attribution"><a href="https://arxiv.org/abs/2407.14594">Zhang &amp; Green 2024)</a></span></h4>
             <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_ZG24.svg"></img>
           </section>
 
@@ -823,6 +604,30 @@
                 <p>One-to-one relation between our extinction-curve measures</p>
               </div>
             </div>
+          </section>
+
+          <section>
+            <h3>Compare with previous catalogs of R(V) ...</h3>
+          </section>
+
+          <section class="compact" data-transition="slide-in none-out">
+            <h4>100s of R(V) measurements with O/B-stars (Gordon+23, Valencic+04)</h4>
+            <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_G23_V04.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <h4>~37,000 R(V) measurements with APOGEE/PS1 <span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2016ApJ...821...78S/abstract">(Schlafly+2016)</a></span></h4>
+            <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_S16.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <h4>~1 million R(V) measurements with LAMOST/XP <span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023ApJS..269....6Z/abstract">(Zhang+2023)</a></span></h4>
+            <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_ZYC23.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in slide-out">
+            <h4>~130 million R(V) measurements with XP (<span class="attribution"><a href="https://arxiv.org/abs/2407.14594">Zhang &amp; Green 2024)</a></span></h4>
+            <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_ZG24.svg"></img>
           </section>
 
           <section>
@@ -880,6 +685,75 @@
         </section>
 
         <section>
+          <section data-background-image="../media/bprp/dust_495pc_dark_magma_q60.jpg">
+            <h1 class="stroke-text-dark">Extinction in 3D</h1>
+          </section>
+
+          <section>
+            <h2>Extinction along individual sightlines</h2>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/los_extinction_OrionB.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/los_extinction_MonocerosR2.svg"></img>
+          </section>
+          
+          <section>
+            <h2>All-sky results from binning and averaging stars</h2>
+          </section>
+
+          <section>
+            <video class="r-stretch" data-autoplay loop data-src="../media/simple_dust23/allsky_multires.mp4"></video>
+          </section>
+
+          <section>
+            <video class="r-stretch" data-autoplay loop data-src="../media/simple_dust23/allsky_multires_diff.mp4"></video>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/GalCen500pc.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/Ophiuchus.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/AquilaSouth.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/GalAntiCen2000pc.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/Orion.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/PerTaurCali.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/CepheusPolaris.svg"></img>
+          </section>
+
+          <section>
+            <div class="multicol">
+              <div class="wider">
+                <img class="full-width" data-src="../media/bprp/extinction_birdseye_bprp_zhang23_dark.svg"></img>
+              </div>
+              <div class="vertical-center">
+                <h3>Bird's-eye view of the Galactic plane</h3>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
+              </div>
+          </section>
+        </section>
+
+        <section>
           <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
             <h2 class="stroke-text-dark">Patterns in the data</h2>
           </section>
@@ -933,9 +807,14 @@
             <img class="r-stretch" data-src="../media/xp_rv/Rv_birdseye_w_Ostars.svg"></img>
           </section>
 
+          <section class="compact">
+            <h4>R(V) in the Magellanic Clouds</h4>
+            <img class="r-stretch" data-src="../media/xp_rv/LMC_SMC_Rv.svg"></img>
+          </section>
+
           <section>
-            <h3>Two takeaways:</h3>
-            <ol>
+            <h2>Two takeaways:</h2>
+            <ol style="font-size:130%;">
               <li class="fragment">U-shaped relation between density &amp; R(V).</li>
               <li class="fragment">Star-formation / UV radiation correlated with high R(V).</li>
             </ol>
@@ -943,8 +822,8 @@
         </section>
 
         <section>
-          <section>
-            <h2>Implications for dust composition</h2>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+            <h2 class="stroke-text-dark">Implications for dust composition</h2>
           </section>
 
           <section data-auto-animate class="compact">
@@ -1036,12 +915,45 @@
         </section>
 
         <section>
-          <section class="compact">
-            <h4>R(V) in the Magellanic Clouds</h4>
-            <img class="r-stretch" data-src="../media/xp_rv/LMC_SMC_Rv.svg"></img>
+          <section>
+            <div class="multicol vcenter">
+              <div class="compact wide">
+                <video class="full-width" data-autoplay loop data-src="../media/dust/pah57_rotation.mp4"></video>
+                <p class="attribution">C<sub>19</sub>H<sub>11</sub> from <a href="https://www.astrochemistry.org/pahdb/theoretical/3.20/default/details/57">PAHdb</a></p>
+              </div>
+              <div>
+                <h3>Polycyclic Aromatic Hydrocarbon (PAH)</h3>
+                <p class="space-top">Extinction feature in the UV (responsible for 2175&thinsp;Å feature?).</p>
+                <p>Strong mid-IR emission features.</p>
+              </div>
+            </div>
           </section>
 
-          <section class="compact" data-auto-animate>
+          <section data-transition="slide-in none-out" class="compact">
+            <img class="r-stretch" data-src="../media/dust/PAH_scaling.svg"></img>
+            <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023ApJ...948...55H/abstract">Hensley &amp; Draine (2023)</a> dust model.</p>
+          </section>
+
+          <section data-transition="none-in slide-out">
+            <video class="r-stretch" data-autoplay loop data-src="../media/dust/PAH_scaling.mp4"></video>
+          </section>
+
+          <section data-auto-animate>
+            <video class="r-stretch" data-autoplay loop data-src="../media/dust/PAH_scaling_optical.mp4"></video>
+          </section>
+          <section data-auto-animate>
+            <div class="multicol vcenter">
+              <div class="wide">
+                <video class="full-width" data-autoplay loop data-src="../media/dust/PAH_scaling_optical.mp4"></video>
+              </div>
+              <div>
+                <p>As PAH mass increases, optical extinction becomes steeper <span style="color:gray;">(R(V) decreases)</span>.</p>
+                <p class="fragment">Requires less mass to change R(V) than accretion onto silicates.</p>
+                <p class="fragment">Importance of 2175 Å bump.</p>
+              </div>
+          </section>
+
+          <section class="compact" data-auto-animate data-auto-animate-restart>
             <h4>R(V) vs. PAH fraction</h4>
             <div class="multicol vcenter">
               <div>
@@ -1109,30 +1021,6 @@
             <img class="r-stretch" data-src="../media/xp_rv/Rv_qPAH_Perseus_panel2.svg"></img>
           </section>
           -->
-
-          <section data-transition="slide-in none-out" class="compact">
-            <img class="r-stretch" data-src="../media/dust/PAH_scaling.svg"></img>
-            <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023ApJ...948...55H/abstract">Hensley &amp; Draine (2023)</a> dust model.</p>
-          </section>
-
-          <section data-transition="none-in slide-out">
-            <video class="r-stretch" data-autoplay loop data-src="../media/dust/PAH_scaling.mp4"></video>
-          </section>
-
-          <section data-auto-animate>
-            <video class="r-stretch" data-autoplay loop data-src="../media/dust/PAH_scaling_optical.mp4"></video>
-          </section>
-          <section data-auto-animate>
-            <div class="multicol vcenter">
-              <div class="wide">
-                <video class="full-width" data-autoplay loop data-src="../media/dust/PAH_scaling_optical.mp4"></video>
-              </div>
-              <div>
-                <p>As PAH mass increases, optical extinction becomes steeper <span style="color:gray;">(R(V) decreases)</span>.</p>
-                <p class="fragment">Requires less mass to change R(V) than accretion onto silicates.</p>
-                <p class="fragment">Importance of 2175 Å bump.</p>
-              </div>
-          </section>
         </section>
 
         <section>
@@ -1147,7 +1035,7 @@
               <li class="fragment stroke-text-dark">High R(V) in star-forming regions: Destruction of PAHs? Cycling of large grains?</li>
             </ul>
 
-            <h4 class="fragment space-top">Paper: <a  style="-webkit-text-stroke-color:black;" href="https://arxiv.org/abs/2407.14594">arXiv:2407.14594</a> <span style="margin-left:1em;"></span> Data: <a href="https://doi.org/10.5281/zenodo.11394477"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.11394477.svg" alt="DOI:10.5281/zenodo.11394477" style="margin:0 0 -2px 5px; filter:hue-rotate(205deg) brightness(1.4) saturate(0.3);"></a></h4>
+            <h4 class="fragment space-top">Paper: <a  style="-webkit-text-stroke-color:black;" href="https://arxiv.org/abs/2407.14594">arXiv:2407.14594</a> <span style="margin-left:1em;"></span> Data: <a href="https://doi.org/10.5281/zenodo.11394477"><img src="../media/xp_rv/zenodo.11394477.svg" alt="DOI:10.5281/zenodo.11394477" style="margin:0 0 -2px 5px; filter:hue-rotate(205deg) brightness(1.4) saturate(0.3);"></a></h4>
           </section>
         </section>
 
@@ -1176,7 +1064,8 @@
         },
         */
         mathjax3: {
-          mathjax: "https://cdn.jsdelivr.net/npm/mathjax@4.0.0-alpha.1/es5/tex-mml-chtml.js",
+          //mathjax: "https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.7/tex-mml-chtml.js",
+          mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-chtml.js",
           loader: {load: ['[tex]/html']},
           tex: {packages: {'[+]': ['html']}},
         },
