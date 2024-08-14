@@ -227,6 +227,7 @@
          1px  1px 0 #000;
     }
 
+    /* Custom color definitions */
     .star-color {
       /*color: rgb(116,211,255);*/
       color: #99ccff;
@@ -234,6 +235,19 @@
     .model-color {
       /*color: rgb(255,130,116);*/
       color: #ff6767;
+    }
+
+    /* Slide numbers */
+    .reveal .slide-number {
+      right: inherit;
+      left: 8px;
+      backdrop-filter: blur(1.5px);
+      font-size: 12pt;
+      font-weight: bold;
+    }
+
+    .reveal .slide-number-delimiter {
+      margin: 0 0;
     }
   </style>
 
@@ -1040,16 +1054,19 @@
         <section>
           <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
             <h1 class="stroke-text-dark">Summary</h1>
-            <h4 class="fragment stroke-text-dark">~130 million R(V) measurements from Gaia XP spectra.</h4>
-            <h4 class="fragment stroke-text-dark">First 3D picture of the extinction curve variation in a large volume of the Milky Way.</h4>
-            <h4 class="fragment stroke-text-dark">Models of dust composition and evolution will have to explain these maps.</h4>
-            <h3 class="fragment space-top stroke-text-dark">Preliminary ideas:</h3>
-            <ul>
-              <li class="fragment stroke-text-dark">R(V) decreases due to accretion (onto PAHs?) at moderate densities, then increases due to coagulation at higher densities.</li>
-              <li class="fragment stroke-text-dark">High R(V) in star-forming regions: Destruction of PAHs? Cycling of large grains?</li>
-            </ul>
+            <div class="compact">
+              <h4 class="fragment stroke-text-dark">~130 million dust R(V) measurements from Gaia XP spectra.</h4>
+              <h4 class="fragment stroke-text-dark">First 3D picture of the extinction curve variation in a large volume of the Milky Way.</h4>
+              <h4 class="fragment stroke-text-dark">Models of dust composition and evolution will have to explain these maps.</h4>
+            </div>
+            <h3 class="fragment space-top-slight stroke-text-dark">Preliminary ideas:</h3>
+            <div class="compact">
+              <h4 class="fragment stroke-text-dark">R(V) decreases due to accretion (onto PAHs?) at moderate densities, then increases due to coagulation at higher densities.</h4>
+              <h4 class="fragment stroke-text-dark">High R(V) in star-forming regions: Destruction of PAHs? Cycling of large grains?</h4>
+            </div>
+            <h4 class="fragment space-top-slight stroke-text-dark">Upcoming (similar) datasets: Euclid, CSST.</h4>
 
-            <h4 class="fragment space-top">Paper: <a  style="-webkit-text-stroke-color:black;" href="https://arxiv.org/abs/2407.14594">arXiv:2407.14594</a> <span style="margin-left:1em;"></span> Data: <a href="https://doi.org/10.5281/zenodo.11394477"><img src="../media/xp_rv/zenodo.11394477.svg" alt="DOI:10.5281/zenodo.11394477" style="margin:0 0 -2px 5px; filter:hue-rotate(205deg) brightness(1.4) saturate(0.3);"></a></h4>
+            <h4 class="fragment space-top-slight">Paper: <a  style="-webkit-text-stroke-color:black;" href="https://arxiv.org/abs/2407.14594">arXiv:2407.14594</a> <span style="margin-left:1em;"></span> Data: <a href="https://doi.org/10.5281/zenodo.11394477"><img src="../media/xp_rv/zenodo.11394477.svg" alt="DOI:10.5281/zenodo.11394477" style="margin:0 0 -2px 5px; filter:hue-rotate(205deg) brightness(1.4) saturate(0.3);"></a></h4>
           </section>
         </section>
 
@@ -1064,6 +1081,7 @@
       Reveal.initialize({
         history: true,
         transition: 'linear',
+        slideNumber: 'h.v',
 
         /*
         math: {
