@@ -17,6 +17,7 @@ Table of Contents
 * [Ringberg Milky Way Methods - Deep Potential](presentations/deep_potential_ringberg_2024y07m.html): Deep potential - inferring the gravitational potential from a snapshot of stellar kinematics.
 * [Cosmic Dust 14 - R(V) in 3D](presentations/cosmic_dust_14.html): Mapping dust extinction curve variation in 3D.
 * [Beijing Stellar Parameters - R(V) in 3D](presentations/lowres_spectra_beijing_2024.html): Mapping dust extinction curve variation in 3D with Gaia XP.
+* [Stanford - Dust & Dynamics](presentations/stanford_dust_dynamics_2024y10m.html): Overview of work on dynamics (Deep Potential) and dust (extinction-curve variation) with Gaia.
 
 Initial setup
 -------------
