@@ -1158,14 +1158,18 @@
             </div>
           </section>
 
-          <section>
-            <h3>Learned stellar models of Gaia XP spectra</h3>
-            <div class="r-stack">
-              <img class="full-width fragment fade-out" data-fragment-index=0 data-src="../media/bprp/model_flux_vs_dwarfs_nolines.svg"></img>
-              <img class="full-width fragment current-visible" data-fragment-index=0 data-src="../media/bprp/model_flux_vs_dwarfs_hlines.svg"></img>
-              <img class="full-width fragment" data-fragment-index=1 data-src="../media/bprp/model_flux_vs_dwarfs_metallines.svg"></img>
+          <section class="compact">
+            <div class="multicol vcenter">
+              <div class="widest r-stack">
+                <img class="full-width fragment fade-out" data-fragment-index=0 data-src="../media/bprp/model_flux_vs_dwarfs_1panel_nolines.svg"></img>
+                <img class="full-width fragment current-visible" data-fragment-index=0 data-src="../media/bprp/model_flux_vs_dwarfs_1panel_hlines.svg"></img>
+                <img class="full-width fragment" data-fragment-index=1 data-src="../media/bprp/model_flux_vs_dwarfs_1panel_metallines.svg"></img>
+              </div>
+              <div>
+                <h3>Learned stellar models of Gaia XP spectra</h3>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
+              </div>
             </div>
-            <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
           </section>
 
           <section class="compact" data-transition="slide-in none-out">
@@ -1757,9 +1761,9 @@
           //mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-svg-nofont.js",
           loader: {load: ['[tex]/html']},
           tex: {packages: {'[+]': ['html']}},
-          chtml: {
-            fontURL: "../js/mathjax-4.0.0-beta.7/output/chtml/fonts/woff-v2"
-          }
+          //chtml: {
+          //  fontURL: "../js/mathjax-4.0.0-beta.7/output/chtml/fonts/woff-v2"
+          //}
         },
 
         sortFragmentsOnSync: false,
