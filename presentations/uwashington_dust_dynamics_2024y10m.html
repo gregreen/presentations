@@ -1,0 +1,1780 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>R(V) in 3D</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="../icon.ico">
+
+    <link rel="stylesheet" href="../revealjs/dist/reveal.css">
+    <link rel="stylesheet" href="../revealjs/dist/theme/night.css" id="theme">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../revealjs/plugin/highlight/monokai.css" id="highlight-theme">
+
+    <!-- Custom CSS files go here -->
+  </head>
+
+  <style>
+    /* Override theme variables */
+    :root {
+      --r-background-color: #000;
+      --r-main-font-size: 16pt;
+      --r-heading2-size: 2.50em;
+      --r-link-color: #f3d7ac;
+      --r-link-color-hover: #ffcc7d;
+    }
+
+    /* Stroke text */
+    .stroke-text-dark, .stroke-text-dark p {
+      text-stroke: 1px black;
+      -webkit-text-stroke: 1px black;
+      paint-order: stroke fill;
+    }
+    .stroke-text-light {
+      text-stroke: 1px white rgba(255,255,255,0.3);
+      -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+      paint-order: stroke fill;
+    }
+
+    .stroke-text-dark-thick, .stroke-text-dark-thick p {
+      text-stroke: 5px black;
+      -webkit-text-stroke: 5px black;
+      paint-order: stroke fill;
+    }
+    h1.stroke-text-dark-thick, h2.stroke-text-dark-thick,
+    .stroke-text-dark-thick h1, .stroke-text-dark-thick h2 {
+      text-stroke: 8px black;
+      -webkit-text-stroke: 8px black;
+      paint-order: stroke fill;
+    }
+
+    .stroke-text-light {
+      text-stroke: 1px white rgba(255,255,255,0.7);
+      -webkit-text-stroke: 1px rgba(255,255,255,0.7);
+      paint-order: stroke fill;
+    }
+    .stroke-text-light-thick {
+      text-stroke: 5px white rgba(255,255,255,0.8);
+      -webkit-text-stroke: 5px rgba(255,255,255,0.8);
+      paint-order: stroke fill;
+    }
+
+    /* Attribution text */
+    p.attribution, span.attribution {
+      font-size: 70%;
+      color: #aaa;
+      margin-top: 0;
+      /*margin: calc(0.5 * var(--r-block-margin)) 0;*/
+    }
+    p.attribution a, span.attribution a {
+      color: #ddf;
+    }
+    h1 span.attribution, h2 span.attribution, h3 span.attribution, h4 span.attribution {
+      font-size: 100%;
+    }
+
+    /* Compact */
+    .compact *:not(.MathJax_Display *, .MathJax *)
+    {
+      margin: calc(0.3 * var(--r-block-margin)) 0 !important;
+    }
+
+    .compact-p p {
+      margin: calc(0.3 * var(--r-block-margin)) 0 !important;
+    }
+
+    .compact img {
+      max-width: 100%;
+    }
+
+    /* Footer (bottom of slide)
+       .footer only works if the slide is .full-height */
+    section.full-height {
+      height: 100%;
+    }
+
+    div.footer {
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      text-align: center;
+    }
+
+    div.abs-bottom-right {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+    }
+    div.abs-bottom-right * {
+      float: right;
+    }
+
+    div.abs-bottom-left {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+    }
+    div.abs-bottom-left * {
+      float: left;
+    }
+
+    /* .abs-vcenter only works if the slide is .full-height.
+       Use in slides that have .footer, to center rest of content.
+     */
+    div.abs-vcenter {
+      position: absolute;
+      top: 50%;
+      margin-top: -25%;
+    }
+
+    /* Vertically center content in container */
+    .vertical-center {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-direction: column;
+    }
+
+    /* Slide-specific vertical centering override */
+    .reveal .slides section[data-vertical-align-top]{
+      top: 0 !important;
+    }
+
+    /* Invert colors - useful for adapting graphics for dark slides. */
+    img.invert-colors, video.invert-colors {
+      filter: invert(1);
+    }
+
+    /* Image width */
+    img.half-width, video.half-width {
+      width: 50%;
+      max-width: 50%;
+    }
+    img.limit-width, video.limit-width {
+      max-width: 70%;
+    }
+    img.full-width, div.full-width {
+      width: 100%;
+    }
+
+    /* Item placement in r-stack environment */
+    .reveal .r-stack .align-top {
+      margin: initial;
+    }
+
+    /* Basic slide layouts */
+    .multicol {
+      display: flex;
+      flex-direction: row;
+    }
+    .multicol.vcenter {
+      align-items: center;
+    }
+    .multicol > div {
+      flex-basis: 50%;
+    }
+    .multicol > div.wide {
+      flex-basis: 67%;
+    }
+    .multicol > div.wider {
+      flex-basis: 100%;
+    }
+    .multicol > div.widest {
+      flex-basis: 120%;
+    }
+
+    .multicol > div {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+    /* Margins */
+    .space-top {
+      margin-top: calc(3 * var(--r-block-margin)) !important;
+    }
+    .space-top-slight {
+      margin-top: calc(2 * var(--r-block-margin)) !important;
+    }
+
+    /* Text alignment */
+    .align-left {
+      text-align: left;
+    }
+
+    /* Text size */
+    .shrink-text {
+      font-size: 67%;
+    }
+
+    /* iframe borders */
+    iframe {
+      border: none;
+    }
+
+    body.invert-bg .backgrounds {
+      filter: invert(1);
+    }
+
+    /* Stroke text */
+    h1.stroke-black {
+      text-shadow:
+         1px  0px 0 #000,
+         0px  1px 0 #000,
+        -1px  0px 0 #000,
+         0px -1px 0 #000,
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+    }
+
+    /* Custom color definitions */
+    .star-color {
+      /*color: rgb(116,211,255);*/
+      color: #99ccff;
+    }
+    .model-color {
+      /*color: rgb(255,130,116);*/
+      color: #ff6767;
+    }
+
+    /* Slide numbers */
+    .reveal .slide-number {
+      /*right: inherit;*/
+      /*left: 8px;*/
+      right: 62px;
+      bottom: 48px;
+      transform: translateX(50%);
+      backdrop-filter: blur(1.5px);
+      font-size: 12pt;
+      font-weight: bold;
+    }
+
+    .reveal .slide-number-delimiter {
+      margin: 0 0;
+    }
+  </style>
+
+  <body>
+
+    <div class="reveal">
+      <div class="slides">
+
+        <section class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+          <div style="position:absolute; top:45%; transform:translateY(-50%);" class="stroke-text-dark">
+            <h2>Milky Way Dust and Dynamics</h2>
+            <h3 class="space-top-slight">Astronomy Colloquium, University of Washington</h3>
+            <h3>17&nbsp;October&nbsp;2024</h3>
+            <div class="space-top-slight compact">
+              <h3>Gregory M. Green, Taavet Kalda, Xiangyu Zhang (张翔宇)</h3>
+              <p>(MPIA, Heidelberg)</p>
+            </div>
+          </div>
+          <div class="abs-bottom-right">
+            <img data-src="../media/logos/MPIA_horizontal.svg" class="half-width" style="filter:contrast(0.5) brightness(1.0);"></img>
+          </div>
+          <div class="abs-bottom-left">
+            <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="half-width" style="width:40%; filter:contrast(0.5) brightness(1.2);"></img>
+          </div>
+        </section>
+
+        <section>
+          <section data-background-video="../media/gaia/gaia_proper_motion_on_sky_h264.mp4" data-background-video-loop data-background-size="contain" class="full-height">
+            <div class="stroke-text-dark-thick">
+              <h2>The Gaia revolution</h2>
+              <div class="space-top fragment compact">
+                <h3>Dynamics</h3>
+                <p>How is the dark matter distributed on sub-galactic scales?</p>
+              </div>
+              <div class="space-top fragment compact">
+                <h3>3D distribution of stars and dust</h3>
+                <p>What is the composition of the dust? How does it vary?</p>
+              </div>
+              <div class="space-top fragment compact">
+                <h3>New analysis methods</h3>
+                <p>The richness and volume of the data requires more complex models, faster methods.</p>
+              </div>
+            </div>
+            <div class="footer">
+              <p class="attribution"><a href="https://sci.esa.int/web/gaia/-/60233-parallax-and-proper-motion-on-the-sky">ESA/Gaia/DPAC, CC BY-SA 3.0 IGO</a></p>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Dynamics</h2>
+            <p class="fragment">
+              Gaia is delivering a snapshot of stellar positions and velocities: $\left\{ \vec{x} , \vec{v} \right\}$
+            </p>
+            <p class="fragment">
+              <i>Accelerations</i> tell us about the potential:
+              $$
+                \frac{\mathrm{d}\vec{v}}{\mathrm{d}t} = -\nabla \Phi \left( \vec{x} \right) \, .
+              $$
+            </p>
+            <p class="fragment">$\mathrm{d}\vec{v}/\mathrm{d}t$ is only rarely observable <em>(as of yet)</em>.</p>
+            <p class="fragment space-top">Knowing $\Phi\left(\vec{x}\right)$ would tell us the distribution of <em>total</em> mass (Baryonic + dark) in the Milky Way.</p>
+            <p class="fragment space-top">How to connect $\Phi\left(\vec{x}\right)$ with $\left\{ \vec{x} , \vec{v} \right\}$? <span class="fragment"><em>Stationarity</em>.</span></p>
+          </section>
+
+          <section data-transition="slide-in none-out">
+            <div class="multicol vcenter">
+              <div>
+                <h3>Stationarity assumption</h3>
+                <p class="fragment space-top">Galaxy doesn't <em>statistically</em> change over time.</p>
+              </div>
+              <div class="wider">
+                <video data-autoplay data-src="../media/deep_potential/plummer_trajectories_0_lq.mp4" loop="loop" class="fragment"></video>
+              </div>
+            </div>
+          </section>
+
+          <section data-transition="none-in none-out">
+            <div class="multicol vcenter">
+              <div>
+                <h3>Stationarity assumption</h3>
+                <p class="space-top">Galaxy doesn't <em>statistically</em> change over time.</p>
+              </div>
+              <div class="wider">
+                <video data-autoplay data-src="../media/deep_potential/plummer_trajectories_2_lq.mp4" loop="loop"></video>
+              </div>
+            </div>
+          </section>
+
+          <section data-transition="none-in slide-out">
+            <div class="multicol vcenter">
+              <div>
+                <h3>Stationarity assumption</h3>
+                <p class="space-top">Galaxy doesn't <em>statistically</em> change over time.</p>
+              </div>
+              <div class="wider">
+                <video data-autoplay data-src="../media/deep_potential/plummer_trajectories_1_lq.mp4" loop="loop"></video>
+              </div>
+            </div>
+          </section>
+
+          <section data-transition="slide-in none-out">
+            <div class="multicol vcenter">
+              <div>
+                <h3>Stationarity assumption</h3>
+                <p class="space-top">Galaxy doesn't <em>statistically</em> change over time.</p>
+              </div>
+              <div class="wider">
+                <video data-autoplay data-src="../media/deep_potential/SHO_box_stationary.mp4" loop="loop"></video>
+              </div>
+            </div>
+          </section>
+
+          <section data-transition="none-in slide-out">
+            <div class="multicol vcenter">
+              <div>
+                <h3>Stationarity assumption</h3>
+                <p class="space-top">Galaxy doesn't <em>statistically</em> change over time.</p>
+              </div>
+              <div class="wider">
+                <video data-autoplay data-src="../media/deep_potential/SHO_box_nonstationary.mp4" loop="loop"></video>
+              </div>
+            </div>
+          </section>
+
+          <section data-auto-animate>
+            <h4>Hamiltonians, distribution functions and stationarity</h4>
+            <div class="multicol vcenter">
+              <div>
+                <div class="r-stack">
+                  <img data-src="../media/deep_potential/H.png" class="fragment current-visible" data-fragment-index=1></img>
+                  <img data-src="../media/deep_potential/H_streamplot.png" class="fragment current-visible" data-fragment-index=2></img>
+                  <img data-src="../media/deep_potential/df.png" class="fragment current-visible" data-fragment-index=3></img>
+                  <img data-src="../media/deep_potential/f_samples.png" class="fragment current-visible" data-fragment-index=4></img>
+                  <video data-autoplay loop="loop" data-src="../media/deep_potential/f_orbits_lq.mp4" class="fragment current-visible" data-fragment-index=5></video>
+                  <img data-src="../media/deep_potential/delf_delt.png" class="fragment" data-fragment-index=6></img>
+                </div>
+              </div>
+              <div>
+                <div class="r-stack">
+                  <div class="fragment fade-out" data-fragment-index=6>
+                    <p class="fragment" data-fragment-index=1>
+                      $$\mathcal{H} = \frac{p^2}{2m} + m\Phi\left(q\right) \, ,$$
+                      where $q$ are spatial coordinates, and $p$ are momenta.
+                    </p>
+                    <p class="fragment" data-fragment-index=2>
+                      $\mathcal{H}$ determines the flow of particles through phase space:
+                      $$
+                        \dot{q} = \frac{\partial\mathcal{H}}{\partial p} , \ \ \ 
+                        \dot{p} = -\frac{\partial\mathcal{H}}{\partial q} \, .
+                      $$
+                    </p>
+                    <p class="fragment" data-fragment-index=3>
+                      $\mathcal{H}$ determines how a distribution function $f\left(q,p\right)$ will change over time.
+                    </p>
+                  </div>
+                  <div class="fragment" data-fragment-index=6>
+                    <p>
+                      $\mathcal{H}$ determines how a distribution function $f\left(q,p\right)$ will change over time.
+                    </p>
+                    <p class="fragment space-top" data-fragment-index=7>
+                      Collisionless Boltzmann Equation (CBE):
+                      $$
+                        \frac{\mathrm{d}f}{\mathrm{d}t}
+                        =
+                        \frac{\partial f}{\partial t}
+                        +
+                        \sum_{\mathrm{dimension}\ i} \!
+                        \left(
+                          p_i \, \frac{\partial f}{\partial q_i}
+                          -\frac{\partial \Phi}{\partial q_i} \frac{\partial f}{\partial p_i}
+                        \right)
+                        = 0 \, .
+                      $$
+                    </p>
+                    <p class="fragment space-top" data-fragment-index=8>
+                      &rArr; Adjust $\Phi\left(q\right)$ until $\frac{\partial f}{\partial t} \rightarrow 0$ everywhere.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section data-auto-animate>
+            <h4>Hamiltonians, distribution functions and stationarity</h4>
+            <div class="multicol vcenter">
+              <div class="r-stack">
+                <img data-src="../media/deep_potential/delf_delt.png"></img>
+                <img data-src="../media/deep_potential/delf_delt_philine.png" class="fragment"></img>
+              </div>
+              <div>
+                <p>
+                  Collisionless Boltzmann Equation (CBE):
+                  $$
+                    \frac{\mathrm{d}f}{\mathrm{d}t}
+                    =
+                    \frac{\partial f}{\partial t}
+                    +
+                    \sum_{\mathrm{dimension}\ i} \!
+                    \left(
+                      p_i \, \frac{\partial f}{\partial q_i}
+                      -\frac{\partial \Phi}{\partial q_i} \frac{\partial f}{\partial p_i}
+                    \right)
+                    = 0 \, .
+                  $$
+                </p>
+                <p>
+                  &rArr; Adjust $\Phi\left(q\right)$ until $\frac{\partial f}{\partial t} \rightarrow 0$ everywhere.
+                </p>
+                <p class="space-top">There may be no $\Phi\left(q\right)$ that solves the equation everywhere!</p>
+              </div>
+            </div>
+          </section>
+
+          <section data-transition="slide-in none-out">
+            <p>We need to be able to calculate <span style="color:cyan;">gradients</span> of the distribution function:</p>
+            <p>
+              $$
+              \require{color}
+              \sum_{\mathrm{dimension}\ i} \!
+              \left(
+                v_i \, {\color{cyan} \frac{\partial f}{\partial x_i}}
+                -\frac{\partial \Phi}{\partial x_i} {\color{cyan} \frac{\partial f}{\partial v_i}}
+              \right)
+              = 0 \, .
+              $$
+            </p>
+          </section>
+
+          <section data-transition="none-in slide-out">
+            <p>Our parameterization of the potential needs to be easily <span style="color:lightgreen;">differentiable</span>:</p>
+            <p>
+              $$
+              \sum_{\mathrm{dimension}\ i} \!
+              \left(
+                v_i \, \frac{\partial f}{\partial x_i}
+                -{\color{lightgreen} \frac{\partial \Phi}{\partial x_i}} \frac{\partial f}{\partial v_i}
+              \right)
+              = 0 \, .
+              $$
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h4>Overview of &ldquo;Deep Potential&rdquo;</h4>
+            <img class="r-stretch" data-src="../media/deep_potential/deep_potential_explanatory_figure.svg"></img>
+            <p class="attribution">(<a href="https://ui.adsabs.harvard.edu/abs/2020arXiv201104673G/abstract">Green &amp; Ting 2020</a>; <a href="https://ui.adsabs.harvard.edu/abs/2023ApJ...942...26G/abstract">Green, Ting &amp; Kamdar 2023</a>)</p>
+          </section>
+
+          <section>
+            <h4>Fitting the distribution function</h4>
+            <img class="r-stretch" data-src="../media/deep_potential/deep_potential_explanatory_figure_df.svg"></img>
+            <p class="attribution">(<a href="https://ui.adsabs.harvard.edu/abs/2020arXiv201104673G/abstract">Green &amp; Ting 2020</a>)</p>
+          </section>
+
+          <section>
+            <h3>Normalizing flows</h3>
+            <div class="multicol vcenter">
+              <div>
+                <video data-autoplay data-src="../media/deep_potential/trajectories_moons_grid_loop_1600.mp4" loop="loop"></video>
+              </div>
+              <div>
+                <div>
+                  <p>Invertible transformation: $\vec{x} \leftrightarrow \vec{y}$</p>
+                  <p>$p \left( \vec{x} \right)$ is simple, but $p \left( \vec{y} \right)$ is complicated.</p>
+                </div>
+                <div class="r-stack">
+                  <div class="fragment current-visible">
+                    <p>Sampling: draw $\vec{x} \sim p\big(\vec{x}\big)$, transform to $\vec{y}$.</p>
+                  </div>
+                  <div class="fragment current-visible">
+                    <p>Probability density in $\vec{y}$:
+                      $$
+                        p \left( \vec{y} \right) =
+                        \left| \frac{\partial \vec{x}}{\partial \vec{y}} \right|
+                        p \left( \vec{x} \right) \, .
+                      $$
+                    </p>
+                    <p>&rArr; Requires Jacobian of coordinate transformation.</p>
+                  </div>
+                  <div class="fragment">
+                    <p>FFJORD: <a href="https://arxiv.org/abs/1810.01367">Grathwohl+(2018)</a>, <a href="https://arxiv.org/abs/2002.02798">Finlay+(2020)</a></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!--
+          <section>
+            <h4>Fitting the distribution function</h4>
+            <img data-src="../media/deep_potential/deep_potential_explanatory_figure_df.svg"></img>
+            <p>
+              $f_{\varphi}$ is a normalizing flow with a large number of fitting parameters, $\varphi$.
+            </p>
+            <p class="fragment space-top">
+              Maximize the Poisson likelihood of the stars, varying $\varphi$:
+              $$
+              \DeclareMathOperator*{\argmax}{arg\,max}
+              \varphi^{\ast}
+              =
+              \argmax_{\varphi} \bigg[
+                \ln p \left( \left\{ \hat{x} , \hat{v} \right\} \mid \varphi \right)
+              \bigg]
+              =
+              \argmax_{\varphi}
+              \Bigg[
+                \sum_{\mathrm{star}\ k}
+                  \ln f_{\varphi} \! \left( \hat{x}_k , \hat{v}_k \right)
+              \Bigg]
+              \, .
+              $$
+            </p>
+          </section>
+          -->
+
+          <section>
+            <h4>Compute gradients of the distribution function</h4>
+            <img data-src="../media/deep_potential/deep_potential_explanatory_figure_df_grads.svg"></img>
+            <p>Normalizing flows are <span style="color:cyan;">differentiable</span>.</p>
+            <div class="fragment space-top">
+              <p>In Tensorflow, it's as simple as</p>
+              <pre><code class="python" data-trim>
+                with tf.GradientTape() as g:
+                  g.watch(eta)
+                  f = flow(eta)
+                df_deta = g.gradient(f, eta)
+              </code></pre>
+            </div>
+          </section>
+
+          <section>
+            <h4>Fitting the potential</h4>
+            <img data-src="../media/deep_potential/deep_potential_explanatory_figure_Phi.svg"></img>
+            <div class="r-stack">
+              <div class="fragment current-visible">
+                <p>Represent $\Phi$ as a neural network: $\Phi_{\theta} \left( \vec{x} \right)$.
+                <p>&rArr; <span style="color:cyan;">auto-differentiable</span>: $\frac{\partial \Phi}{\partial \vec{x}}$.</p>
+              </div>
+              <div class="fragment current-visible">
+                <p>Find parameters $\theta$ that minimize <span style="color:lightgreen;">non-stationarity</span>:</p>
+                <p>
+                  $$
+                  \require{color}
+                  \DeclareMathOperator*{\argmin}{arg\,min}
+                  \DeclareMathOperator*{\asinh}{asinh}
+                  \theta^{\ast}
+                  =
+                  \argmin_{\theta}
+                  \left<
+                    {\color{lightgreen}
+                      \asinh \left|
+                        \frac{\partial f_{\varphi^{\ast}}}{\partial t}
+                      \right|
+                    }
+                    +
+                    \lambda \, \asinh \left(
+                      \max \left\{
+                        -\nabla^2 \Phi_{\theta}
+                        , \,
+                        0
+                      \right\}
+                    \right)
+                  \right>_{
+                    \vec{x} , \vec{v} \, \sim \, f_{\varphi^{\ast}}
+                  }
+                  $$
+                </p>
+              </div>
+              <div class="fragment current-visible">
+                <p>Penalize <span class="red">negative mass densities</span>:</p>
+                <p>
+                  $$
+                  \require{color}
+                  \DeclareMathOperator*{\argmin}{arg\,min}
+                  \DeclareMathOperator*{\asinh}{asinh}
+                  \theta^{\ast}
+                  =
+                  \argmin_{\theta}
+                  \left<
+                    \asinh \left|
+                      \frac{\partial f_{\varphi^{\ast}}}{\partial t}
+                    \right|
+                    +
+                    {\color{red}
+                      \lambda \, \asinh \left(
+                        \max \left\{
+                          -\nabla^2 \Phi_{\theta}
+                          , \,
+                          0
+                        \right\}
+                      \right)
+                    }
+                  \right>_{
+                    \vec{x} , \vec{v} \, \sim \, f_{\varphi^{\ast}}
+                  }
+                  $$
+                </p>
+              </div>
+              <div class="fragment">
+                <p><span style="color:cyan;">Average over sample</span> drawn from DF:</p>
+                <p>
+                  $$
+                  \require{color}
+                  \DeclareMathOperator*{\argmin}{arg\,min}
+                  \DeclareMathOperator*{\asinh}{asinh}
+                  \theta^{\ast}
+                  =
+                  \argmin_{\theta}
+                  {\color{cyan}
+                  \left<
+                    {\color{white}
+                    \asinh \left|
+                      \frac{\partial f_{\varphi^{\ast}}}{\partial t}
+                    \right|
+                    +
+                    \lambda \, \asinh \left(
+                      \max \left\{
+                        -\nabla^2 \Phi_{\theta}
+                        , \,
+                        0
+                      \right\}
+                    \right)
+                    }
+                  \right>_{
+                    \vec{x} , \vec{v} \, \sim \, f_{\varphi^{\ast}}
+                  }
+                  }
+                  $$
+                </p>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <!--
+        <section>
+          <section class="compact">
+            <h3>Toy example: Miyamoto-Nagai disk</h3>
+            <p>Axisymmetric, flattened disk potential.</p>
+            <p class="attribution">(<a href="https://ui.adsabs.harvard.edu/abs/2020arXiv201104673G/abstract">Green &amp; Ting 2020</a>; <a href="https://ui.adsabs.harvard.edu/abs/2023ApJ...942...26G/abstract">Green, Ting &amp; Kamdar 2023</a>)</p>
+            <p class="fragment slight-space-top">Integrate particles in potential until they phase-mix. &rArr; Stationary ensemble.</p>
+            <video data-autoplay data-src="../media/deep_potential/mn_orbit_integration_projections_h264_crf27.mp4" loop="loop" class="fragment"></video>
+          </section>
+
+          <section>
+            <div class="multicol vcenter">
+              <div class="widest">
+                <img class="full-width" data-src="../media/deep_potential/mn_stat_phi_rho_xy_Rz.svg"></img>
+              </div>
+              <div>
+                <h3>Recovery of potential and density</h3>
+              </div>
+          </section>
+
+          <section>
+            <h3>Residuals in potential, forces and density</h3>
+            <img class="r-stretch" data-src="../media/deep_potential/mn_stat_residuals_xy_plane.svg"></img>
+            <div class="fragment">
+              <p>~0.1% accuracy in potential, few % accuracy in forces, ~20% accuracy in density.</p>
+            </div>
+          </section>
+
+          <section>
+            <h3>Recovery of nonstationary distribution function</h3>
+            <div class="r-stack">
+              <img class="full-width fragment fade-out" data-fragment-index=0 data-src="../media/deep_potential/mn_nonstat_DF_marginal_R_vR.svg"></img>
+              <img class="full-width fragment" data-fragment-index=0 data-src="../media/deep_potential/mn_nonstat_DF_marginal_vR_vT.svg"></img>
+            </div>
+          </section>
+
+          <section>
+            <h3>Recovery of nonstationary potential, forces &amp; density</h3>
+            <div class="r-stack">
+              <img class="full-width fragment fade-out" data-fragment-index=0 data-src="../media/deep_potential/mn_nonstat_residuals_xy_plane.svg"></img>
+              <img class="full-width fragment" data-fragment-index=0 data-src="../media/deep_potential/mn_stat_residuals_xy_plane.svg"></img>
+            </div>
+            <p class="fragment" data-fragment-index=0 style="color:gray;">(stationary case - for comparison)</p>
+          </section>
+
+          <section>
+            <div class="multicol vcenter">
+              <div>
+                <h3>Identifying bulk motions</h3>
+                <p>Calculate $\partial f / \partial t$, given the best-fit potential and distribution function:</p>
+                <p>
+                  $$
+                    \frac{\partial f}{\partial t}
+                    = \!\!\!\!\!
+                    \sum_{\mathrm{dimension}\ i} \!
+                    \left(
+                      \frac{\partial \Phi}{\partial x_i} \frac{\partial f}{\partial v_i}
+                      - v_i \, \frac{\partial f}{\partial v_i}
+                    \right)
+                  $$
+                </p>
+              </div>
+              <div class="wider compact">
+                <img class="full-width fragment" data-src="../media/deep_potential/nonstationarity_R_vR_vT.svg"></img>
+              </div>
+            </div>
+          </section>
+        </section>
+        -->
+
+        <section>
+          <section>
+            <h2>$N$-body simulation of a barred galaxy</h2>
+            <img data-src="../media/deep_potential/barred_nbody_timesteps_background.svg" class="r-stretch"></img>
+            <p><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv231000040K">Kalda, Green &amp; Ghosh (2023), arXiv:2310.00040</a></p>
+          </section>
+
+          <section>
+            <div class="multicol vcenter">
+              <div class="">
+                <img data-src="../media/deep_potential/barred_nbody_true_rho_x_y_t80.svg" class="full-width"></img>
+              </div>
+              <div class="wide">
+                <h3>Stationarity <em>in a rotating frame</em>.</h3>
+                <p class="fragment space-top">$$\frac{\partial f}{\partial t} \neq 0$$</p>
+                <p class="fragment shrink-text-slight">
+                  $$
+                  \frac{\partial f}{\partial t}
+                  + \left[
+                      \vec{\Omega} \!\times\! \left( \vec{x}\!-\!\vec{x}_0 \right)
+                    \!+\! \vec{v}_0
+                    \right]
+                    \!\cdot\!
+                    \frac{\partial f}{\partial \vec{x}}
+                  +
+                    \vec{\Omega} \!\times\! \left( \vec{v}\!-\!\vec{v}_0 \right)
+                    \!\cdot\!
+                    \frac{\partial f}{\partial \vec{v}}
+                  = 0
+                  $$
+                </p>
+                <p class="fragment space-top">&rArr; Infer rotation: $\vec{\Omega}$.</p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h3>1. Fit distribution function</h3>
+            <div class="r-stack">
+              <img data-src="../media/deep_potential/barred_nbody_DF_marginal_x_y_t80.svg" class="full-width fragment"></img>
+              <img data-src="../media/deep_potential/barred_nbody_DF_marginal_vR_vT_t80.svg" class="full-width fragment"></img>
+            </div>
+          </section>
+
+          <section>
+            <h3>2. Fit gravitational potential</h3>
+            <div class="r-stack space-top">
+              <p class="fragment current-visible" data-fragment-index=1>Accelerations: $\vec{a} = -\nabla \Phi$</p>
+              <p class="fragment fade-in" data-fragment-index=2>Density: $\rho = \nabla^2 \Phi / \left(4\pi G\right)$</p>
+            </div>
+            <div class="r-stack">
+              <img data-src="../media/deep_potential/barred_nbody_true_vs_model_acc_t80_x.svg" class="full-width fragment current-visible" data-fragment-index=1></img>
+              <img data-src="../media/deep_potential/barred_nbody_true_vs_model_rho_x_y_t80.svg" class="full-width fragment fade-in" data-fragment-index=2></img>
+            </div>
+          </section>
+
+          <section>
+            <div class="multicol vcenter">
+              <div class="r-stack wide">
+                <img data-src="../media/deep_potential/barred_nbody_dlnf_dt_x_y_t80_lab.svg" class="full-width fragment"></img>
+                <img data-src="../media/deep_potential/barred_nbody_dlnf_dt_x_y_t80_rot.svg" class="full-width fragment"></img>
+              </div>
+              <div>
+                <h3>Non-stationarities</h3>
+                <p>How much non-stationarity is left over in the system?</p>
+                <p class="fragment">Galaxy is more stationary in rotating frame.</p>
+                <p class="fragment">$\Omega$ inferred to ~15% accuracy.</p>
+              </div>
+            </div>
+          </section>
+
+          <!--
+          <section>
+            <div class="multicol vcenter">
+              <div class="wide">
+                <img data-src="../media/deep_potential/barred_nbody_marginal_4kpc.svg" class="full-width"></img>
+              </div>
+              <div>
+                <h3>Solar-like sub-volume</h3>
+                <p class="fragment">Similar to what <em>Gaia</em> observes.</p>
+                <p class="fragment">$\Omega$ inferred to ~20% accuracy.</p>
+              </div>
+            </div>
+          </section>
+          -->
+
+          <section>
+            <div class="multicol vcenter">
+              <div class="r-stack wide">
+                <img data-src="../media/deep_potential/barred_nbody_true_vs_model_dm_vs_r_t80_tot_model.svg" class="full-width fragment" data-fragment-index=1></img>
+                <img data-src="../media/deep_potential/barred_nbody_true_vs_model_dm_vs_r_t80_tot.svg" class="full-width fragment" data-fragment-index=2></img>
+                <img data-src="../media/deep_potential/barred_nbody_true_vs_model_dm_vs_r_t80.svg" class="full-width fragment" data-fragment-index=3></img>
+              </div>
+              <div>
+                <h3>Radial density profile</h3>
+                <p>$\rho\left(r\right)$</p>
+                <p class="fragment" data-fragment-index=3>Subtract stars from modeled density to obtain dark-matter density.</p>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section class="compact">
+            <h3>Application to Gaia: Modeling the selection function</h3>
+            <div class="r-stack">
+              <img class="fragment full-width fade-out" data-fragment-index=1 style="filter:saturate(0);" data-src="../media/deep_potential/gaia_sel_mollweide_count.svg"></img>
+              <img class="fragment full-width current-visible" data-fragment-index=1 data-src="../media/deep_potential/gaia_sel_mollweide_E.svg"></img>
+              <img class="fragment full-width current-visible" data-fragment-index=2 data-src="../media/deep_potential/gaia_sel_mollweide_astrometric_matched_transits.svg"></img>
+              <img class="fragment full-width current-visible" data-fragment-index=3 data-src="../media/deep_potential/gaia_sel_mollweide_completeness.svg"></img>
+              <img class="fragment full-width current-visible" data-fragment-index=4 data-src="../media/deep_potential/gaia_sel_mollweide_sel_optuna.svg"></img>
+              <img class="fragment full-width" data-fragment-index=5 data-src="../media/deep_potential/gaia_sel_mollweide_sel_residue_optuna.svg"></img>
+            </div>
+          </section>
+
+          <section data-background-video="../media/gaia/gaia_proper_motion_on_sky_h264.mp4" data-background-video-loop data-background-size="contain" class="full-height">
+            <div class="stroke-text-dark-thick">
+              <h2>Dust</h2>
+              <p class="fragment">
+                Recovering the true distribution of stellar $\left\{ \vec{x} , \vec{v} \right\}$ requires accurate dust corrections.
+              </p>
+              <p class="fragment">
+                Dust plays a key role in star formation and the chemistry of the interstellar medium.
+              </p>
+            </div>
+            <div class="footer">
+              <p class="attribution"><a href="https://sci.esa.int/web/gaia/-/60233-parallax-and-proper-motion-on-the-sky">ESA/Gaia/DPAC, CC BY-SA 3.0 IGO</a></p>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section data-auto-animate class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
+            <h1>Dust mapping</h1>
+            <div class="footer">
+              <p><a href="https://ui.adsabs.harvard.edu/abs/1998ApJ...500..525S/abstract">Schlegel, Finkbeiner &amp; Davis (1998; &ldquo;SFD&rdquo;)</a></p>
+            </div>
+          </section>
+          <section data-auto-animate class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
+            <h1>Dust mapping</h1>
+            <div class="compact space-top">
+              <p class="stroke-text-dark">Universal extinction curve: $A\left(\lambda\right) / A\left(\lambda_0\right)$.</p>
+              <img style="background: #00000077; display: inline-block; box-shadow: 0px 0px 25px #000;" class="r-stretch" data-src="../media/dust/extinction_curve_hensley_draine_2003.svg"></img>
+            </div>
+          </section>
+          <section data-auto-animate data-auto-animate-duration=0 class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
+            <h1>Dust mapping</h1>
+            <div class="compact space-top">
+              <p class="stroke-text-dark">Universal extinction curve: $A\left(\lambda\right) / A\left(\lambda_0\right)$.</p>
+              <img style="background: #00000077; display: inline-block; box-shadow: 0px 0px 25px #000;" class="r-stretch" data-src="../media/dust/extinction_curve_hensley_draine_2003_wRv.svg"></img>
+            </div>
+          </section>
+          <section data-auto-animate data-auto-animate-duration=0 class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
+            <h1>Dust mapping</h1>
+            <div class="compact space-top">
+              <p class="stroke-text-dark">R(V) varies.</p>
+              <img style="background: #00000077; display: inline-block; box-shadow: 0px 0px 25px #000;" class="limit-width" data-src="../media/dust/RV_Fitzpatrick1999.png"></img>
+            </div>
+          </section>
+          <section data-auto-animate class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
+            <h1>Dust mapping</h1>
+            <div class="footer">
+              <p class="stroke-text-dark" style="padding-bottom:40pt;">Universal extinction curve: $A\left(\lambda\right) / A\left(\lambda_0\right)$.</p>
+            </div>
+          </section>
+          <section data-auto-animate class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background.jpg">
+            <h1 class="stroke-text-dark-thick">Dust mapping</h1>
+            <div class="footer">
+              <h4 style="padding-bottom:50pt;color:black;" class="stroke-text-light-thick">Varying extinction curve.</h4>
+            </div>
+          </section>
+          <section data-auto-animate class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background.jpg">
+            <h1 class="stroke-text-dark-thick">Dust mapping</h1>
+            <div class="compact space-top">
+              <h4 style="color:black;" class="stroke-text-light-thick">Varying extinction curve.</h4>
+              <img style="background: #00000077; display: inline-block; box-shadow: 0px 0px 25px #000;" class="r-stretch" data-src="../media/xp_rv/extcurve_zxy.svg"></img>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted.jpg">
+            <h1 class="stroke-text-dark">Data</h1>
+          </section>
+
+          <section>
+            <h3>Gaia BP/RP spectrophotometry</h3>
+            <h4 class="fragment">(&ldquo;XP spectra&rdquo;)</h4>
+            <div class="multicol vcenter fragment">
+              <div>
+                <ul>
+                  <li>$R \sim 50-160$</li>
+                  <li>slitless spectroscopy</li>
+                  <li>optical (330&mdash;1050 nm)</li>
+                  <li>220 million stars (in DR3)</li>
+                </ul>
+              </div>
+              <div class="wider">
+                <img data-src="../media/bprp/optical_path.png" class=""></img>
+              </div>
+            </div>
+            <!--
+            <p>Blue Photometer (BP): 330&mdash;680 nm</p>
+            <p>Red Photometer (RP): 640&mdash;1050 nm</p>
+            -->
+          </section>
+
+          <section data-transition="slide-in none-out">
+            <h3>Example XP spectra</h3>
+            <img data-src="../media/bprp/example_XP_spectrum_0.svg" class="r-stretch"></img>
+          </section>
+          <section data-transition="none-in none-out">
+            <h3>Example XP spectra</h3>
+            <img data-src="../media/bprp/example_XP_spectrum_1.svg" class="r-stretch"></img>
+          </section>
+          <section data-transition="none-in slide-out">
+            <h3>Example XP spectra</h3>
+            <img data-src="../media/bprp/example_XP_spectrum_2.svg" class="r-stretch"></img>
+          </section>
+
+          <section>
+            <h2>Comparison with LAMOST</h2>
+
+            <ul>
+              <li class="fragment">20&times; as many stars</li>
+              <li class="fragment">1/20<sup>th</sup> the resolution</li>
+              <li class="fragment">Flux-calibrated</li>
+              <li class="fragment">All-sky, uniform selection function</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted.jpg">
+            <h1 class="stroke-text-dark">Modeling approach</h1>
+          </section>
+
+          <section data-transition="slide-in none-out">
+            <h4>How to extract astrophysical information from these spectra?</h4>
+            <img class="r-stretch" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_xp.svg"></img>
+          </section>
+          <section data-transition="none-in none-out">
+            <h4>How to extract astrophysical information from these spectra?</h4>
+            <img class="r-stretch" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_1.svg"></img>
+          </section>
+          <section data-transition="none-in none-out">
+            <h4>How to extract astrophysical information from these spectra?</h4>
+            <img class="r-stretch" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_0p.svg"></img>
+          </section>
+          <section data-transition="none-in slide-out">
+            <h4>How to extract astrophysical information from these spectra?</h4>
+            <img class="r-stretch" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_2.svg"></img>
+          </section>
+
+          <section>
+            <h4>Gaia-LAMOST crossmatch</h4>
+            <div class="multicol vcenter buffer">
+              <div>
+                <img class="r-stretch" data-src="../media/bprp/crossmatch_kiel.svg" style="filter:invert(1) hue-rotate(180deg);"></img>
+              </div>
+              <div>
+              <div>
+                <p>2.6 million matches.</p>
+                <p class="fragment space-top">Bootstrap the 1% of BP/RP stars with LAMOST matches to determine types of the other 99%.</p>
+                <p class="space-top fragment">(Include NIR photometry from 2MASS &amp; WISE)</p>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Forward model of stellar spectrum</h3>
+            <span class="fragment" data-fragment-index=1></span>
+            <span class="fragment" data-fragment-index=2></span>
+            <span class="fragment" data-fragment-index=3></span>
+            <p style="font-size:150%;">
+              $$
+              f_{\lambda}\left(
+                \lambda
+                \class{fragment}{\data{fragment-index=0}{
+                  ,\class{star-color}{\Theta,\varpi,E,\xi}
+                  }
+                }
+              \right)
+              \class{fragment}{\data{fragment-index=1}{
+                =
+                {\color{gray}
+                \underbrace{
+                  \color{white}
+                  \ 
+                  F_{\lambda}\left(\lambda,\class{star-color}{\Theta};\class{model-color}{W}\right)
+                }_{
+                  \mathrm{neural\ network}
+                }
+                }
+              }}
+              \class{fragment}{\data{fragment-index=2}{
+                \, \class{star-color}{\varpi^2}
+              }}
+              \class{fragment}{\data{fragment-index=3}{
+              \, e^{-\class{star-color}{E} \class{model-color}{R}\left(\lambda,\,\class{star-color}{\xi}\right)}
+              }}
+              $$
+            </p>
+            <div class="multicol">
+              <div class="star-color fragment wide" data-fragment-index=0>
+                <p>Stellar parameters:</p>
+                <ul>
+                  <li>$\Theta =$ type (LAMOST)</li>
+                  <li>$\varpi =$ parallax (Gaia)</li>
+                  <li>$E =$ extinction (Bayestar19)</li>
+                  <li>$\xi =$ extinction curve shape (universal at first)</li>
+                </ul>
+              </div>
+              <div class="model-color fragment" data-fragment-index=1>
+                <p>Model parameters:</p>
+                <ul>
+                  <li>$W =$ neural net weights</li>
+                  <li class="fragment" data-fragment-index=3>$R =$ extinction curve</li>
+                </ul>
+              </div>
+            </div>
+            <p class="fragment space-top" data-fragment-index=4><span class="star-color">$\xi$</span> plays the role of $R(V)$.</p>
+            <p class="fragment" data-fragment-index=5>Model structure reflects the physics of $f_{\lambda}$.</p>
+          </section>
+
+          <!--
+          <section>
+            <div class="multicol">
+              <div>
+                <h3>Extinction model</h3>
+                <p style="font-size:130%;">
+                  $$
+                    \vec{A} = \class{star-color}{E} \, \exp\left(
+                        \class{model-color}{\ln\vec{R}_0}
+                      + \class{star-color}{\xi}
+                      \,\class{model-color}{\Delta\ln\vec{R}}
+                    \right)
+                  $$
+                </p>
+                <p class="fragment space-top">Mean extinction curve: $\class{model-color}{\ln\vec{R}_0}$</p>
+                <p class="fragment">Variation in extinction curve: $\class{model-color}{\Delta\ln\vec{R}}$</p>
+                <p class="fragment">$\class{star-color}{\xi}$ plays the role of $R(V)$.</p>
+              </div>
+              <div>
+                <p class="space-top">
+                Key:
+                  $$
+                  \class{star-color}{\mathrm{stellar\ parameters}} \\
+                  \class{model-color}{\mathrm{model\ parameters}}
+                  $$
+                </p>
+              </div>
+            </div>
+          </section>
+          -->
+
+          <section class="compact">
+            <h4>Model structure</h4>
+            <img data-src="../media/bprp/bprp_nn_structure_xi_dark.svg"></img>
+          </section>
+
+          <section class="compact">
+            <h4>Model vs. Observations</h4>
+            <img class="r-stretch" data-src="../media/bprp/chi2_example.svg" style="filter:invert(1) hue-rotate(0deg) saturate(2.0) contrast(1.0);"></img>
+          </section>
+
+          <section class="compact">
+            <h4>Training the model</h4>
+            <div class="multicol vcenter">
+              <div class="wide">
+                <div class="r-stack">
+                  <img class="fragment fade-out" data-fragment-index=1 data-src="../media/bprp/bprp_nn_structure_xi_dark.svg"></img>
+                  <img class="fragment current-visible" data-fragment-index=1 data-src="../media/xp_rv/bprp_nn_structure_xi_dark_highlightmodelparams.svg"></img>
+                  <img class="fragment current-visible" data-fragment-index=2 data-src="../media/xp_rv/bprp_nn_structure_xi_dark_highlightstellarparams.svg"></img>
+                  <img class="fragment current-visible" data-fragment-index=3 data-src="../media/xp_rv/bprp_nn_structure_xi_dark_highlightparams.svg"></img>
+                  <img class="fragment" data-fragment-index=4 data-src="../media/bprp/bprp_nn_structure_xi_dark.svg"></img>
+                </div>
+              </div>
+              <div>
+                <img data-src="../media/bprp/chi2_example.svg" style="filter:invert(1) hue-rotate(0deg) saturate(2.0) contrast(1.0);"></img>
+              </div>
+            </div>
+            <div class="r-stack">
+              <p class="fragment current-visible" data-fragment-index=1>Update <span style="font-weight:bold; color:#ff5555;">model</span>, holding <span style="font-weight:bold; color:#6397caff;">stellar parameters</span> fixed.</p>
+              <p class="fragment current-visible" data-fragment-index=2>Update <span style="font-weight:bold; color:#6397caff;">stellar parameters</span>, holding <span style="font-weight:bold; color:#ff5555;">model</span> fixed.</p>
+              <p class="fragment current-visible" data-fragment-index=3>Converge on optimal <span style="font-weight:bold; color:#ff5555;">model</span> and <span style="font-weight:bold; color:#6397caff;">stellar parameters</span>.</p>
+              <p class="fragment" data-fragment-index=4>Implemented in auto-differentiable framework (<em>TensorFlow</em>). &rArr; gradient descent.</p>
+            </div>
+          </section>
+
+          <section>
+            <h3>Learned stellar models of Gaia XP spectra</h3>
+            <div class="r-stack">
+              <img class="full-width fragment fade-out" data-fragment-index=0 data-src="../media/bprp/model_flux_vs_dwarfs_nolines.svg"></img>
+              <img class="full-width fragment current-visible" data-fragment-index=0 data-src="../media/bprp/model_flux_vs_dwarfs_hlines.svg"></img>
+              <img class="full-width fragment" data-fragment-index=1 data-src="../media/bprp/model_flux_vs_dwarfs_metallines.svg"></img>
+            </div>
+            <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
+          </section>
+
+          <section class="compact" data-transition="slide-in none-out">
+            <img class="r-stretch" data-src="../media/xp_rv/extcurve_comp_v2_vs_G23_panelA.svg"></img>
+            <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green (2024)</a></p>
+          </section>
+
+          <section class="compact" data-transition="none-in slide-out">
+            <img class="r-stretch" data-src="../media/xp_rv/extcurve_comp_v2_vs_G23_panelB.svg"></img>
+            <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023ApJ...950...86G/abstract">Gordon <em>et al.</em> (2023)</a></p>
+          </section>
+        </section>
+
+        <section>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
+            <h2 class="stroke-text-dark">Learned stellar parameters</h2>
+            <h4 class="fragment stroke-text-dark">Use XP spectra, NIR photometry &amp; Gaia parallaxes to learn parameters of 220 million stars.</h4>
+            <h4 class="fragment stroke-text-dark">LAMOST spectra <em>not</em> used for parameter inference.</h4>
+          </section>
+
+          <section data-auto-animate>
+            <h3>Infer dust R(V) for every star ...</h3>
+            <p class="fragment">Remove stars with bad $\chi^2/\mathrm{dof}$, low extinction, ...</p>
+            <p class="fragment">~130 million R(V) measurements with XP (<span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green 2024</a></span>)</p>
+          </section>
+          <section data-auto-animate class="compact">
+            <p>~130 million R(V) measurements with XP (<span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green 2024</a></span>)</p>
+            <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_ZG24.svg"></img>
+          </section>
+
+          <section data-transition="none-out slide-in">
+            <div class="multicol vcenter">
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/s16_comparison_xi_x_Egt0p1.svg"></img>
+              </div>
+              <div class="wide">
+                <h3>Comparison with <span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2016ApJ...821...78S/abstract">Schlafly+ (2016)</a></span></h3>
+                <p>One-to-one relation between our extinction-curve measures</p>
+              </div>
+            </div>
+          </section>
+
+          <section data-transition="none-in slide-out">
+            <div class="multicol vcenter">
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/xp_zry_lamost_hist2d_Egt0p1.svg"></img>
+              </div>
+              <div class="wide">
+                <h3>Comparison with <span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023ApJS..269....6Z/abstract">Zhang+ (2023)</a></span></h3>
+                <p>One-to-one relation between our extinction-curve measures</p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h3>Compare with previous catalogs of R(V) ...</h3>
+          </section>
+
+          <section class="compact" data-transition="slide-in none-out">
+            <h4>100s of R(V) measurements with O/B-stars (Gordon+23, Valencic+04)</h4>
+            <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_G23_V04.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <h4>~37,000 R(V) measurements with APOGEE/PS1 <span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2016ApJ...821...78S/abstract">(Schlafly+2016)</a></span></h4>
+            <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_S16.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <h4>~1 million R(V) measurements with LAMOST/XP <span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023ApJS..269....6Z/abstract">(Zhang+2023)</a></span></h4>
+            <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_ZYC23.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in slide-out">
+            <h4>~130 million R(V) measurements with XP (<span class="attribution"><a href="https://arxiv.org/abs/2407.14594">Zhang &amp; Green 2024)</a></span></h4>
+            <img class="r-stretch" data-src="../media/xp_rv/skyplot_Rv_ZG24.svg"></img>
+          </section>
+
+          <section>
+            <h3>Distribution in the Galactic plane ...</h3>
+          </section>
+
+          <section class="compact" data-transition="slide-in none-out">
+            <h4>100s of R(V) measurements with O/B-stars (Gordon+23, Valencic+04)</h4>
+            <img class="r-stretch" data-src="../media/xp_rv/birdseyeplot_Rv_G23_V04.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <h4>~37,000 R(V) measurements with APOGEE/PS1 <span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2016ApJ...821...78S/abstract">(Schlafly+2016)</a></span></h4>
+            <img class="r-stretch" data-src="../media/xp_rv/birdseyeplot_Rv_S16.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <h4>~1 million R(V) measurements with LAMOST/XP <span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023ApJS..269....6Z/abstract">(Zhang+2023)</a></span></h4>
+            <img class="r-stretch" data-src="../media/xp_rv/birdseyeplot_Rv_ZYC23.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in slide-out">
+            <h4>~130 million R(V) measurements with XP (<span class="attribution"><a href="https://arxiv.org/abs/2407.14594">Zhang &amp; Green 2024)</a></span></h4>
+            <img class="r-stretch" data-src="../media/xp_rv/birdseyeplot_Rv_ZG24.svg"></img>
+          </section>
+
+          <section>
+            <h3>3D map of R(V) ...</h3>
+            <p class="fragment">&ldquo;Undoing&rdquo; the line-of-sight integral:
+              $$
+              A\left(\ell,b\right) = \int_0^{r} \!\! A\left(\ell,b,r'\right) \, \mathrm{d}r'
+              $$
+            </p>
+          </section>
+
+          <section class="compact" data-transition="slide-in none-out">
+            <p>~37,000 R(V) measurements with APOGEE/PS1 (Schlafly+16,17)</p>
+            <img class="r-stretch" data-src="../media/xp_rv/birdseyeplot_dRv_2kpc_S17.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <p>~130 million R(V) measurements with XP (Zhang &amp; Green 2024)</p>
+            <img class="r-stretch" data-src="../media/xp_rv/birdseyeplot_dRv_2kpc_ZG24.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in none-out">
+            <p>~130 million R(V) measurements with XP (Zhang &amp; Green 2024)</p>
+            <img class="r-stretch" data-src="../media/xp_rv/birdseyeplot_dRv_5kpc_ZG24.svg"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in slide-out">
+            <p>~130 million R(V) measurements with XP (Zhang &amp; Green 2024)</p>
+            <img class="r-stretch" data-src="../media/xp_rv/birdseyeplot_dRv_10kpc_ZG24.svg"></img>
+          </section>
+        </section>
+
+        <!--
+        <section>
+          <section data-background-image="../media/bprp/dust_495pc_dark_magma_q60.jpg">
+            <h1 class="stroke-text-dark">Extinction in 3D</h1>
+          </section>
+
+          <section>
+            <h2>Extinction along individual sightlines</h2>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/los_extinction_OrionB.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/bprp/los_extinction_MonocerosR2.svg"></img>
+          </section>
+          
+          <section>
+            <h2>All-sky results from binning and averaging stars</h2>
+          </section>
+
+          <section>
+            <video class="r-stretch" data-autoplay loop data-src="../media/simple_dust23/allsky_multires.mp4"></video>
+          </section>
+
+          <section>
+            <video class="r-stretch" data-autoplay loop data-src="../media/simple_dust23/allsky_multires_diff.mp4"></video>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/GalCen500pc.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/Ophiuchus.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/AquilaSouth.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/GalAntiCen2000pc.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/Orion.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/PerTaurCali.svg"></img>
+          </section>
+
+          <section>
+            <img class="r-stretch" data-src="../media/simple_dust23/CepheusPolaris.svg"></img>
+          </section>
+
+          <section>
+            <div class="multicol">
+              <div class="wider">
+                <img class="full-width" data-src="../media/bprp/extinction_birdseye_bprp_zhang23_dark.svg"></img>
+              </div>
+              <div class="vertical-center">
+                <h3>Bird's-eye view of the Galactic plane</h3>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
+              </div>
+          </section>
+        </section>
+        -->
+
+        <section>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+            <h2 class="stroke-text-dark">Patterns in the data</h2>
+          </section>
+
+          <section data-auto-animate>
+            <img class="r-stretch" data-src="../media/xp_rv/Rv_sky_with_zoom_ins.svg"></img>
+          </section>
+
+          <section data-auto-animate>
+            <div class="multicol">
+              <div class="wide">
+                <img class="full-width" data-src="../media/xp_rv/Rv_sky_with_zoom_ins.svg"></img>
+              </div>
+              <div class="compact">
+                <p>U-shaped relation: density vs. R(V):</p>
+                <div class="r-stack">
+                  <img data-fragment-index=1 class="full-width fragment fade-out" data-src="../media/xp_rv/Rv_vs_E_Perseus.svg"></img>
+                  <img data-fragment-index=1 class="full-width fragment current-visible" data-src="../media/xp_rv/Rv_vs_E_OrionA.svg"></img>
+                  <img data-fragment-index=2 class="full-width fragment current-visible" data-src="../media/xp_rv/Rv_vs_E_Taurus.svg"></img>
+                  <img data-fragment-index=3 class="full-width fragment" data-src="../media/xp_rv/Rv_vs_E_rhoOph.svg"></img>
+                </div>
+                <p class="fragment" data-fragment-index=3>ρ Ophiuchus is different.</p>
+              </div>
+          </section>
+
+          <section data-auto-animate data-auto-animate-restart>
+            <img class="r-stretch" data-src="../media/xp_rv/Rv_OBstars_rhoOph_UpperSco.svg"></img>
+          </section>
+
+          <section data-auto-animate>
+            <div class="multicol vcenter compact">
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/Rv_OBstars_rhoOph_UpperSco.svg"></img>
+              </div>
+              <div>
+                <p>Connection between high R(V) and star formation / UV radiation?</p>
+              </div>
+            </div>
+          </section>
+
+          <section data-transition="slide-in none-out">
+            <img class="r-stretch" data-src="../media/xp_rv/Rv_birdseye_density_overlay_nolabels.svg"></img>
+          </section>
+          <section data-transition="none-in none-out">
+            <img class="r-stretch" data-src="../media/xp_rv/Rv_birdseye_density_overlay.svg"></img>
+          </section>
+          <section data-transition="none-in none-out">
+            <img class="r-stretch" data-src="../media/xp_rv/Rv_birdseye_wo_Ostars.svg"></img>
+          </section>
+          <section data-transition="none-in slide-out">
+            <img class="r-stretch" data-src="../media/xp_rv/Rv_birdseye_w_Ostars.svg"></img>
+          </section>
+
+          <section class="compact">
+            <h4>R(V) in the Magellanic Clouds</h4>
+            <img class="r-stretch" data-src="../media/xp_rv/LMC_SMC_Rv.svg"></img>
+          </section>
+
+          <section>
+            <h2>Two takeaways:</h2>
+            <ol style="font-size:130%;">
+              <li class="fragment">U-shaped relation between density &amp; R(V).</li>
+              <li class="fragment">Star-formation / UV radiation correlated with high R(V).</li>
+            </ol>
+          </section>
+        </section>
+
+        <section>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+            <h2 class="stroke-text-dark">Implications for dust composition</h2>
+            <h4 class="fragment">Zhang, Hensley &amp; Green, <em>in prep.</em></h4>
+          </section>
+
+          <section data-auto-animate class="compact">
+            <h2>Dust-grain evolution</h2>
+            <img class="r-stretch" data-src="../media/xp_rv/galaxy_schematic_McKinnon_etal_2018.png"></img>
+            <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2018MNRAS.478.2851M/abstract">McKinnon+ (2018)</a></p>
+          </section>
+
+          <section data-auto-animate class="compact">
+            <h2>Dust-grain evolution</h2>
+            <div class="multicol vcenter">
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/galaxy_schematic_McKinnon_etal_2018.png"></img>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2018MNRAS.478.2851M/abstract">McKinnon+ (2018)</a></p>
+              </div>
+              <div>
+                <p>Grain-size distribution: $\frac{\mathrm{d}n}{\mathrm{d}a}$
+                  <span class="fragment" data-fragment-index=1>$\propto a^{-3.5}$</span>
+                  <span class="attribution fragment" data-fragment-index=1>(<a href="https://ui.adsabs.harvard.edu/abs/1977ApJ...217..425M/abstract">MRN 1977</a>).</span>
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section data-auto-animate data-auto-animate-restart class="compact">
+            <h4>Accretion and R(V)</h4>
+            <video class="r-stretch" data-autoplay loop data-src="../media/dust/accretion.mp4"></video>
+          </section>
+          <section data-auto-animate class="compact">
+            <h4>Accretion and R(V)</h4>
+            <div class="multicol vcenter">
+              <div class="widest">
+                <video class="full-width" data-autoplay loop data-src="../media/dust/accretion.mp4"></video>
+              </div>
+              <div>
+                <p>R(V) tends to <em>decrease</em>.</p>
+                <p class="fragment">Occurs at intermediate densities (the translucent interstellar medium).</p>
+                <p class="fragment">Large amount of additional mass needed to change R(V) with silicates.</p>
+              </div>
+            </div>
+          </section>
+
+          <section data-auto-animate data-auto-animate-restart class="compact">
+            <h4>Coagulation and R(V)</h4>
+            <video class="r-stretch" data-autoplay loop data-src="../media/dust/coagulation.mp4"></video>
+          </section>
+          <section data-auto-animate class="compact">
+            <h4>Coagulation and R(V)</h4>
+            <div class="multicol vcenter">
+              <div class="widest">
+                <video class="full-width" data-autoplay loop data-src="../media/dust/coagulation.mp4"></video>
+              </div>
+              <div>
+                <p>R(V) tends to <em>increase</em>.</p>
+                <p class="fragment">Important in dense cores of clouds.</p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h3>A simple picture:</h3>
+            <div class="multicol vcenter">
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/Rv_vs_E_OrionA.svg"></img>
+              </div>
+              <div>
+                <ul>
+                  <li class="fragment">Accretion reduces R(V) at intermediate densities <span style="color:gray">(steeper exinction curve)</span>.</li>
+                  <li class="fragment">Coagulation increases R(V) at high densities <span style="color:gray">(flatter extinction curve)</span>.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h3>What about star-forming regions?</h3>
+            <div class="multicol vcenter">
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/Rv_vs_E_rhoOph.svg"></img>
+              </div>
+              <div>
+                <ul>
+                  <li class="fragment">Cycling of large grains from dense molecular clouds back into the surrounding ISM?</li>
+                  <li class="fragment">Destruction of PAHs by ionizing radiation?</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section data-transition="slide-in none-out">
+            <div class="multicol vcenter">
+              <div class="compact wide">
+                <video class="full-width" data-autoplay loop data-src="../media/dust/pah57_rotation.mp4"></video>
+                <p class="attribution">C<sub>19</sub>H<sub>11</sub> from <a href="https://www.astrochemistry.org/pahdb/theoretical/3.20/default/details/57">PAHdb</a></p>
+              </div>
+              <div>
+                <h3>Polycyclic Aromatic Hydrocarbon (PAH)</h3>
+                <p class="space-top">π&rarr;π* electronic transitions in the UV (responsible for 2175&thinsp;Å extinction feature?).</p>
+                <p>Strong mid-IR emission features.</p>
+              </div>
+            </div>
+          </section>
+
+          <section data-transition="none-in slide-out">
+            <div class="multicol vcenter">
+              <div class="compact wide">
+                <video class="full-width" data-autoplay loop data-src="../media/dust/pah_gallery.mp4"></video>
+                <p class="attribution">Several PAHs from <a href="https://www.astrochemistry.org/pahdb/">PAHdb</a></p>
+              </div>
+              <div>
+                <h3>Polycyclic Aromatic Hydrocarbon (PAH)</h3>
+                <p class="space-top">π&rarr;π* electronic transitions in the UV (responsible for 2175&thinsp;Å extinction feature?).</p>
+                <p>Strong mid-IR emission features.</p>
+              </div>
+            </div>
+          </section>
+
+          <section data-transition="slide-in none-out" class="compact">
+            <img class="r-stretch" data-src="../media/dust/PAH_scaling.svg"></img>
+            <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023ApJ...948...55H/abstract">Hensley &amp; Draine (2023)</a> dust model.</p>
+          </section>
+
+          <section data-transition="none-in slide-out">
+            <video class="r-stretch" data-autoplay loop data-src="../media/dust/PAH_scaling.mp4"></video>
+          </section>
+
+          <section data-auto-animate>
+            <video class="r-stretch" data-autoplay loop data-src="../media/dust/PAH_scaling_optical.mp4"></video>
+          </section>
+          <section data-auto-animate>
+            <div class="multicol vcenter">
+              <div class="wide">
+                <video class="full-width" data-autoplay loop data-src="../media/dust/PAH_scaling_optical.mp4"></video>
+              </div>
+              <div>
+                <p>As PAH mass increases, optical extinction becomes steeper <span style="color:gray;">(R(V) decreases)</span>.</p>
+                <p class="fragment">Requires less mass to change R(V) than accretion onto silicates.</p>
+                <p class="fragment">Importance of 2175 Å bump.</p>
+              </div>
+          </section>
+
+          <section class="compact" data-auto-animate data-auto-animate-restart>
+            <h4>R(V) vs. PAH fraction</h4>
+            <div class="multicol vcenter">
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/LMC_Rv.svg"></img>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green (2024)</a></p>
+              </div>
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/LMC_qPAH_Chastenet_etal_2019.svg"></img>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...876...62C/abstract">Chastenet+ (2019)</a></p>
+              </div>
+            </div>
+          </section>
+
+          <section class="compact" data-auto-animate>
+            <h4>R(V) vs. PAH fraction</h4>
+            <div class="multicol vcenter">
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/LMC_Rv.svg"></img>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green (2024)</a></p>
+              </div>
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/LMC_qPAH_Chastenet_etal_2019.svg"></img>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...876...62C/abstract">Chastenet+ (2019)</a></p>
+              </div>
+              <div>
+                <p>PAH destruction &rArr; high R(V).</p>
+                <p class="fragment">Ionizing radiation in star-forming regions.</p>
+              </div>
+            </div>
+          </section>
+
+          <section data-auto-animate data-auto-animate-restart>
+            <img class="r-stretch" data-src="../media/xp_rv/Rv_qPAH_Perseus.svg"></img>
+            <p class="attribution">$Q_{\mathrm{PAH}}$ from <a href="https://ui.adsabs.harvard.edu/abs/2016A%26A...586A.132P/abstract">Planck Collaboration (2016)</a>, based on the <a href="https://ui.adsabs.harvard.edu/abs/2007ApJ...657..810D/abstract">Draine &amp; Li (2007)</a> model.</p>
+          </section>
+          <section data-auto-animate>
+            <div class="multicol vcenter">
+              <div class="wider">
+                <img class="full-width" data-src="../media/xp_rv/Rv_qPAH_Perseus.svg"></img>
+              </div>
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/Rv_qPAH_corr_Perseus.svg"></img>
+              </div>
+            </div>
+            <p>Anti-correlation between $Q_{\mathrm{PAH}}$ and $R(V)$ in Perseus.</p>
+          </section>
+
+          <section>
+            <div class="multicol vcenter">
+              <div class="widest">
+                <img class="full-width" data-src="../media/xp_rv/Rv_qPAH_Taurus.svg"></img>
+              </div>
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/Rv_qPAH_corr_Taurus.svg"></img>
+              </div>
+            </div>
+            <p>Anti-correlation between $Q_{\mathrm{PAH}}$ and $R(V)$ in Taurus.</p>
+          </section>
+
+          <!--
+          <section data-transition="slide-in none-out">
+            <img class="r-stretch" data-src="../media/xp_rv/Rv_qPAH_Perseus_panel0.svg"></img>
+          </section>
+          <section data-transition="none-in slide-out">
+            <img class="r-stretch" data-src="../media/xp_rv/Rv_qPAH_Perseus_panel2.svg"></img>
+          </section>
+          -->
+        </section>
+
+        <section>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+            <h2 class="">Is there information in the extinction curve beyond R(V)?</h2>
+            <h4 class="fragment">Green, Zhang, &amp; Zhang, <em>in prep.</em></h4>
+          </section>
+
+          <section class="compact" data-auto-animate>
+            <h3>Component decomposition of extinction curves</h3>
+            <img data-src="../media/beyond_rv/A_normalization_darkbg.svg" class="r-stretch"></img>
+          </section>
+
+          <section class="compact" data-auto-animate>
+            <h3>Component decomposition of extinction curves</h3>
+            <img data-src="../media/beyond_rv/skymap_components_darkbg_panel0.svg" class="r-stretch"></img>
+          </section>
+
+          <section class="compact" data-auto-animate data-auto-animate-duration=0>
+            <h3>Component decomposition of extinction curves</h3>
+            <img data-src="../media/beyond_rv/skymap_components_darkbg_panel1.svg" class="r-stretch"></img>
+          </section>
+
+          <section>
+            <div class="multicol vcenter">
+              <div>
+                <img data-src="../media/beyond_rv/linewidth_measurement_770nm_darkbg.svg" class="full-width"></img>
+              </div>
+              <div>
+                <h3>Measuring equivalent widths of features</h3>
+                <p class="fragment">Features at 770 and 850 nm, and "very broad structure" (VBS).</p>
+                <p class="fragment">Measure equivalent widths in ~24 million extinction curves.</p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="multicol vcenter">
+              <div>
+                <img data-src="../media/beyond_rv/feature_correlations_darkbg.svg" class="full-width"></img>
+              </div>
+              <div>
+                <h3>Correlations between feature strengths</h3>
+                <p class="fragment">Strong (but not perfect) correlations with R(V).</p>
+                <p class="fragment">Deviations from this correlation have spatial structure.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="compact" data-auto-animate data-auto-animate-duration=0>
+            <h3>Deviation of feature strength from expectation given R(V)</h3>
+            <img data-src="../media/beyond_rv/skymap_delta_features_darkbg.svg" class="r-stretch"></img>
+          </section>
+        </section>
+
+        <section class="" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
+          <div class="stroke-text-dark">
+            <h2 class="">Gaia is revolutionizing our view of the Milky Way</h2>
+            <div class="compact stroke-text-dark space-top">
+              <h4 class="fragment">Deep Potential: determining the distribution of all the mass from stellar positions and velocities.</h4>
+              <h4 class="fragment">&rArr; Uncovering the distribution of dark matter on sub-galactic scales.</h4>
+            </div>
+            <div class="compact stroke-text-dark space-top">
+              <h4 class="fragment">~130 million dust R(V) measurements.</h4>
+              <h4 class="fragment">First 3D picture of extinction-curve variation in a large volume of the Milky Way.</h4>
+              <h4 class="fragment">PAHs drive much of the R(V) variation in the Milky Way.</h4>
+            </div>
+          <div class="stroke-text-dark space-top">
+            <h4 class="fragment">Upcoming datasets: JWST, Euclid, LSST.</h4>
+          </div>
+        </section>
+
+      </div> <!--slides-->
+    </div> <!--reveal-->
+
+    <script src="../revealjs/dist/reveal.js"></script>
+    <script src="../revealjs/plugin/math/math.js"></script>
+    <script src="../revealjs/plugin/notes/notes.js"></script>
+    <script src="../revealjs/plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        history: true,
+        transition: 'linear',
+        slideNumber: 'h.v',
+
+        /*
+        math: {
+          // mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          TeX: {
+            Macros: {
+              R: '\\mathbb{R}',
+              set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+            }
+          }
+        },
+        */
+        plugins: [ RevealMath.MathJax3 ],
+        mathjax3: {
+          //mathjax: "https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.7/tex-mml-chtml.js",
+          mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-chtml.js",
+          //mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-chtml-nofont.js",
+          //mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-svg-nofont.js",
+          loader: {load: ['[tex]/html']},
+          tex: {packages: {'[+]': ['html']}},
+          chtml: {
+            fontURL: "../js/mathjax-4.0.0-beta.7/output/chtml/fonts/woff-v2"
+          }
+        },
+
+        sortFragmentsOnSync: false,
+
+        pdfMaxPagesPerSlide: 1,
+
+        plugins: [ RevealMath.MathJax3, RevealNotes, RevealHighlight ]
+      });
+    </script>
+
+    <!-- jQuery -->
+    <script src="../js/jquery-3.6.1.min.js"></script>
+    <!-- d3 -->
+    <script src="../js/d3.min.js" charset="utf-8"></script>
+    <!-- Custom scripts go here -->
+
+  </body>
+</html>
