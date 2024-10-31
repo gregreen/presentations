@@ -19,6 +19,7 @@ Table of Contents
 * [Beijing Stellar Parameters - R(V) in 3D](presentations/lowres_spectra_beijing_2024.html): Mapping dust extinction curve variation in 3D with Gaia XP.
 * [Stanford - Dust & Dynamics](presentations/stanford_dust_dynamics_2024y10m.html): Overview of work on dynamics (Deep Potential) and dust (extinction-curve variation) with Gaia.
 * [U Washington - Dust & Dynamics](presentations/uwashington_dust_dynamics_2024y10m.html): Overview of work on dynamics (Deep Potential) and dust (extinction-curve variation) with Gaia.
+* [JPL - Dust & Dynamics](presentations/jpl_dust_dynamics_2024y10m.html): Overview of work on dynamics (Deep Potential) and dust (extinction-curve variation) with Gaia.
 
 Initial setup
 -------------
