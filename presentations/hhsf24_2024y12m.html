@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Dust beyond R(V)</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="../icon.ico">
+
+    <link rel="stylesheet" href="../revealjs/dist/reveal.css">
+    <link rel="stylesheet" href="../revealjs/dist/theme/night.css" id="theme">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../revealjs/plugin/highlight/monokai.css" id="highlight-theme">
+
+    <!-- Custom CSS files go here -->
+  </head>
+
+  <style>
+    /* Override theme variables */
+    :root {
+      --r-background-color: #000;
+      --r-main-font-size: 16pt;
+      --r-heading2-size: 2.50em;
+      --r-link-color: #f3d7ac;
+      --r-link-color-hover: #ffcc7d;
+    }
+
+    /* Shadow behind text */
+    .shadow-text-dark, .shadow-text-dark p,
+    .shadow-text-dark h1, .shadow-text-dark h2,
+    .shadow-text-dark h3, .shadow-text-dark h4,
+    .shadow-text-dark a {
+      text-shadow: 0 0 30px black;
+    }
+
+    /* Stroke text */
+    .stroke-text-dark, .stroke-text-dark p,
+    .stroke-text-dark, .stroke-text-dark a {
+      text-stroke: 1px black;
+      -webkit-text-stroke: 1px black;
+      paint-order: stroke fill;
+    }
+    .stroke-text-light {
+      text-stroke: 1px white rgba(255,255,255,0.3);
+      -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+      paint-order: stroke fill;
+    }
+
+    .stroke-text-dark-thick, .stroke-text-dark-thick p {
+      text-stroke: 5px black;
+      -webkit-text-stroke: 5px black;
+      paint-order: stroke fill;
+    }
+    h1.stroke-text-dark-thick, h2.stroke-text-dark-thick,
+    .stroke-text-dark-thick h1, .stroke-text-dark-thick h2 {
+      text-stroke: 8px black;
+      -webkit-text-stroke: 8px black;
+      paint-order: stroke fill;
+    }
+
+    .stroke-text-light {
+      text-stroke: 1px white rgba(255,255,255,0.7);
+      -webkit-text-stroke: 1px rgba(255,255,255,0.7);
+      paint-order: stroke fill;
+    }
+    .stroke-text-light-thick {
+      text-stroke: 5px white rgba(255,255,255,0.8);
+      -webkit-text-stroke: 5px rgba(255,255,255,0.8);
+      paint-order: stroke fill;
+    }
+
+    /* Attribution text */
+    p.attribution, span.attribution {
+      font-size: 70%;
+      color: #aaa;
+      margin-top: 0;
+      /*margin: calc(0.5 * var(--r-block-margin)) 0;*/
+    }
+    p.attribution a, span.attribution a {
+      color: #ddf;
+    }
+    h1 span.attribution, h2 span.attribution, h3 span.attribution, h4 span.attribution {
+      font-size: 100%;
+    }
+
+    /* Compact */
+    .compact *:not(.MathJax_Display *, .MathJax *)
+    {
+      margin: calc(0.3 * var(--r-block-margin)) 0 !important;
+    }
+
+    .compact-p p {
+      margin: calc(0.3 * var(--r-block-margin)) 0 !important;
+    }
+
+    .compact img {
+      max-width: 100%;
+    }
+
+    /* Footer (bottom of slide)
+       .footer only works if the slide is .full-height */
+    section.full-height {
+      height: 100%;
+    }
+
+    div.footer {
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      text-align: center;
+    }
+
+    div.abs-bottom-right {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+    }
+    div.abs-bottom-right * {
+      float: right;
+    }
+
+    div.abs-bottom-left {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+    }
+    div.abs-bottom-left * {
+      float: left;
+    }
+
+    /* .abs-vcenter only works if the slide is .full-height.
+       Use in slides that have .footer, to center rest of content.
+     */
+    div.abs-vcenter {
+      position: absolute;
+      top: 50%;
+      margin-top: -25%;
+    }
+
+    /* Vertically center content in container */
+    .vertical-center {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-direction: column;
+    }
+
+    /* Slide-specific vertical centering override */
+    .reveal .slides section[data-vertical-align-top]{
+      top: 0 !important;
+    }
+
+    /* Invert colors - useful for adapting graphics for dark slides. */
+    img.invert-colors, video.invert-colors {
+      filter: invert(1);
+    }
+
+    /* Image width */
+    img.half-width, video.half-width {
+      width: 50%;
+      max-width: 50%;
+    }
+    img.limit-width, video.limit-width {
+      max-width: 70%;
+    }
+    img.full-width, div.full-width {
+      width: 100%;
+    }
+
+    /* Item placement in r-stack environment */
+    .reveal .r-stack .align-top {
+      margin: initial;
+    }
+
+    /* Basic slide layouts */
+    .multicol {
+      display: flex;
+      flex-direction: row;
+    }
+    .multicol.vcenter {
+      align-items: center;
+    }
+    .multicol > div {
+      flex-basis: 50%;
+    }
+    .multicol > div.wide {
+      flex-basis: 67%;
+    }
+    .multicol > div.wider {
+      flex-basis: 100%;
+    }
+    .multicol > div.widest {
+      flex-basis: 120%;
+    }
+
+    .multicol > div {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+    /* Margins */
+    .space-top {
+      margin-top: calc(3 * var(--r-block-margin)) !important;
+    }
+    .space-top-slight {
+      margin-top: calc(2 * var(--r-block-margin)) !important;
+    }
+
+    /* Text alignment */
+    .align-left {
+      text-align: left;
+    }
+
+    /* Text size */
+    .shrink-text {
+      font-size: 67%;
+    }
+
+    /* iframe borders */
+    iframe {
+      border: none;
+    }
+
+    body.invert-bg .backgrounds {
+      filter: invert(1);
+    }
+
+    /* Stroke text */
+    h1.stroke-black {
+      text-shadow:
+         1px  0px 0 #000,
+         0px  1px 0 #000,
+        -1px  0px 0 #000,
+         0px -1px 0 #000,
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+    }
+
+    /* Custom color definitions */
+    .star-color {
+      /*color: rgb(116,211,255);*/
+      color: #99ccff;
+    }
+    .model-color {
+      /*color: rgb(255,130,116);*/
+      color: #ff6767;
+    }
+
+    /* Slide numbers */
+    .reveal .slide-number {
+      /*right: inherit;*/
+      /*left: 8px;*/
+      right: 62px;
+      bottom: 48px;
+      transform: translateX(50%);
+      backdrop-filter: blur(1.5px);
+      font-size: 12pt;
+      font-weight: bold;
+    }
+
+    .reveal .slide-number-delimiter {
+      margin: 0 0;
+    }
+  </style>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+        <section class="full-height" data-background-image="../media/beyond_rv/skymap_components_zoomin_0to3_bg.jpg">
+          <div style="position:absolute; top:45%; transform: translateY(-50%) translateX(-50%); left:50%; width:80%;" class="stroke-text-dark shadow-text-dark">
+            <h2>Dust beyond R(V)</h2>
+            <h3 class="space-top">Heidelberg-Harvard Star Formation 2024</h3>
+            <h3>3&nbsp;December&nbsp;2024</h3>
+            <div class="space-top compact">
+              <h4>Gregory M. Green, Xiangyu Zhang (张翔宇), Ruoyi Zhang (张若羿)</h4>
+              <p>(MPIA, Heidelberg)</p>
+            </div>
+          </div>
+          <div class="abs-bottom-right">
+            <img data-src="../media/logos/MPIA_horizontal.svg" class="half-width" style="filter:contrast(0.5) brightness(1.0);"></img>
+          </div>
+          <div class="abs-bottom-left">
+            <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="half-width" style="width:40%; filter:contrast(0.5) brightness(1.2);"></img>
+          </div>
+        </section>
+
+        <section>
+          <section>
+            <img data-src="../media/beyond_rv/fitzpatrick2019_quote_inverted.svg" class="full-width"/>
+          </section>
+
+          <section data-background-video="../media/gaia/gaia_proper_motion_on_sky_h264.mp4" data-background-video-loop data-background-size="contain" class="full-height">
+            <div class="stroke-text-dark-thick">
+              <h2>The Gaia revolution</h2>
+            </div>
+            <div class="footer">
+              <p class="attribution"><a href="https://sci.esa.int/web/gaia/-/60233-parallax-and-proper-motion-on-the-sky">ESA/Gaia/DPAC, CC BY-SA 3.0 IGO</a></p>
+            </div>
+          </section>
+
+          <section>
+            <h3>Gaia BP/RP spectrophotometry</h3>
+            <h4 class="fragment">(&ldquo;XP spectra&rdquo;)</h4>
+            <div class="multicol vcenter fragment">
+              <div>
+                <ul>
+                  <li>$R \sim 50-160$</li>
+                  <li>slitless spectroscopy</li>
+                  <li>optical (330&mdash;1050 nm)</li>
+                  <li>220 million stars (in DR3)</li>
+                </ul>
+              </div>
+              <div class="wider">
+                <img data-src="../media/bprp/optical_path.png" class=""></img>
+              </div>
+            </div>
+          </section>
+
+          <section data-transition="slide-in none-out">
+            <div class="multicol vcenter">
+              <div class="wider">
+                <img data-src="../media/euclid/NISP_grism_commissioning_data.jpg" class="full-width"></img>
+              </div>
+              <div>
+                <h3>Slitless spectra</h3>
+                <p class="attribution">(ESA/Euclid/Euclid Consortium/NASA, CC BY-SA 3.0 IGO)</p>
+              </div>
+            </div>
+          </section>
+
+          <section data-transition="slide-in none-out">
+            <h3>Example XP spectra</h3>
+            <img data-src="../media/bprp/example_XP_spectrum_0.svg" class="r-stretch"></img>
+          </section>
+          <section data-transition="none-in none-out">
+            <h3>Example XP spectra</h3>
+            <img data-src="../media/bprp/example_XP_spectrum_1.svg" class="r-stretch"></img>
+          </section>
+          <section data-transition="none-in slide-out">
+            <h3>Example XP spectra</h3>
+            <img data-src="../media/bprp/example_XP_spectrum_2.svg" class="r-stretch"></img>
+          </section>
+        </section>
+
+        <section>
+          <section data-auto-animate class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
+            <h1>Dust mapping</h1>
+            <div class="footer">
+              <p><a href="https://ui.adsabs.harvard.edu/abs/1998ApJ...500..525S/abstract">Schlegel, Finkbeiner &amp; Davis (1998; &ldquo;SFD&rdquo;)</a></p>
+            </div>
+          </section>
+          <section data-auto-animate class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
+            <h1>Dust mapping</h1>
+            <div class="compact space-top">
+              <p class="stroke-text-dark">Universal extinction curve: $A\left(\lambda\right) / A\left(\lambda_0\right)$.</p>
+              <img style="background: #00000077; display: inline-block; box-shadow: 0px 0px 25px #000;" class="r-stretch" data-src="../media/dust/extinction_curve_hensley_draine_2003.svg"></img>
+            </div>
+          </section>
+          <section data-auto-animate data-auto-animate-duration=0 class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
+            <h1>Dust mapping</h1>
+            <div class="compact space-top">
+              <p class="stroke-text-dark">Universal extinction curve: $A\left(\lambda\right) / A\left(\lambda_0\right)$.</p>
+              <img style="background: #00000077; display: inline-block; box-shadow: 0px 0px 25px #000;" class="r-stretch" data-src="../media/dust/extinction_curve_hensley_draine_2003_wRv.svg"></img>
+            </div>
+          </section>
+          <section data-auto-animate data-auto-animate-duration=0 class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
+            <h1>Dust mapping</h1>
+            <div class="compact space-top">
+              <p class="stroke-text-dark">R(V) varies.</p>
+              <img style="background: #00000077; display: inline-block; box-shadow: 0px 0px 25px #000;" class="limit-width" data-src="../media/dust/RV_Fitzpatrick1999.png"></img>
+            </div>
+          </section>
+          <section data-auto-animate class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
+            <h1>Dust mapping</h1>
+            <div class="footer">
+              <p class="stroke-text-dark" style="padding-bottom:40pt;">Universal extinction curve: $A\left(\lambda\right) / A\left(\lambda_0\right)$.</p>
+            </div>
+          </section>
+          <section data-auto-animate class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background.jpg">
+            <h1 class="stroke-text-dark-thick">Dust mapping</h1>
+            <div class="footer">
+              <h4 style="padding-bottom:50pt;color:black;" class="stroke-text-light-thick">Varying extinction curve.</h4>
+            </div>
+          </section>
+          <section data-auto-animate class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background.jpg">
+            <h1 class="stroke-text-dark-thick">Dust mapping</h1>
+            <div class="compact space-top">
+              <h4 style="color:black;" class="stroke-text-light-thick">Varying extinction curve.</h4>
+              <img style="background: #00000077; display: inline-block; box-shadow: 0px 0px 25px #000;" class="r-stretch" data-src="../media/xp_rv/extcurve_zxy.svg"></img>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+            <h2 class="stroke-text-dark">Is there information in the extinction curve beyond R(V)?</h2>
+            <h4 class="fragment stroke-text-dark">Green, Zhang, &amp; Zhang (<a style="color:white;" href="https://arxiv.org/abs/2410.22537">arXiv:2410.22537</a>)</h4>
+          </section>
+
+          <!--
+          <section>
+            <h2>Empirical extinction curves</h2>
+            <p class="fragment">
+              <a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green (2024)</a> infers parameters of stars and foreground dust for ~130&nbsp;million stars.
+            </p>
+            <p>
+            <p class="fragment">
+              Use stellar parameters to predict intrinsic spectrum: $f_{\mathrm{intrinsic}}\left(\lambda\right)$.
+            </p>
+            <p class="fragment">
+              Compare with observed spectrum to obtain extinction:
+              $$
+                A\left(\lambda\right) = -2.5\log_{10}\left[ \frac{
+                    f_{\mathrm{observed}}\left(\lambda\right)
+                  }{
+                    f_{\mathrm{intrinsic}}\left(\lambda\right)
+                  }
+                \right]
+                \, .
+              $$
+            </p>
+          </section>
+          -->
+
+          <section data-transition="slide-in none-out">
+            <h2>Empirical extinction curves</h2>
+            <p class="fragment">
+              <a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green (2024)</a> infers parameters of stars and foreground dust for ~130&nbsp;million stars.
+            </p>
+            <img class="r-stretch" data-src="../media/beyond_rv/empirical_extcurve_example_flux0.svg"></img>
+          </section>
+          <section data-transition="none-in none-out">
+            <h2>Empirical extinction curves</h2>
+            <p>
+              <a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green (2024)</a> infers parameters of stars and foreground dust for ~130&nbsp;million stars.
+            </p>
+            <img class="r-stretch" data-src="../media/beyond_rv/empirical_extcurve_example_flux1.svg"></img>
+          </section>
+          <section data-transition="none-in none-out">
+            <h2>Empirical extinction curves</h2>
+            <p>
+              <a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green (2024)</a> infers parameters of stars and foreground dust for ~130&nbsp;million stars.
+            </p>
+            <img class="r-stretch" data-src="../media/beyond_rv/empirical_extcurve_example_flux2.svg"></img>
+          </section>
+          <section data-transition="none-in none-out">
+            <h2>Empirical extinction curves</h2>
+            <p>
+              <a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green (2024)</a> infers parameters of stars and foreground dust for ~130&nbsp;million stars.
+            </p>
+            <img class="r-stretch" data-src="../media/beyond_rv/empirical_extcurve_example_extinction0.svg"></img>
+          </section>
+          <section data-transition="none-in none-out">
+            <h2>Empirical extinction curves</h2>
+            <p>
+              <a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green (2024)</a> infers parameters of stars and foreground dust for ~130&nbsp;million stars.
+            </p>
+            <img class="r-stretch" data-src="../media/beyond_rv/empirical_extcurve_example_extinction1.svg"></img>
+          </section>
+          <section data-transition="none-in none-out">
+            <h2>Empirical extinction curves</h2>
+            <p>
+              <a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green (2024)</a> infers parameters of stars and foreground dust for ~130&nbsp;million stars.
+            </p>
+            <img class="r-stretch" data-src="../media/beyond_rv/empirical_extcurve_example_deltaA.svg"></img>
+          </section>
+
+          <section class="" data-auto-animate>
+            <h3>Component decomposition of extinction curves</h3>
+            <img data-src="../media/beyond_rv/A_normalization_darkbg.svg" class="r-stretch"></img>
+          </section>
+          <section class="" data-auto-animate>
+            <h3>Component decomposition of extinction curves</h3>
+            <img data-src="../media/beyond_rv/A_normalization_darkbg.svg" class="r-stretch"></img>
+            <p class="space-top">
+              Component decomposition:
+              $$
+                r\left(\lambda\right) = \sum_i b_i \, g_i\!\left(\lambda\right) \, .
+              $$
+            </p>
+          </section>
+          <section class="" data-auto-animate>
+            <h3>Component decomposition of extinction curves</h3>
+            <img data-src="../media/beyond_rv/A_normalization_darkbg.svg" class="r-stretch"></img>
+            <p class="space-top">
+              Component decomposition:
+              $$
+                r\left(\lambda\right) = \sum_i b_i \, g_i\!\left(\lambda\right) \, .
+              $$
+            </p>
+            <p class="">
+              $$
+                g_i\left(\lambda\right) = \mathrm{basis\ function}\ i \, . \\
+                b_i = \mathrm{coefficient}\ i\ (\mathrm{different\ for\ each\ star}) \, .
+              $$
+            </p>
+          </section>
+          <section class="" data-auto-animate>
+            <h3>Component decomposition of extinction curves</h3>
+            <img data-src="../media/beyond_rv/A_normalization_darkbg.svg" class="r-stretch"></img>
+            <p class="space-top">
+              Component decomposition:
+              $$
+                r\left(\lambda\right) = \sum_i b_i \, g_i\!\left(\lambda\right) \, .
+              $$
+            </p>
+            <p class="">
+              $$
+                g_i\left(\lambda\right) = \mathrm{basis\ function}\ i \, . \\
+                b_i = \mathrm{coefficient}\ i\ (\mathrm{different\ for\ each\ star}) \, .
+              $$
+            </p>
+            <p class="space-top">
+              Find basis functions that minimize $\chi^2$ of all &ldquo;high-quality&rdquo; extinction curves.
+            </p>
+          </section>
+          <section class="" data-auto-animate>
+            <h3>Component decomposition of extinction curves</h3>
+            <img data-src="../media/beyond_rv/A_normalization_darkbg.svg" class="r-stretch"></img>
+            <p class="space-top">
+              Component decomposition:
+              $$
+                r\left(\lambda\right) = \sum_i b_i \, g_i\!\left(\lambda\right) \, .
+              $$
+            </p>
+            <p class="">
+              $$
+                g_i\left(\lambda\right) = \mathrm{basis\ function}\ i \, . \\
+                b_i = \mathrm{coefficient}\ i\ (\mathrm{different\ for\ each\ star}) \, .
+              $$
+            </p>
+            <p class="space-top">
+              Find basis functions that minimize $\chi^2$ of all &ldquo;high-quality&rdquo; extinction curves.
+            </p>
+            <p>
+              Decompose 24M &ldquo;medium-quality&rdquo; extinction curves.
+            </p>
+          </section>
+
+          <section class="compact" data-auto-animate>
+            <h3>Component decomposition of extinction curves</h3>
+            <img data-src="../media/beyond_rv/skymap_components_darkbg_panel0.svg" class="r-stretch"></img>
+          </section>
+
+          <section class="compact" data-auto-animate data-auto-animate-duration=0>
+            <h3>Component decomposition of extinction curves</h3>
+            <img data-src="../media/beyond_rv/skymap_components_darkbg_panel1.svg" class="r-stretch"></img>
+          </section>
+
+          <section class="compact" data-transition="slide-in none-out">
+            <h3>&ldquo;Dust-like&rdquo; spatial patterns in lowest-order components</h3>
+            <img data-src="../media/beyond_rv/skymap_components_zoomin_0to3.svg" class="r-stretch"></img>
+          </section>
+
+          <section class="compact" data-transition="none-in slide-out">
+            <h3>&ldquo;Gaia-like&rdquo; spatial patterns in higher-order components</h3>
+            <img data-src="../media/beyond_rv/skymap_components_zoomin_4to7.svg" class="r-stretch"></img>
+          </section>
+        </section>
+
+        <section>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+            <h2 class="stroke-text-dark">Individual extinction features</h2>
+          </section>
+
+          <section>
+            <div class="multicol vcenter">
+              <div>
+                <img data-src="../media/beyond_rv/linewidth_measurement_770nm_darkbg.svg" class="full-width"></img>
+              </div>
+              <div>
+                <h3>Measuring equivalent widths of features</h3>
+                <p class="fragment">Features at 770 and 850 nm, and "very broad structure" (VBS).</p>
+                <p class="fragment">770 nm feature discovered by <a href="https://ui.adsabs.harvard.edu/abs/2021MNRAS.501.2487M/abstract">Maíz Apellániz+(2021)</a>.</p>
+                <p class="fragment">850 nm feature is new.</p>
+                <p class="fragment">Measure equivalent widths in ~24 million extinction curves.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="compact">
+            <h3>Sky maps of equivalent widths</h3>
+            <img data-src="../media/beyond_rv/skymap_features_darkbg.svg" class="r-stretch"></img>
+          </section>
+
+          <section>
+            <div class="multicol vcenter">
+              <div>
+                <img data-src="../media/beyond_rv/feature_correlations_darkbg.svg" class="full-width"></img>
+              </div>
+              <div>
+                <h3>Correlations between feature strengths</h3>
+                <p class="fragment">Strong (but not perfect) correlations with R(V).</p>
+                <p class="fragment">Deviations from this correlation have spatial structure.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="compact" data-auto-animate data-auto-animate-duration=0>
+            <h3>Deviation of feature strength from expectation given R(V)</h3>
+            <img data-src="../media/beyond_rv/skymap_delta_features_darkbg.svg" class="r-stretch"></img>
+          </section>
+
+          <section class="compact" data-auto-animate data-auto-animate-restart>
+            <h3>Feature profiles</h3>
+            <img data-src="../media/beyond_rv/feature_fits_1panel.svg" class="r-stretch"></img>
+          </section>
+          <section data-auto-animate>
+            <div class="multicol vcenter">
+              <div class="widest compact">
+                <h3>Feature profiles</h3>
+                <img data-src="../media/beyond_rv/feature_fits_1panel.svg" class="full-width"></img>
+              </div>
+              <div>
+                <p>Both features are far wider than any DIB.</p>
+                <p class="fragment">770&nbsp;nm $\lambda_0$ and FWHM agree with Maíz Apellániz+(2021).</p>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section class="" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
+          <div class="stroke-text-dark">
+            <h2 class="">There's more than R(V)</h2>
+            <div class="compact stroke-text-dark space-top">
+              <h4 class="fragment">...and we can map it!</h4>
+            </div>
+            <div class="compact stroke-text-dark space-top">
+              <h4 class="fragment">The extinction curve has at least 3 extra degrees of freedom.</h4>
+              <h4 class="fragment">Broad extinction features at 770 and 850 nm.</h4>
+            </div>
+            <div class="compact stroke-text-dark space-top">
+              <h4 class="fragment">We should correlate extinction-curve variation with ISM properties.</h4>
+            </div>
+          <div class="stroke-text-dark space-top">
+            <h4 class="fragment">Upcoming datasets: JWST, Euclid, SPHEREx, Roman, CSST.</h4>
+          </div>
+        </section>
+
+      </div> <!--slides-->
+    </div> <!--reveal-->
+
+    <script src="../revealjs/dist/reveal.js"></script>
+    <script src="../revealjs/plugin/math/math.js"></script>
+    <script src="../revealjs/plugin/notes/notes.js"></script>
+    <script src="../revealjs/plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        history: true,
+        transition: 'linear',
+        slideNumber: 'h.v',
+
+        /*
+        math: {
+          // mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          TeX: {
+            Macros: {
+              R: '\\mathbb{R}',
+              set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+            }
+          }
+        },
+        */
+        plugins: [ RevealMath.MathJax3 ],
+        mathjax3: {
+          //mathjax: "https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.7/tex-mml-chtml.js",
+          mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-chtml.js",
+          //mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-chtml-nofont.js",
+          //mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-svg-nofont.js",
+          loader: {load: ['[tex]/html']},
+          tex: {packages: {'[+]': ['html']}},
+          //chtml: {
+          //  fontURL: "../js/mathjax-4.0.0-beta.7/output/chtml/fonts/woff-v2"
+          //}
+        },
+
+        sortFragmentsOnSync: false,
+
+        pdfMaxPagesPerSlide: 1,
+
+        plugins: [ RevealMath.MathJax3, RevealNotes, RevealHighlight ]
+      });
+    </script>
+
+    <!-- jQuery -->
+    <script src="../js/jquery-3.6.1.min.js"></script>
+    <!-- d3 -->
+    <script src="../js/d3.min.js" charset="utf-8"></script>
+    <!-- Custom scripts go here -->
+
+  </body>
+</html>

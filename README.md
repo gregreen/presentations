@@ -20,6 +20,7 @@ Table of Contents
 * [Stanford - Dust & Dynamics](presentations/stanford_dust_dynamics_2024y10m.html): Overview of work on dynamics (Deep Potential) and dust (extinction-curve variation) with Gaia.
 * [U Washington - Dust & Dynamics](presentations/uwashington_dust_dynamics_2024y10m.html): Overview of work on dynamics (Deep Potential) and dust (extinction-curve variation) with Gaia.
 * [JPL - Dust & Dynamics](presentations/jpl_dust_dynamics_2024y10m.html): Overview of work on dynamics (Deep Potential) and dust (extinction-curve variation) with Gaia.
+* [Harvard-Heidelberg Star Formation 24](presentations/hhsf24_2024y12m.html): Dust beyond R(V) - variations in the optical dust extinction curve that are orthogonal to R(V).
 
 Initial setup
 -------------
