@@ -331,6 +331,18 @@
       --r-link-color-hover: #ffcc7d;
     }
 
+    /* Code blocks */
+    .reveal pre.code-wrapper{
+      display: inline-block;
+      text-align: center;
+      font-size: 0.75em;
+      line-height: 1.3em;
+    }
+    .reveal pre code {
+      display: inline-block;
+      padding: 10px;
+    }
+
     /* Stroke text */
     .stroke-text-dark, .stroke-text-dark p,
     .stroke-text-dark, .stroke-text-dark a {
@@ -571,7 +583,7 @@
         <section class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
           <div style="position:absolute; top:45%; left:50%; width:95%; transform:translate(-50%,-50%);" class="stroke-text-dark">
             <h2>Milky Way Dust and Dynamics</h2>
-            <h3 class="space-top">Tsinghua University (清华)</h3>
+            <h3 class="space-top">Tsinghua Astronomy (清华大学天文系)</h3>
             <h3>10&nbsp;January&nbsp;2025</h3>
             <div class="space-top compact">
               <h3>Gregory M. Green</h3>
@@ -883,9 +895,10 @@
             <div class="multicol vcenter">
               <div class="wider">
                 <div class="r-stack">
-                  <img data-src="../media/bprp/example_XP_spectrum_0.svg" data-fragment-index=2 class="fragment current-visible full-width"></img>
-                  <img data-src="../media/bprp/example_XP_spectrum_1.svg" data-fragment-index=3 class="fragment current-visible full-width"></img>
-                  <img data-src="../media/bprp/example_XP_spectrum_2.svg" data-fragment-index=4 class="fragment full-width"></img>
+                  <img data-src="../media/bprp/BP_RP_2d_spectra.png" data-fragment-index=2 class="fragment current-visible full-width"></img>
+                  <img data-src="../media/bprp/example_XP_spectrum_0.svg" data-fragment-index=3 class="fragment current-visible full-width"></img>
+                  <img data-src="../media/bprp/example_XP_spectrum_1.svg" data-fragment-index=4 class="fragment current-visible full-width"></img>
+                  <img data-src="../media/bprp/example_XP_spectrum_2.svg" data-fragment-index=5 class="fragment full-width"></img>
                 </div>
               </div>
               <div>
@@ -1019,7 +1032,7 @@
           </section>
 
           <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
-            <h4 class="stroke-text-dark">For the first time, we can &ldquo;see&rdquo; the dust properties throughout much of the Milky Way in 3D.</h4>
+            <h3 class="stroke-text-dark">For the first time, we can &ldquo;see&rdquo; the dust properties throughout much of the Milky Way in 3D.</h3>
           </section>
 
           <section>
@@ -1110,6 +1123,7 @@
             <div class="stroke-text-dark">
               <h4>At intermediate densities, growth of PAHs seems to drive R(V) variation.</h4>
               <h4 class="fragment space-top">This significant revision of the prevailing view was made possible by our dust R(V) measurements of 130 million sightlines.</h4>
+              <h4 class="fragment space-top">We hope to follow-up this hypothesis with JWST observations.</h4>
             </div>
           </section>
         </section>
@@ -1135,23 +1149,36 @@
             <img data-src="../media/beyond_rv/skymap_components_darkbg_panel1.svg" class="r-stretch"></img>
           </section>
 
-          <section class="compact" data-transition="slide-in none-out">
+          <section class="compact">
             <h3>&ldquo;Dust-like&rdquo; spatial patterns in lowest-order components</h3>
             <img data-src="../media/beyond_rv/skymap_components_zoomin_0to3.svg" class="r-stretch"></img>
           </section>
 
+          <section>
+            <div class="multicol vcenter">
+              <div class="wider">
+                <img data-src="../media/beyond_rv/feature_fits_1panel.svg" class="full-width"></img>
+              </div>
+              <div>
+                <h3>Two extinction features</h3>
+                <p>Both features are far wider than any DIB.</p>
+                <p>The feature at 850&nbsp;nm is new.</p>
+              </div>
+            </div>
+          </section>
+
           <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
-            <h4 class="stroke-text-dark">We are only at the beginning &mdash; much more can be learned about ISM chemistry from Gaia and similar surveys.</h4>
+            <h3 class="stroke-text-dark">We are only at the beginning &mdash; much more can be learned about ISM chemistry from Gaia and similar surveys.</h3>
           </section>
         </section>
 
         <section>
-          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
-            <h2 class="stroke-text-dark">Summary of dust work</h2>
-            <h4 class="stroke-text-dark fragment">First large-scale 3D maps of dust in the Milky Way: Green+(2015,2018,2019).</h4>
-            <h4 class="stroke-text-dark fragment">First all-sky 3D maps of dust R(V): Zhang &amp; Green (2024).</h4>
-            <h4 class="stroke-text-dark fragment">PAHs drive R(V) variation: Zhang, Hensley &amp; Green (2024).</h4>
-            <h4 class="fragment stroke-text-dark">Going beyond R(V): Green, Zhang, &amp; Zhang (<a style="color:white;" href="https://arxiv.org/abs/2410.22537">2024</a>)</h4>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
+            <h1 class="stroke-text-dark">Summary of dust work</h1>
+            <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="stroke-text-dark fragment">First large-scale 3D maps of dust in the Milky Way: Green+(2015,2018,2019).</h4>
+            <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="stroke-text-dark fragment">First all-sky 3D maps of dust R(V): Zhang &amp; Green (2024).</h4>
+            <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="stroke-text-dark fragment">PAHs drive R(V) variation: Zhang, Hensley &amp; Green (2024).</h4>
+            <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="fragment stroke-text-dark">Going beyond R(V): Green, Zhang, &amp; Zhang (<a style="color:white;" href="https://arxiv.org/abs/2410.22537">2024</a>)</h4>
           </section>
         </section>
 
@@ -1422,7 +1449,7 @@
             <h4>Compute gradients of the distribution function</h4>
             <img data-src="../media/deep_potential/deep_potential_explanatory_figure_df_grads.svg"></img>
             <p>Normalizing flows are <span style="color:cyan;">differentiable</span>.</p>
-            <div class="fragment space-top">
+            <div class="fragment space-top compact">
               <p>In Tensorflow, it's as simple as</p>
               <pre><code class="python" data-trim>
                 with tf.GradientTape() as g:
@@ -1610,17 +1637,87 @@
             </div>
           </section>
 
+          <section data-auto-animate>
+            <h3>1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
+          </section>
+
+          <section data-auto-animate>
+            <h3>1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
+            <div class="multicol vcenter">
+              <div>
+                <img data-src="../media/deep_potential/barred_nbody_true_vs_model_rho_x_y_t80_vertical.svg" class="full-width"></img>
+              </div>
+              <div class="wider">
+              </div>
+            </div>
+          </section>
+
+          <section data-auto-animate>
+            <h3>1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
+            <div class="multicol vcenter">
+              <div>
+                <img data-src="../media/deep_potential/barred_nbody_true_vs_model_rho_x_y_t80_vertical.svg" class="full-width"></img>
+              </div>
+              <div class="wider">
+                <h4>Are there signs of deviations from cold dark matter on small scales?</h4>
+              </div>
+            </div>
+          </section>
+
+          <section data-auto-animate>
+            <h3>1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
+            <div class="multicol vcenter">
+              <div>
+                <img data-src="../media/deep_potential/barred_nbody_true_vs_model_rho_x_y_t80_vertical.svg" class="full-width"></img>
+              </div>
+              <div class="wider">
+                <h4>Are there signs of deviations from cold dark matter on small scales?</h4>
+                <h4>Only in the Milky Way do we have 6D position-velocity data.</h4>
+              </div>
+            </div>
+          </section>
+
+          <section data-auto-animate>
+            <h3>1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
+            <div class="multicol vcenter">
+              <div>
+                <img data-src="../media/deep_potential/barred_nbody_true_vs_model_rho_x_y_t80_vertical.svg" class="full-width"></img>
+              </div>
+              <div class="wider">
+                <h4>Are there signs of deviations from cold dark matter on small scales?</h4>
+                <h4>Only in the Milky Way do we have 6D position-velocity data.</h4>
+                <h4>Gaia Data Release 4 (expected 2026): large increase in kinematic data.</h4>
+              </div>
+            </div>
+          </section>
+
+          <section data-auto-animate>
+            <h3>1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
+            <div class="multicol vcenter">
+              <div>
+                <img data-src="../media/deep_potential/barred_nbody_true_vs_model_rho_x_y_t80_vertical.svg" class="full-width"></img>
+              </div>
+              <div class="wider">
+                <h4>Are there signs of deviations from cold dark matter on small scales?</h4>
+                <h4>Only in the Milky Way do we have 6D position-velocity data.</h4>
+                <h4>Gaia Data Release 4 (expected 2026): large increase in kinematic data.</h4>
+                <h4 class="space-top">Adapt Deep Potential to external galaxies with &lt;6 observed phase-space dimensions.</h4>
+              </div>
+            </div>
+          </section>
+
+          <!--
           <section data-auto-animate data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
             <div class="stroke-text-dark">
               <h1>Research Plan</h1>
-              <h4>1. Determine the Milky Way potential to constrain dark matter distribution.</h4>
+              <h3 class="space-top">1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
             </div>
           </section>
 
           <section data-auto-animate data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
             <div class="stroke-text-dark">
               <h1>Research Plan</h1>
-              <h4>1. Determine the Milky Way potential to constrain dark matter distribution.</h4>
+              <h3 class="space-top">1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
               <h4>Only in the Milky Way do we have 6D position-velocity data.</h4>
               <h4>Gaia Data Release 4 (expected 2026): large increase in kinematic data.</h4>
             </div>
@@ -1629,37 +1726,64 @@
           <section data-auto-animate data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
             <div class="stroke-text-dark">
               <h1>Research Plan</h1>
-              <h4>1. Determine the Milky Way potential to constrain dark matter distribution.</h4>
+              <h3 class="space-top">1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
               <h4>Only in the Milky Way do we have 6D position-velocity data.</h4>
               <h4>Gaia Data Release 4 (expected 2026): large increase in kinematic data.</h4>
+              <h4>Adapt Deep Potential to external galaxies with &lt;6 observed phase-space dimensions.</h4>
             </div>
           </section>
 
           <section data-auto-animate data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
             <div class="stroke-text-dark">
               <h1>Research Plan</h1>
-              <h4>1. Determine the Milky Way potential to constrain dark matter distribution.</h4>
+              <h3 class="space-top">1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
               <h4>Only in the Milky Way do we have 6D position-velocity data.</h4>
               <h4>Gaia Data Release 4 (expected 2026): large increase in kinematic data.</h4>
-              <h4>2. Understand dust properties and distribution using data from across the electromagnetic spectrum.</h4>
+              <h4>Adapt Deep Potential to external galaxies with &lt;6 observed phase-space dimensions.</h4>
+              <h3 class="space-top">2. Understand dust properties and distribution using data from across the electromagnetic spectrum.</h3>
+            </div>
+          </section>
+          -->
+
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
+            <div class="stroke-text-dark">
+              <h3 class="space-top">2. Understand dust properties and distribution using data from across the electromagnetic spectrum.</h3>
             </div>
           </section>
 
           <section data-background-gradient="linear-gradient(to bottom, #000, #111, #000)" data-transition="slide-in none-out">
-            <h4>Low-resolution spectra across the spectrum</h4>
-            <img class="r-stretch" data-src="../media/misc/missions_across_spectrum_gaia.svg"></img>
+            <h4>Low-resolution spectra from the UV to the mid-IR</h4>
+            <img class="r-stretch" data-src="../media/misc/missions_across_spectrum_withuvex_0.svg"></img>
           </section>
-          <section data-background-gradient="linear-gradient(to bottom, #000, #111, #000)" data-transition="none-in slide-out">
-            <h4>Low-resolution spectra across the spectrum</h4>
-            <img class="r-stretch" data-src="../media/misc/missions_across_spectrum.svg"></img>
+          <section data-background-gradient="linear-gradient(to bottom, #000, #111, #000)" data-transition="none-in none-out">
+            <h4>Low-resolution spectra from the UV to the mid-IR</h4>
+            <img class="r-stretch" data-src="../media/misc/missions_across_spectrum_withuvex_1.svg"></img>
+          </section>
+          <section data-auto-animate data-background-gradient="linear-gradient(to bottom, #000, #111, #000)" data-transition="none-in slide-out">
+            <h4>Low-resolution spectra from the UV to the mid-IR</h4>
+            <img class="r-stretch" data-src="../media/misc/missions_across_spectrum_withuvex.svg"></img>
+          </section>
+          <section data-auto-animate data-background-gradient="linear-gradient(to bottom, #000, #111, #000)" data-transition="none-in slide-out">
+            <div class="multicol vcenter">
+              <div>
+                <h4>Low-resolution spectra from the UV to the mid-IR</h4>
+                <img class="r-stretch" data-src="../media/misc/missions_across_spectrum_withuvex.svg"></img>
+              </div>
+              <div style="margin-left:20px;">
+                <p class="">What dust chemistry drives extinction-curve variation?</p>
+                <p class="fragment">What is the origin of extinction-curve variation beyond R(V)?</p>
+                <p class="fragment">Is there a relation to diffuse interstellar bands?</p>
+                <p class="space-top fragment">Better 3D maps of dust extinction in the Milky Way.</p>
+              </div>
+            </div>
           </section>
 
           <section data-auto-animate data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
             <div class="stroke-text-dark">
-              <h2>Summary</h2>
-              <h4 class="fragment">Large new surveys are revolutionizing our knowledge of the Milky Way.</h4>
-              <h4 class="fragment">My focus: The interstellar medium, and Milky Way structure and dynamics</h4>
-              <h4 class="fragment">... through application of modern computational methods to these rich datasets.</h4>
+              <h1>Summary</h1>
+              <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="fragment">Large new surveys are revolutionizing our knowledge of the Milky Way.</h4>
+              <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="fragment">My focus: The interstellar medium, and Milky Way structure and dynamics</h4>
+              <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="fragment">... through application of modern computational methods to these rich datasets.</h4>
             </div>
           </section>
         </section>
