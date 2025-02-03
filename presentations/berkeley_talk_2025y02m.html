@@ -331,6 +331,58 @@
       transform: scale(0.7);
     }
 
+    /* Image grid */
+    .image-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      justify-content: center;
+    }
+
+    .image-grid .grid-item {
+      flex: 1 1 28%;  /* Grow, shrink, basis */
+      max-width: 35%;
+      position: relative;
+      /*border: solid white 1px;*/
+    }
+
+    .image-grid .item-title {
+      font-size: 14pt;
+      margin-top: 3px;
+      margin-bottom: 1px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .image-grid .grid-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      margin: 8px;
+      margin-top: 4px;
+    }
+
+    .image-grid .image-caption {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin: 0;
+      padding: 0px 10px;
+      font-size: 8pt;
+    }
+
+    .image-grid .image-caption a {
+      font-size: 8pt;
+      color: white;
+      opacity: 50%;
+    }
+
+    .image-grid .image-caption a:hover {
+      font-size: 8pt;
+      color: white;
+      opacity: 70%;
+    }
+
     /* Code blocks */
     .reveal pre.code-wrapper{
       display: inline-block;
@@ -677,7 +729,7 @@
                 <p>What is the composition of the dust? How does it vary?</p>
               </div>
               <div class="space-top fragment compact">
-                <h3>New analysis methods</h3>
+                <h3>Computational methods</h3>
                 <p>The richness and volume of the data requires more complex models, faster methods.</p>
               </div>
             </div>
@@ -714,7 +766,7 @@
               <p class="attribution">ESA/Gaia/DPAC; A. Moitinho and M. Barros<a href="https://sci.esa.int/s/8D04j58"></a></p>
             </div>
           </section>
-          <section class="full-height" data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg" data-transition="fade-in slide-out">
+          <section class="full-height" data-auto-animate data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg" data-transition="fade-in slide-out">
             <h2>Gaia &amp; Dynamics</h2>
             <div class="abs-vcenter">
               <p class="stroke-text-dark">~30 million stars with high-quality, full 6D phase-space measurements.</p>
@@ -723,13 +775,48 @@
               <p class="attribution">ESA/Gaia/DPAC; A. Moitinho and M. Barros<a href="https://sci.esa.int/s/8D04j58"></a></p>
             </div>
           </section>
+          <section class="full-height" data-auto-animate data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg" data-transition="fade-in slide-out">
+            <h2>Gaia &amp; Dynamics</h2>
+            <div class="abs-vcenter">
+              <p class="stroke-text-dark">~30 million stars with high-quality, full 6D phase-space measurements.</p>
+              <p class="stroke-text-dark">How is mass distributed in the Milky Way?</p>
+            </div>
+            <div class="footer">
+              <p class="attribution">ESA/Gaia/DPAC; A. Moitinho and M. Barros<a href="https://sci.esa.int/s/8D04j58"></a></p>
+            </div>
+          </section>
+          <section class="full-height" data-auto-animate data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg" data-transition="fade-in slide-out">
+            <h2>Gaia &amp; Dynamics</h2>
+            <div class="abs-vcenter">
+              <p class="stroke-text-dark">~30 million stars with high-quality, full 6D phase-space measurements.</p>
+              <p class="stroke-text-dark">How is mass distributed in the Milky Way?</p>
+              <p class="stroke-text-dark">(Cusp vs. core? Is the dark matter distribution clumpy? What is the local DM density?)</p>
+            </div>
+            <div class="footer">
+              <p class="attribution">ESA/Gaia/DPAC; A. Moitinho and M. Barros<a href="https://sci.esa.int/s/8D04j58"></a></p>
+            </div>
+          </section>
+          <section class="full-height" data-auto-animate data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg" data-transition="fade-in slide-out">
+            <h2>Gaia &amp; Dynamics</h2>
+            <div class="abs-vcenter">
+              <p class="stroke-text-dark">~30 million stars with high-quality, full 6D phase-space measurements.</p>
+              <p class="stroke-text-dark">How is mass distributed in the Milky Way?</p>
+              <p class="stroke-text-dark">(Cusp vs. core? Is the dark matter distribution clumpy? What is the local DM density?)</p>
+              <p class="stroke-text-dark">What are the dynamics of the spiral arms and bar?</p>
+            </div>
+            <div class="footer">
+              <p class="attribution">ESA/Gaia/DPAC; A. Moitinho and M. Barros<a href="https://sci.esa.int/s/8D04j58"></a></p>
+            </div>
+          </section>
 
+          <!--
           <section data-background-video="../media/gaia/gaia_proper_motion_on_sky_h264.mp4" data-background-video-loop data-background-size="contain" class="full-height">
             <h2>Gaia &amp; Dynamics</h2>
             <div class="footer">
               <p class="attribution"><a href="https://sci.esa.int/web/gaia/-/60233-parallax-and-proper-motion-on-the-sky">ESA/Gaia/DPAC, CC BY-SA 3.0 IGO</a></p>
             </div>
           </section>
+          -->
 
           <section>
             <h2>Dynamics</h2>
@@ -1272,6 +1359,42 @@
             <h3 class="fragment">&ldquo;Love it or hate it&rdquo;</h3>
           </section>
 
+          <section>
+            <h3>Some astrophysics affected by dust...</h3>
+            <div class="image-grid">
+              <div class="grid-item fragment">
+                <p class="item-title">Star formation</p>
+                <img data-src="../media/misc/bok_globules_eso1322a.jpg"></img>
+                <p class="image-caption"><a href="https://www.eso.org/public/unitedkingdom/images/eso1322a">ESO</a></p>
+              </div>
+              <div class="grid-item fragment">
+                <p class="item-title">Planet formation</p>
+                <img data-src="../media/misc/protoplanetary_disk_continuum_hltauri_eso1436a.jpg"></img>
+                <p class="image-caption"><a href="https://www.eso.org/public/unitedkingdom/images/eso1436a">ALMA (ESO/NAOJ/NRAO)</a></p>
+              </div>
+              <div class="grid-item fragment">
+                <p class="item-title">CMB foregrounds</p>
+                <img data-src="../media/misc/Polarised_emission_from_Milky_Way_dust_square_zoom.jpg"></img>
+                <p class="image-caption"><a href="https://www.esa.int/ESA_Multimedia/Images/2015/02/Polarised_emission_from_Milky_Way_dust">ESA/Planck Collaboration</a></p>
+              </div>
+              <div class="grid-item fragment">
+                <p class="item-title">Stellar population synthesis</p>
+                <img data-src="../media/misc/stellar_pop_synthesis_conroy2013.svg" style="object-fit:contain;"></img>
+                <p class="image-caption"><a href="https://doi.org/10.1146/annurev-astro-082812-141017">Conroy (2013)</a></p>
+              </div>
+              <div class="grid-item fragment">
+                <p class="item-title">Large-scale structure</p>
+                <img data-src="../media/misc/desi_1yr_noirlab2408b.jpg"></img>
+                <p class="image-caption"><a href="https://noirlab.edu/public/images/noirlab2408b/">DESI Collaboration/NOIRLab/NSF/AURA/R. Proctor</a></p>
+              </div>
+              <div class="grid-item fragment">
+                <p class="item-title">Chemistry of the ISM</p>
+                <img data-src="../media/misc/Messier17_gemini1306a.jpg"></img>
+                <p class="image-caption"><a href="https://noirlab.edu/public/images/gemini1306a/">International Gemini Observatory/AURA</a></p>
+              </div>
+            </div>
+          </section>
+
           <section data-background-video="../media/decaps/dust_cloud_zoomin_postprocessed.webm" data-background-video-loop="true" class="full-height">
             <h3 style="backdrop-filter: blur(5px); background: #0008;">Zooming in on a dust cloud in the Milky Way</h3>
           </section>
@@ -1410,24 +1533,10 @@
         </section>
 
         <section>
-          <section data-auto-animate class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
-            <h1>Dust mapping</h1>
+          <section class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
+            <h2>How do dust properties vary?</h2>
             <div class="footer">
               <p><a href="https://ui.adsabs.harvard.edu/abs/1998ApJ...500..525S/abstract">Schlegel, Finkbeiner &amp; Davis (1998; &ldquo;SFD&rdquo;)</a></p>
-            </div>
-          </section>
-          <section data-auto-animate class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
-            <h1>Dust mapping</h1>
-            <div class="compact space-top">
-              <p class="stroke-text-dark">Universal extinction curve: $A\left(\lambda\right) / A\left(\lambda_0\right)$.</p>
-              <img style="background: #00000077; display: inline-block; box-shadow: 0px 0px 25px #000;" class="r-stretch" data-src="../media/dust/extinction_curve_hensley_draine_2003.svg"></img>
-            </div>
-          </section>
-          <section data-auto-animate data-auto-animate-duration=0 class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
-            <h1>Dust mapping</h1>
-            <div class="compact space-top">
-              <p class="stroke-text-dark">Universal extinction curve: $A\left(\lambda\right) / A\left(\lambda_0\right)$.</p>
-              <img style="background: #00000077; display: inline-block; box-shadow: 0px 0px 25px #000;" class="r-stretch" data-src="../media/dust/extinction_curve_hensley_draine_2003_wRv.svg"></img>
             </div>
           </section>
 
@@ -1458,7 +1567,7 @@
           -->
 
           <section data-auto-animate class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
-            <h1>Dust mapping</h1>
+            <h1>Dust density</h1>
             <div class="footer">
               <p class="stroke-text-dark" style="padding-bottom:40pt;">Universal extinction curve: $A\left(\lambda\right) / A\left(\lambda_0\right)$.</p>
             </div>
@@ -1479,7 +1588,7 @@
           </section>
           -->
           <section data-auto-animate class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background.jpg">
-            <h1 class="stroke-text-dark-thick">Dust mapping</h1>
+            <h1 class="stroke-text-dark-thick">Dust properties</h1>
             <div class="footer" style="background: linear-gradient(0deg,transparent,#0009,#0009,#0009,transparent); padding-top: 50px; padding-bottom: 50px;">
               <h4 style="color:white;">First map of dust R(V) across the entire sky.</h4>
             </div>
@@ -1742,7 +1851,7 @@
             <div class="stroke-text-dark">
               <h4>At intermediate densities, growth of PAHs seems to drive R(V) variation.</h4>
               <h4 class="fragment space-top">This significant revision of the prevailing view was made possible by our dust R(V) measurements of 130 million sightlines.</h4>
-              <h4 class="fragment space-top">We hope to follow-up this hypothesis with JWST observations.</h4>
+              <h4 class="fragment space-top">We aim to follow-up this hypothesis with JWST observations.</h4>
             </div>
           </section>
         </section>
@@ -1782,6 +1891,7 @@
                 <h3>Two extinction features</h3>
                 <p>Both features are far wider than any DIB.</p>
                 <p>The feature at 850&nbsp;nm is new.</p>
+                <p class="fragment">The extinction curve contains information about the detailed chemistry of the ISM.</p>
               </div>
             </div>
           </section>
@@ -1823,6 +1933,7 @@
           </section>
         </section>
 
+        <!--
         <section>
           <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
             <h1 class="stroke-text-dark">Summary of dust work</h1>
@@ -1830,6 +1941,33 @@
             <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="stroke-text-dark fragment">First all-sky 3D maps of dust R(V): Zhang &amp; Green (2024).</h4>
             <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="stroke-text-dark fragment">PAHs drive R(V) variation: Zhang, Hensley &amp; Green (2024).</h4>
             <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="fragment stroke-text-dark">Going beyond R(V): Green, Zhang, &amp; Zhang (<a style="color:white;" href="https://arxiv.org/abs/2410.22537">2024</a>)</h4>
+          </section>
+        </section>
+        -->
+
+        <section>
+          <section data-auto-animate data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
+            <h2>Computational methods</h2>
+          </section>
+          <section data-auto-animate data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
+            <h2>Computational methods</h2>
+            <h3 class="space-top">Machine-learning tools are powerful.</h3>
+            <p>Large, flexible models. GPU computing. Automatic derivatives.</p>
+          </section>
+          <section data-auto-animate data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
+            <h2>Computational methods</h2>
+            <h3 class="space-top">Machine-learning tools are powerful.</h3>
+            <p>Large, flexible models. GPU computing. Automatic derivatives.</p>
+            <h3 class="space-top">... but best applied in physically principled ways:</h3>
+            <p>Solving physical equations. Models with correct causal structure. Rigorous statistical inference.</p>
+          </section>
+          <section data-auto-animate data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
+            <h2>Computational methods</h2>
+            <h3 class="space-top">Machine-learning tools are powerful.</h3>
+            <p>Large, flexible models. GPU computing. Automatic derivatives.</p>
+            <h3 class="space-top">... but best applied in physically principled ways:</h3>
+            <p>Solving physical equations. Models with correct causal structure. Rigorous statistical inference.</p>
+            <h3 class="space-top">My focus: applications to dynamics and the interstellar medium</h3>
           </section>
         </section>
 
