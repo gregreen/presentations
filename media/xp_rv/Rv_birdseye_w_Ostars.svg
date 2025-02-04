@@ -24,10 +24,10 @@
      showgrid="false"
      lock-margins="true"
      inkscape:zoom="1.7421875"
-     inkscape:cx="448.57399"
-     inkscape:cy="309.09417"
-     inkscape:window-width="2048"
-     inkscape:window-height="1088"
+     inkscape:cx="346.40359"
+     inkscape:cy="171.33632"
+     inkscape:window-width="1440"
+     inkscape:window-height="836"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -7530,6 +7530,18 @@
        width="344"
        height="11"
        xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVgAAAALCAIAAAC1YwL6AAAABmJLR0QA/wD/AP+gvaeTAAABNElEQVRoge2UsWHEMAwDAdi/SvYvMh+RQhQtJyMEV+H5B8oV+X1/8UMAusmPdBMAP9TNZ35RFwFQ5KXJHS5SoghAFylSGmHNl7AzqWfJdN9Z4K+utkOszGeIKVI4ZLDnkMhdFEHhj48lcD7g5YCnIwA9ZO/vQL3yftRc8pm72D8BUyA9D1Hee4yZy4djyuB0ARiPsFru+UuehQZN2rsLtgMaM+czN+vIL8cEUHs+Qhkj2ABQR15CL/H6C/2Q8XbQznSNV3cPz1yFt+xf87XZ5clVPvYYgAu2q9Ye1/aX7O20bFe5Hy3XKnSeoo+il9bZrnryerU6z55ynX7tXMfCyVt2VfXC/qxeUkII4d+TQxBCyCEIIeQQhBCQQxBCQA5BCAE5BCEE5BCEEJBDEEJADkEIAcAP2wA7bJs4zBsAAAAASUVORK5CYII=" />
+    <rect
+       x="647.10529"
+       y="14.43396"
+       width="226.87888"
+       height="27.877064"
+       id="rect19634" />
+    <rect
+       x="647.10529"
+       y="14.43396"
+       width="226.87888"
+       height="27.877064"
+       id="rect19634-9" />
   </defs>
   <path
      style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
@@ -18319,4 +18331,24 @@
      style="fill:none;stroke:#ffffff;stroke-width:0.8;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
      d="m 120.17419,296.18204 v -7.73437 h 247.67968 v 7.73437 z m 0,0"
      id="path7764" />
+  <text
+     xml:space="preserve"
+     transform="matrix(0.75,0,0,0.75000336,-193.75043,296.41588)"
+     id="text19632"
+     style="font-size:18.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect19634);opacity:0.7;stroke-width:0.999998"><tspan
+       x="647.10547"
+       y="30.949249"
+       id="tspan65415"><tspan
+         style="font-size:12px;-inkscape-font-specification:'sans-serif, Normal';fill:#ffffff"
+         id="tspan65413">Larger grains ⟶</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     transform="matrix(0.75,0,0,0.75000336,-365.27755,296.41588)"
+     id="text19632-3"
+     style="font-size:18.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect19634-9);opacity:0.7;stroke-width:0.999998"><tspan
+       x="647.10547"
+       y="30.949249"
+       id="tspan65419"><tspan
+         style="font-size:12px;-inkscape-font-specification:'sans-serif, Normal';fill:#ffffff"
+         id="tspan65417">⟵ Smaller grains </tspan></tspan></text>
 </svg>

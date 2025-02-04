@@ -20,299 +20,6 @@
 
     <script src="../js/d3.min.js" charset="utf-8"></script>
     <!--<script src="https://d3js.org/d3.v7.min.js"></script>-->
-    <script src="https://unpkg.com/topojson@3"></script>
-  
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const width = 800,
-	    height = 500;
-
-      const svg = d3.select("#map-container")
-	.append("svg")
-	.attr("width", width)
-	.attr("height", height);
-
-      const mainGroup = svg.append("g");
-
-      // Projection and path
-      const projection = d3.geoConicConformal()
-        .parallels([30, 60]) // Standard parallels appropriate to 45N
-        .rotate([45, 0, 0]) // Rotate globe azimuthally to bring 45W to center
-        .translate([0.55*width, 1.2*height]) // Center region of interest
-        .scale(400);
-
-      const path = d3.geoPath().projection(projection);
-
-      // Colors and styling
-      const landColor = "#c0c0c0";
-      const lakeColor = "#6BA8C5";
-      const borderColor = "#999";
-      const lineColor = "#70C8A0";
-      const pointColor = "#399371";
-      const pointRadius = 3;
-      const labelColor = "#399371";
-
-      // Locations array: [longitude, latitude, label]
-      const locations = [
-	[-83.7430, 42.2808, "U. of Michigan", "lb"],
-	[-71.116943, 42.374443, "Harvard", "rb"],
-	[-122.165413, 37.422590, "Stanford", "lt"],
-	[8.6724, 49.3988, "MPIA", "rt"]
-      ];
-
-      const mapTransitions = {
-        "0": "translate(0px, 0px) scale(1.5) rotate(347deg)",
-        "3": "translate(0px, 0px) scale(1) rotate(0deg)",
-      };
-
-      let reverseMapTransitions = {
-        "0": "",
-        "3": mapTransitions[0]
-      }
-
-      // Load data from countries-110m.json
-      d3.json("../data/natural_earth/world-110m-withlakes.json").then(function(world) {
-	// Extract features
-	const land = topojson.feature(world, world.objects.land);
-	const countries = topojson.feature(world, world.objects.countries).features;
-        const lakes = topojson.feature(world, world.objects.ne_110m_lakes);
-
-	// Draw land
-	mainGroup.append("path")
-          .datum(land)
-          .attr("d", path)
-          .attr("fill", landColor)
-          .attr("stroke", borderColor)
-          .attr("stroke-width", 0.5);
-
-	// Draw countries
-	mainGroup.selectAll("path.country")
-          .data(countries)
-          .enter().append("path")
-          .attr("class", "country")
-          .attr("d", path)
-          .attr("fill", "none")
-          .attr("stroke", borderColor)
-          .attr("stroke-width", 0.5);
-
-        // Draw lakes
-        mainGroup.append("g")
-          .selectAll("path.lake")
-          .data(lakes.features)
-          .enter().append("path")
-          .attr("class", "lake")
-          .attr("d", path)
-          .attr("fill", lakeColor)
-          .attr("stroke", "none");
-
-	// Prepare groups for lines, points, and labels
-        const gLines = mainGroup.append("g").attr("class", "lines");
-        const gPoints = mainGroup.append("g").attr("class", "points");
-        const gLabels = mainGroup.append("g").attr("class", "labels");
-
-        // Pre-draw the other lines/points, hidden
-        for (let i = 0; i < locations.length; i++) {
-          const end = projection(locations[i]);
-
-          if (i != 0) {
-            const start = projection(locations[i-1]);
-            gLines.append("line")
-              .attr("class", "line-" + i)
-              .attr("x1", start[0])
-              .attr("y1", start[1])
-              .attr("x2", end[0])
-              .attr("y2", end[1])
-              .attr("stroke", lineColor)
-              .attr("stroke-width", 2)
-              .style("opacity", 0);
-          }
-
-          gPoints.append("circle")
-            .attr("class", "point-" + i)
-            .attr("cx", end[0])
-            .attr("cy", end[1])
-            .attr("r", 5)
-            .attr("fill", pointColor)
-            .style("opacity", 0);
-
-          const labelPos = locations[i][3];
-          if (labelPos[0] == "r") {
-            textAnchor = "start";
-            dx = 5;
-          } else {
-            textAnchor = "end";
-            dx = -3;
-          }
-          if (labelPos[1] == "b") {
-            textBaseline = "text-top";
-            dy = 15;
-          } else {
-            textBaseline = "text-bottom";
-            dy = -5;
-          }
-          gLabels.append("text")
-            .attr("class", "label-" + i)
-            .attr("x", end[0] + dx)
-            .attr("y", end[1] + dy)
-            .attr("text-anchor", textAnchor)
-            .attr("dominant-baseline", textBaseline)
-            .text(locations[i][2])
-            .style("fill", labelColor)
-            .style("font-size", "14pt")
-            .style("font-weight", "700")
-            .style("stroke", "#fff7")
-            .style("paint-order", "stroke")
-            .style("opacity", 0);
-        }
-
-        // Initial point visible
-        svg.select("point-0").style("opacity", 1);
-        svg.select("label-0").style("opacity", 1);
-
-	// Function to reveal the next route segment and point
-	function revealPoint(index) {
-	  if (index < 1 || index >= locations.length) return;
-
-	  const start = projection(locations[index - 1]);
-	  const end = projection(locations[index]);
-
-	  // Add the line (path between points)
-	  const line = gLines.append("line")
-	    .attr("x1", start[0])
-	    .attr("y1", start[1])
-	    .attr("x2", start[0])
-	    .attr("y2", start[1])
-	    .attr("stroke", lineColor)
-	    .attr("stroke-width", 2);
-
-	  // Transition the line to the new point
-	  line.transition()
-	    .duration(1000)
-	    .attr("x2", end[0])
-	    .attr("y2", end[1]);
-
-	  // After line animation, show the new point
-	  setTimeout(() => {
-	    gPoints.append("circle")
-	      .transition()
-	      .duration(500)
-	      .attr("r", pointRadius);
-
-	    gLabels.append("text")
-	      .transition()
-	      .duration(500)
-	      .style("opacity", 1);
-	  }, 1000);
-	}
-
-        function ensureVisibleUpTo(i) {
-          for (let idx = 0; idx < i; idx++) {
-            console.log("showing " + idx);
-            svg.select(".line-"+idx)
-              .style("opacity", 1);
-            svg.select(".point-"+idx)
-              .style("opacity", 1);
-            svg.select(".label-"+idx)
-              .style("opacity", 1);
-          }
-        }
-
-	// Reveal.js event listeners for fragment showing
-        function onMapFragmentShown(event) {
-          const i = parseInt(event.fragment.getAttribute('data-fragment-index'), 10);
-          console.log("showing: fragment index = " + i);
-
-          // Make sure that everything before this is shown
-          ensureVisibleUpTo(i);
-
-          // Transform entire map?
-          if (i in mapTransitions) {
-            mainGroup.transition()
-              .duration(1000)
-              .style("transform", mapTransitions[i]);
-          }
-
-          // Animate line drawing
-          if ((i != 0)) {
-            const line = svg.select(".line-" + i);
-            const lineLength = line.node().getTotalLength();
-            line
-              .attr("stroke-dasharray", lineLength + " " + lineLength)
-              .attr("stroke-dashoffset", lineLength)
-              .style("opacity", 1)
-              .transition()
-              .duration(1000)
-              .attr("stroke-dashoffset", 0);
-          }
-
-          // Fade in point
-          svg.select(".point-" + i)
-            .transition()
-            .delay(1000) // after line
-            .duration(500)
-            .style("opacity", 1);
-
-          // Fade in label
-          svg.select(".label-" + i)
-            .transition()
-            .delay(1500) // after point
-            .duration(500)
-            .style("opacity", 1);
-        };
-
-        function onMapFragmentHidden(event) {
-          const i = parseInt(event.fragment.getAttribute('data-fragment-index'), 10);
-
-          // Instantly hide line/point/label or transition them out
-          svg.select(".line-" + i)
-            .style("opacity", 0);
-
-          svg.select(".point-" + i)
-            .style("opacity", 0);
-
-          svg.select(".label-" + i)
-            .style("opacity", 0);
-
-          // Transform entire map?
-          if (i in reverseMapTransitions) {
-            mainGroup.transition()
-              .duration(1000)
-              .style("transform", reverseMapTransitions[i]);
-          }
-        };
-
-        function resetMapSlide() {
-          // Reset all lines/points (except the first) to opacity 0.
-          for (let i = 1; i < locations.length; i++) {
-            svg.select(".line-" + i).style("opacity", 0);
-            svg.select(".point-" + i).style("opacity", 0);
-            svg.select(".label-" + i).style("opacity", 0);
-          }
-        };
-
-        function attachFragmentHandlers() {
-          console.log("Attaching fragment handlers");
-          Reveal.on('fragmentshown', onMapFragmentShown);
-          Reveal.on('fragmenthidden', onMapFragmentHidden);
-        }
-
-        function detachFragmentHandlers() {
-          console.log("Detaching fragment handlers");
-          Reveal.off('fragmentshown', onMapFragmentShown);
-          Reveal.off('fragmenthidden', onMapFragmentHidden);
-        }
-
-        Reveal.on('slidechanged', function(event) {
-          if (event.currentSlide && event.currentSlide.matches('#map-slide')) {
-            attachFragmentHandlers();
-          } else {
-            detachFragmentHandlers();
-          }
-        });
-
-      });
-    });
-    </script>
   </head>
 
   <style>
@@ -648,52 +355,12 @@
             </div>
           </div>
           <div class="abs-bottom-right">
-            <img data-src="../media/logos/MPIA_horizontal.svg" class="half-width" style="filter:contrast(0.5) brightness(1.0);"></img>
-          </div>
-          <div class="abs-bottom-left">
             <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="half-width" style="width:40%; filter:contrast(0.5) brightness(1.2);"></img>
           </div>
-        </section>
-
-        <section data-background-gradient="linear-gradient(to bottom, #000, #222, #000)">
-          <h2>MPIA Dust and Dynamics Group</h2>
-          <div class="multicol">
-            <div class="compact">
-              <img style="clip-path:circle(50%);" data-src="../media/group/greg.jpg"></img>
-              <h4>Gregory M. Green</h4>
-              <p>group leader</p>
-            </div>
-            <div class="compact fragment">
-              <img style="clip-path:circle(50%);" data-src="../media/group/soumavo_ghosh.png"></img>
-              <h4>Soumavo Ghosh</h4>
-              <p>(former) postdoc</p>
-              <p class="shrink-text">dynamics / barred galaxies</p>
-            </div>
-            <div class="compact fragment">
-              <img style="clip-path:circle(50%);" data-src="../media/group/xiangyu_zhang.png"></img>
-              <h4>Xiangyu Zhang</h4>
-              <p>PhD student</p>
-              <p class="shrink-text">interstellar dust / low-res spectra</p>
-            </div>
-            <div class="compact fragment">
-              <img style="clip-path:circle(50%);" data-src="../media/group/taavet_kalda.png"></img>
-              <h4>Taavet Kalda</h4>
-              <p>PhD student</p>
-              <p class="shrink-text">dynamics / machine learning</p>
-            </div>
+          <div class="abs-bottom-left">
+            <img data-src="../media/logos/MPIA_horizontal.svg" class="half-width" style="filter:contrast(0.5) brightness(1.0);"></img>
           </div>
         </section>
-
-	<section id="map-slide" data-transition="fade">
-	  <h4>My academic path</h4>
-	  <!-- Container for the D3 map -->
-	  <div id="map-container" style="width: 1000px; height: 600px; margin: 0 auto; position: relative; background:black;"></div>
-	  <!-- Fragments that will trigger showing each subsequent point and line -->
-	  <div class="fragment"></div>
-	  <div class="fragment"></div>
-	  <div class="fragment"></div>
-	  <div class="fragment"></div>
-	</section>
 
         <section>
           <!--
@@ -737,29 +404,34 @@
               <p class="attribution"><a href="https://sci.esa.int/web/gaia/-/60233-parallax-and-proper-motion-on-the-sky">ESA/Gaia/DPAC, CC BY-SA 3.0 IGO</a></p>
             </div>
           </section>
+
+          <section data-auto-animate data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
+            <h2>Computational methods</h2>
+          </section>
+          <section data-auto-animate data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
+            <h2>Computational methods</h2>
+            <h3 class="space-top">Machine-learning tools are powerful.</h3>
+            <p>Large, flexible models. GPU computing. Automatic derivatives.</p>
+          </section>
+          <section data-auto-animate data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
+            <h2>Computational methods</h2>
+            <h3 class="space-top">Machine-learning tools are powerful.</h3>
+            <p>Large, flexible models. GPU computing. Automatic derivatives.</p>
+            <h3 class="space-top">... but best applied in physically principled ways:</h3>
+            <p>Solving physical equations. Models with correct causal structure. Rigorous statistical inference.</p>
+          </section>
+          <section data-auto-animate data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
+            <h2>Computational methods</h2>
+            <h3 class="space-top">Machine-learning tools are powerful.</h3>
+            <p>Large, flexible models. GPU computing. Automatic derivatives.</p>
+            <h3 class="space-top">... but best applied in physically principled ways:</h3>
+            <p>Solving physical equations. Models with correct causal structure. Rigorous statistical inference.</p>
+            <h3 class="space-top">My focus: applications to dynamics and the interstellar medium</h3>
+          </section>
+
         </section>
 
         <section>
-          <section>
-            <h2>Dynamics</h2>
-            <div class="compact fragment">
-              <div class="multicol">
-                <div>
-                  <h4>In collaboration with Taavet Kalda</h4>
-                  <img style="width:250px; clip-path:circle(50%);" data-src="../media/group/taavet_kalda.png"></img>
-                  <p>PhD student</p>
-                  <p class="shrink-text">dynamics / machine learning</p>
-                </div>
-                <div class="fragment">
-                  <h4>and Soumavo Ghosh</h4>
-                  <img style="width:250px; clip-path:circle(50%);" data-src="../media/group/soumavo_ghosh.png"></img>
-                  <p>(former) postdoc</p>
-                  <p class="shrink-text">dynamics / barred galaxies</p>
-                </div>
-              </div>
-            </div>
-          </section>
-
           <section class="full-height" data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k.jpg" data-transition="slide-in fade-out">
             <h2>Gaia &amp; Dynamics</h2>
             <div class="footer">
@@ -790,7 +462,7 @@
             <div class="abs-vcenter">
               <p class="stroke-text-dark">~30 million stars with high-quality, full 6D phase-space measurements.</p>
               <p class="stroke-text-dark">How is mass distributed in the Milky Way?</p>
-              <p class="stroke-text-dark">(Cusp vs. core? Is the dark matter distribution clumpy? What is the local DM density?)</p>
+              <p class="stroke-text-dark">(How centrally concentrated is the dark matter? Is the DM distribution clumpy? What is the local DM density?)</p>
             </div>
             <div class="footer">
               <p class="attribution">ESA/Gaia/DPAC; A. Moitinho and M. Barros<a href="https://sci.esa.int/s/8D04j58"></a></p>
@@ -801,7 +473,7 @@
             <div class="abs-vcenter">
               <p class="stroke-text-dark">~30 million stars with high-quality, full 6D phase-space measurements.</p>
               <p class="stroke-text-dark">How is mass distributed in the Milky Way?</p>
-              <p class="stroke-text-dark">(Cusp vs. core? Is the dark matter distribution clumpy? What is the local DM density?)</p>
+              <p class="stroke-text-dark">(How centrally concentrated is the dark matter? Is the DM distribution clumpy? What is the local DM density?)</p>
               <p class="stroke-text-dark">What are the dynamics of the spiral arms and bar?</p>
             </div>
             <div class="footer">
@@ -882,11 +554,26 @@
             </div>
           </section>
 
-          <section data-transition="none-in slide-out">
+          <section data-transition="none-in none-out" data-auto-animate>
             <div class="multicol vcenter">
               <div>
                 <h3>Stationarity assumption</h3>
                 <p class="space-top">Galaxy doesn't <em>statistically</em> change over time.</p>
+              </div>
+              <div class="wider">
+                <video data-autoplay data-src="../media/deep_potential/SHO_box_nonstationary.mp4" loop="loop"></video>
+              </div>
+            </div>
+          </section>
+
+          <section data-auto-animate>
+            <div class="multicol vcenter">
+              <div>
+                <h3>Stationarity assumption</h3>
+                <p class="space-top">Galaxy doesn't <em>statistically</em> change over time.</p>
+                <h4 class="space-top">Key concept:</h4>
+                <p>Distribution function: $f\left(\vec{x},\vec{v}\right)$.</p>
+                <p>Number density of stars in phase space ($\vec{x},\vec{v}$).</p>
               </div>
               <div class="wider">
                 <video data-autoplay data-src="../media/deep_potential/SHO_box_nonstationary.mp4" loop="loop"></video>
@@ -1036,7 +723,7 @@
             </p>
           </section>
 
-          <section data-transition="none-in slide-out">
+          <section data-transition="none-in none-out" data-auto-animate>
             <p>Our parameterization of the <span style="color:lightgreen;">potential</span> needs to be easily <span style="color:lightgreen;">differentiable</span>:</p>
             <p>
               $$
@@ -1048,6 +735,22 @@
               = 0 \, .
               $$
             </p>
+          </section>
+
+          <section data-auto-animate>
+            <p>Our parameterization of the <span style="color:lightgreen;">potential</span> needs to be easily <span style="color:lightgreen;">differentiable</span>:</p>
+            <p>
+              $$
+              \sum_{\mathrm{dimension}\ i} \!
+              \left(
+                v_i \, \frac{\partial f}{\partial x_i}
+                -{\color{lightgreen} \frac{\partial \Phi}{\partial x_i}} \frac{\partial f}{\partial v_i}
+              \right)
+              = 0 \, .
+              $$
+            </p>
+
+            <p class="space-top">Machine learning tools are ideal for constructing large, flexible models, and then taking their derivatives.</p>
           </section>
         </section>
 
@@ -1198,8 +901,28 @@
           <section>
             <h2>$N$-body simulation of a barred galaxy</h2>
             <img data-src="../media/deep_potential/barred_nbody_timesteps_background.svg" class="r-stretch"></img>
-            <p><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv231000040K">Kalda, Green &amp; Ghosh (2023), arXiv:2310.00040</a></p>
+            <p><a href="https://ui.adsabs.harvard.edu/abs/2024MNRAS.52712284K">Kalda, Green &amp; Ghosh (2024), <em>MNRAS</em></a></p>
           </section>
+
+          <section>
+            <div class="compact">
+              <div class="multicol">
+                <div>
+                  <h4>In collaboration with Taavet Kalda</h4>
+                  <img style="width:250px; clip-path:circle(50%);" data-src="../media/group/taavet_kalda.png"></img>
+                  <p>PhD student</p>
+                  <p class="shrink-text">dynamics / machine learning</p>
+                </div>
+                <div class="fragment">
+                  <h4>and Soumavo Ghosh</h4>
+                  <img style="width:250px; clip-path:circle(50%);" data-src="../media/group/soumavo_ghosh.png"></img>
+                  <p>(former) postdoc</p>
+                  <p class="shrink-text">dynamics / barred galaxies</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
 
           <section>
             <div class="multicol vcenter">
@@ -1235,18 +958,20 @@
             </div>
           </section>
 
-          <section>
+          <section data-transition="slide-in none-out">
             <h3>1. Fit distribution function</h3>
-            <div class="r-stack">
-              <img data-src="../media/deep_potential/barred_nbody_DF_marginal_x_y_t80.svg" class="full-width fragment"></img>
-              <img data-src="../media/deep_potential/barred_nbody_DF_marginal_vR_vT_t80.svg" class="full-width fragment"></img>
-            </div>
+            <img data-src="../media/deep_potential/barred_nbody_DF_marginal_x_y_t80_2panel.svg" class="r-stretch"></img>
+          </section>
+
+          <section data-transition="none-in slide-out">
+            <h3>1. Fit distribution function</h3>
+            <img data-src="../media/deep_potential/barred_nbody_DF_marginal_vR_vT_t80_2panel.svg" class="r-stretch"></img>
           </section>
 
           <section>
             <h3>2. Fit gravitational potential</h3>
-            <p>Density: $\rho = \nabla^2 \Phi / \left(4\pi G\right)$</p>
-            <img data-src="../media/deep_potential/barred_nbody_true_vs_model_rho_x_y_t80.svg" class="full-width"></img>
+            <p class="space-top-slight">Density: $\rho = \nabla^2 \Phi / \left(4\pi G\right)$</p>
+            <img data-src="../media/deep_potential/barred_nbody_true_vs_model_rho_x_y_t80_2panel.svg" class="r-stretch" style="margin-top:0px;"></img>
           </section>
 
           <!--
@@ -1360,7 +1085,7 @@
           </section>
 
           <section>
-            <h3>Some astrophysics affected by dust...</h3>
+            <h3>Dust is crucial for understanding...</h3>
             <div class="image-grid">
               <div class="grid-item fragment">
                 <p class="item-title">Star formation</p>
@@ -1588,13 +1313,13 @@
           </section>
           -->
           <section data-auto-animate class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background.jpg">
-            <h1 class="stroke-text-dark-thick">Dust properties</h1>
+            <h1 class="stroke-text-dark-thick">Dust R(V)</h1>
             <div class="footer" style="background: linear-gradient(0deg,transparent,#0009,#0009,#0009,transparent); padding-top: 50px; padding-bottom: 50px;">
               <h4 style="color:white;">First map of dust R(V) across the entire sky.</h4>
             </div>
           </section>
           <section data-auto-animate class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background.jpg">
-            <h1 class="stroke-text-dark-thick">Dust mapping</h1>
+            <h1 class="stroke-text-dark-thick">Dust R(V)</h1>
             <div class="footer" style="background: linear-gradient(0deg,transparent,#0009,#0009,#0009,transparent); padding-top: 50px; padding-bottom: 50px;">
               <h4 style="color:white;">First map of dust R(V) across the entire sky.</h4>
               <h4 style="color:white;">Improved extinction corrections, and first ever picture of how dust properties vary throughout the Milky Way.</h4>
@@ -1604,8 +1329,8 @@
 
         <section>
           <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
-            <h2 class="stroke-text-dark">Learning R(V) for 130 million stars</h2>
-            <h4 class="stroke-text-dark">Zhang, Hensley &amp; Green (<a style="color:white;" href="https://arxiv.org/abs/2407.14594">arXiv:2407.14594</a>, accepted by <em>Science</em>)</h4>
+            <h2 class="stroke-text-dark">Determining R(V) for 130 million stars</h2>
+            <h4 class="stroke-text-dark">Zhang, &amp; Green (<a style="color:white;" href="https://arxiv.org/abs/2407.14594">arXiv:2407.14594</a>, accepted by <em>Science</em>)</h4>
           </section>
 
           <section class="compact">
@@ -1620,14 +1345,16 @@
               <h3>Gaia BP/RP spectrophotometry</h3>
               <h4 class="fragment" data-fragment-index=1>(&ldquo;XP spectra&rdquo;)</h4>
             </div>
-            <div class="multicol vcenter">
+            <div class="multicol vcenter space-top">
               <div class="wider">
+                <img data-src="../media/bprp/BP_RP_2d_spectra.png" data-fragment-index=2 class="fragment full-width"></img>
+                <!--
                 <div class="r-stack">
-                  <img data-src="../media/bprp/BP_RP_2d_spectra.png" data-fragment-index=2 class="fragment current-visible full-width"></img>
                   <img data-src="../media/bprp/example_XP_spectrum_0.svg" data-fragment-index=3 class="fragment current-visible full-width"></img>
                   <img data-src="../media/bprp/example_XP_spectrum_1.svg" data-fragment-index=4 class="fragment current-visible full-width"></img>
                   <img data-src="../media/bprp/example_XP_spectrum_2.svg" data-fragment-index=5 class="fragment full-width"></img>
                 </div>
+                -->
               </div>
               <div>
                 <ul class="fragment" data-fragment-index=2>
@@ -1720,12 +1447,11 @@
                   <img data-fragment-index=1 class="full-width fragment fade-out" data-src="../media/xp_rv/Rv_vs_E_Perseus.svg"></img>
                   <img data-fragment-index=1 class="full-width fragment current-visible" data-src="../media/xp_rv/Rv_vs_E_OrionA.svg"></img>
                   <img data-fragment-index=2 class="full-width fragment current-visible" data-src="../media/xp_rv/Rv_vs_E_Taurus.svg"></img>
-                  <img data-fragment-index=3 class="full-width fragment" data-src="../media/xp_rv/Rv_vs_E_rhoOph.svg"></img>
                 </div>
-                <p class="fragment" data-fragment-index=3>ρ Ophiuchus is different.</p>
               </div>
           </section>
 
+          <!--
           <section data-auto-animate data-auto-animate-restart>
             <img class="r-stretch" data-src="../media/xp_rv/Rv_OBstars_rhoOph_UpperSco.svg"></img>
           </section>
@@ -1740,22 +1466,62 @@
               </div>
             </div>
           </section>
+          -->
 
           <section data-transition="slide-in none-out">
-            <img class="r-stretch" data-src="../media/xp_rv/Rv_birdseye_density_overlay_nolabels.svg"></img>
+            <div class="multicol vcenter">
+              <div class="widest">
+                <img class="full-width" data-src="../media/xp_rv/Rv_birdseye_density_overlay_nolabels_1panel.svg"></img>
+              </div>
+              <div>
+                <h3>R(V) in the Galactic plane</h3>
+              </div>
+            </div>
           </section>
           <section data-transition="none-in none-out">
-            <img class="r-stretch" data-src="../media/xp_rv/Rv_birdseye_density_overlay.svg"></img>
+            <div class="multicol vcenter">
+              <div class="widest">
+                <img class="full-width" data-src="../media/xp_rv/Rv_birdseye_density_overlay_1panel.svg"></img>
+              </div>
+              <div>
+                <h3>R(V) in the Galactic plane</h3>
+              </div>
+            </div>
           </section>
           <section data-transition="none-in none-out">
-            <img class="r-stretch" data-src="../media/xp_rv/Rv_birdseye_wo_Ostars.svg"></img>
+            <div class="multicol vcenter">
+              <div class="widest">
+                <img class="full-width" data-src="../media/xp_rv/Rv_birdseye_wo_Ostars_1panel.svg"></img>
+              </div>
+              <div>
+                <h3>R(V) in the Galactic plane</h3>
+              </div>
+            </div>
           </section>
-          <section data-transition="none-in slide-out">
-            <img class="r-stretch" data-src="../media/xp_rv/Rv_birdseye_w_Ostars.svg"></img>
+          <section data-transition="none-in" data-auto-animate>
+            <div class="multicol vcenter">
+              <div class="widest">
+                <img class="full-width" data-src="../media/xp_rv/Rv_birdseye_w_Ostars_1panel.svg"></img>
+              </div>
+              <div>
+                <h3>R(V) in the Galactic plane</h3>
+              </div>
+            </div>
+          </section>
+          <section data-auto-animate>
+            <div class="multicol vcenter">
+              <div class="widest">
+                <img class="full-width" data-src="../media/xp_rv/Rv_birdseye_w_Ostars_1panel.svg"></img>
+              </div>
+              <div>
+                <h3>R(V) in the Galactic plane</h3>
+                <p>Connection between star formation / UV radiation &amp; high R(V)?</p>
+              </div>
+            </div>
           </section>
 
           <section class="compact">
-            <h4>R(V) in the Magellanic Clouds</h4>
+            <h3>R(V) in the Magellanic Clouds</h3>
             <img class="r-stretch" data-src="../media/xp_rv/LMC_SMC_Rv.svg"></img>
           </section>
 
@@ -1862,6 +1628,7 @@
             <h4 class="stroke-text-dark">Green, Zhang, &amp; Zhang (<a style="color:white;" href="https://arxiv.org/abs/2410.22537">arXiv:2410.22537</a>)</h4>
           </section>
 
+          <!--
           <section class="compact" data-auto-animate>
             <h3>Component decomposition of extinction curves</h3>
             <img data-src="../media/beyond_rv/A_normalization_darkbg.svg" class="r-stretch"></img>
@@ -1876,9 +1643,10 @@
             <h3>Component decomposition of extinction curves</h3>
             <img data-src="../media/beyond_rv/skymap_components_darkbg_panel1.svg" class="r-stretch"></img>
           </section>
+          -->
 
           <section class="compact">
-            <h3>&ldquo;Dust-like&rdquo; spatial patterns in lowest-order components</h3>
+            <h3>Four components that show &ldquo;Dust-like&rdquo; spatial patterns</h3>
             <img data-src="../media/beyond_rv/skymap_components_zoomin_0to3.svg" class="r-stretch"></img>
           </section>
 
@@ -1888,7 +1656,7 @@
                 <img data-src="../media/beyond_rv/feature_fits_1panel.svg" class="full-width"></img>
               </div>
               <div>
-                <h3>Two extinction features</h3>
+                <h3>Two discrete extinction features</h3>
                 <p>Both features are far wider than any DIB.</p>
                 <p>The feature at 850&nbsp;nm is new.</p>
                 <p class="fragment">The extinction curve contains information about the detailed chemistry of the ISM.</p>
@@ -1933,202 +1701,26 @@
           </section>
         </section>
 
-        <!--
         <section>
-          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
-            <h1 class="stroke-text-dark">Summary of dust work</h1>
-            <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="stroke-text-dark fragment">First large-scale 3D maps of dust in the Milky Way: Green+(2015,2018,2019).</h4>
-            <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="stroke-text-dark fragment">First all-sky 3D maps of dust R(V): Zhang &amp; Green (2024).</h4>
-            <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="stroke-text-dark fragment">PAHs drive R(V) variation: Zhang, Hensley &amp; Green (2024).</h4>
-            <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="fragment stroke-text-dark">Going beyond R(V): Green, Zhang, &amp; Zhang (<a style="color:white;" href="https://arxiv.org/abs/2410.22537">2024</a>)</h4>
+          <section class="" data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg" data-auto-animate>
+            <h2>Milky Way Dynamics and Dust</h2>
+          </section>
+
+          <section class="" data-background-image="" data-auto-animate>
+            <h2>Milky Way Dynamics and Dust</h2>
+            <img class="r-stretch" data-src="../media/deep_potential/deep_potential_explanatory_figure.svg"></img>
+          </section>
+
+          <section class="" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg" data-auto-animate>
+            <h2>Milky Way Dynamics and Dust</h2>
+            <div class="r-stretch"></div>
+          </section>
+
+          <section class="" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg" data-auto-animate>
+            <h2>Milky Way Dynamics and Dust</h2>
+            <div class="r-stretch"></div>
           </section>
         </section>
-        -->
-
-        <section>
-          <section data-auto-animate data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
-            <h2>Computational methods</h2>
-          </section>
-          <section data-auto-animate data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
-            <h2>Computational methods</h2>
-            <h3 class="space-top">Machine-learning tools are powerful.</h3>
-            <p>Large, flexible models. GPU computing. Automatic derivatives.</p>
-          </section>
-          <section data-auto-animate data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
-            <h2>Computational methods</h2>
-            <h3 class="space-top">Machine-learning tools are powerful.</h3>
-            <p>Large, flexible models. GPU computing. Automatic derivatives.</p>
-            <h3 class="space-top">... but best applied in physically principled ways:</h3>
-            <p>Solving physical equations. Models with correct causal structure. Rigorous statistical inference.</p>
-          </section>
-          <section data-auto-animate data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
-            <h2>Computational methods</h2>
-            <h3 class="space-top">Machine-learning tools are powerful.</h3>
-            <p>Large, flexible models. GPU computing. Automatic derivatives.</p>
-            <h3 class="space-top">... but best applied in physically principled ways:</h3>
-            <p>Solving physical equations. Models with correct causal structure. Rigorous statistical inference.</p>
-            <h3 class="space-top">My focus: applications to dynamics and the interstellar medium</h3>
-          </section>
-        </section>
-
-        <!--
-        <section>
-          <section data-auto-animate data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
-            <div class="stroke-text-dark">
-              <h1>Research Plan</h1>
-            </div>
-          </section>
-
-          <section data-auto-animate>
-            <h3>1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
-          </section>
-
-          <section data-auto-animate>
-            <h3>1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
-            <div class="multicol vcenter">
-              <div>
-                <img data-src="../media/deep_potential/barred_nbody_true_vs_model_rho_x_y_t80_vertical.svg" class="full-width"></img>
-              </div>
-              <div class="wider">
-              </div>
-            </div>
-          </section>
-
-          <section data-auto-animate>
-            <h3>1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
-            <div class="multicol vcenter">
-              <div>
-                <img data-src="../media/deep_potential/barred_nbody_true_vs_model_rho_x_y_t80_vertical.svg" class="full-width"></img>
-              </div>
-              <div class="wider">
-                <h4>Are there signs of deviations from cold dark matter on small scales?</h4>
-              </div>
-            </div>
-          </section>
-
-          <section data-auto-animate>
-            <h3>1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
-            <div class="multicol vcenter">
-              <div>
-                <img data-src="../media/deep_potential/barred_nbody_true_vs_model_rho_x_y_t80_vertical.svg" class="full-width"></img>
-              </div>
-              <div class="wider">
-                <h4>Are there signs of deviations from cold dark matter on small scales?</h4>
-                <h4>Only in the Milky Way do we have 6D position-velocity data.</h4>
-              </div>
-            </div>
-          </section>
-
-          <section data-auto-animate>
-            <h3>1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
-            <div class="multicol vcenter">
-              <div>
-                <img data-src="../media/deep_potential/barred_nbody_true_vs_model_rho_x_y_t80_vertical.svg" class="full-width"></img>
-              </div>
-              <div class="wider">
-                <h4>Are there signs of deviations from cold dark matter on small scales?</h4>
-                <h4>Only in the Milky Way do we have 6D position-velocity data.</h4>
-                <h4>Gaia Data Release 4 (expected 2026): large increase in kinematic data.</h4>
-              </div>
-            </div>
-          </section>
-
-          <section data-auto-animate>
-            <h3>1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
-            <div class="multicol vcenter">
-              <div>
-                <img data-src="../media/deep_potential/barred_nbody_true_vs_model_rho_x_y_t80_vertical.svg" class="full-width"></img>
-              </div>
-              <div class="wider">
-                <h4>Are there signs of deviations from cold dark matter on small scales?</h4>
-                <h4>Only in the Milky Way do we have 6D position-velocity data.</h4>
-                <h4>Gaia Data Release 4 (expected 2026): large increase in kinematic data.</h4>
-                <h4 class="space-top">Adapt Deep Potential to external galaxies with &lt;6 observed phase-space dimensions.</h4>
-              </div>
-            </div>
-          </section>
-
-          <!--
-          <section data-auto-animate data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
-            <div class="stroke-text-dark">
-              <h1>Research Plan</h1>
-              <h3 class="space-top">1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
-            </div>
-          </section>
-
-          <section data-auto-animate data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
-            <div class="stroke-text-dark">
-              <h1>Research Plan</h1>
-              <h3 class="space-top">1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
-              <h4>Only in the Milky Way do we have 6D position-velocity data.</h4>
-              <h4>Gaia Data Release 4 (expected 2026): large increase in kinematic data.</h4>
-            </div>
-          </section>
-
-          <section data-auto-animate data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
-            <div class="stroke-text-dark">
-              <h1>Research Plan</h1>
-              <h3 class="space-top">1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
-              <h4>Only in the Milky Way do we have 6D position-velocity data.</h4>
-              <h4>Gaia Data Release 4 (expected 2026): large increase in kinematic data.</h4>
-              <h4>Adapt Deep Potential to external galaxies with &lt;6 observed phase-space dimensions.</h4>
-            </div>
-          </section>
-
-          <section data-auto-animate data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
-            <div class="stroke-text-dark">
-              <h1>Research Plan</h1>
-              <h3 class="space-top">1. Determine the Milky Way potential to constrain dark matter distribution.</h3>
-              <h4>Only in the Milky Way do we have 6D position-velocity data.</h4>
-              <h4>Gaia Data Release 4 (expected 2026): large increase in kinematic data.</h4>
-              <h4>Adapt Deep Potential to external galaxies with &lt;6 observed phase-space dimensions.</h4>
-              <h3 class="space-top">2. Understand dust properties and distribution using data from across the electromagnetic spectrum.</h3>
-            </div>
-          </section>
-
-          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
-            <div class="stroke-text-dark">
-              <h3 class="space-top">2. Understand dust properties and distribution using data from across the electromagnetic spectrum.</h3>
-            </div>
-          </section>
-
-          <section data-background-gradient="linear-gradient(to bottom, #000, #111, #000)" data-transition="slide-in none-out">
-            <h4>Low-resolution spectra from the UV to the mid-IR</h4>
-            <img class="r-stretch" data-src="../media/misc/missions_across_spectrum_withuvex_0.svg"></img>
-          </section>
-          <section data-background-gradient="linear-gradient(to bottom, #000, #111, #000)" data-transition="none-in none-out">
-            <h4>Low-resolution spectra from the UV to the mid-IR</h4>
-            <img class="r-stretch" data-src="../media/misc/missions_across_spectrum_withuvex_1.svg"></img>
-          </section>
-          <section data-auto-animate data-background-gradient="linear-gradient(to bottom, #000, #111, #000)" data-transition="none-in slide-out">
-            <h4>Low-resolution spectra from the UV to the mid-IR</h4>
-            <img class="r-stretch" data-src="../media/misc/missions_across_spectrum_withuvex.svg"></img>
-          </section>
-          <section data-auto-animate data-background-gradient="linear-gradient(to bottom, #000, #111, #000)" data-transition="none-in slide-out">
-            <div class="multicol vcenter">
-              <div>
-                <h4>Low-resolution spectra from the UV to the mid-IR</h4>
-                <img class="r-stretch" data-src="../media/misc/missions_across_spectrum_withuvex.svg"></img>
-              </div>
-              <div style="margin-left:20px;">
-                <p class="">What dust chemistry drives extinction-curve variation?</p>
-                <p class="fragment">What is the origin of extinction-curve variation beyond R(V)?</p>
-                <p class="fragment">Is there a relation to diffuse interstellar bands?</p>
-                <p class="space-top fragment">Better 3D maps of dust extinction in the Milky Way.</p>
-              </div>
-            </div>
-          </section>
-
-          <section data-auto-animate data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
-            <div class="stroke-text-dark">
-              <h1>Summary</h1>
-              <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="fragment">Large new surveys are revolutionizing our knowledge of the Milky Way.</h4>
-              <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="fragment">My focus: The interstellar medium, and Milky Way structure and dynamics</h4>
-              <h4 style="font-size: calc(1.2 * var(--r-heading4-size));" class="fragment">... through application of modern computational methods to these rich datasets.</h4>
-            </div>
-          </section>
-        </section>
-        -->
 
       </div> <!--slides-->
     </div> <!--reveal-->
