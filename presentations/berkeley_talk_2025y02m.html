@@ -821,7 +821,7 @@
             <div class="r-stack">
               <div class="fragment">
                 <p>Represent $\Phi$ as a neural network: $\Phi_{\theta} \left( \vec{x} \right)$.
-                <p>&rArr; <span style="color:cyan;">auto-differentiable</span>: $\frac{\partial \Phi}{\partial \vec{x}}$.</p>
+                <p>&rArr; Also automaticaly <span style="color:cyan;">differentiable</span>: $\frac{\partial \Phi}{\partial \vec{x}}$.</p>
               </div>
             </div>
           </section>
@@ -1041,17 +1041,17 @@
           </section>
 
           <section class="">
-            <h3>Predicted accelerations</h3>
+            <h2>Predicted accelerations</h2>
             <p>Accelerations obtained from modeled potential: $\vec{a} = -\nabla \Phi$.</p>
             <img class="r-stretch" style="filter:invert(1) hue-rotate(190deg);" data-src="../media/deep_potential/mw_1kpc_1d_acc.png"></img>
             <p class="attribution">Kalda &amp; Green, <em>in prep.</em></p>
           </section>
 
           <section class="">
-            <h3>Preliminary results</h3>
+            <h2>Preliminary results</h2>
             <p>Local matter density: $\rho \approx 0.056\ \mathrm{M_{\odot}\,pc^{-3}}$</p>
-            <p class="fragment">Pattern speed: $\Omega \approx 28.2\ \mathrm{km\,s^{-1}\,kpc^{-1}}$</p>
-            <p class="fragment">Similar to spiral-arm pattern speed, local orbital velocity, and expected bar pattern speed.</p>
+            <p class="fragment">Local pattern speed: $\Omega \approx 28.2\ \mathrm{km\,s^{-1}\,kpc^{-1}}$</p>
+            <p class="fragment">Between spiral-arm pattern speed and bar pattern speed (but also similar to circular velocity).</p>
             <p class="attribution space-top">Kalda &amp; Green, <em>in prep.</em></p>
           </section>
 
@@ -1083,6 +1083,11 @@
             <div class="footer">
               <p class="attribution" style="opacity:50%;"><a href="https://sci.esa.int/s/8D04j58">ESA/Gaia/DPAC; A. Moitinho and M. Barros</a>, <a href="https://esahubble.org/images/heic1719f/">ESA/ATG medialab</a></p>
             </div>
+          </section>
+
+          <section class="compact">
+            <h3>Mapping dust is critical to Milky Way dynamics</h3>
+            <img class="r-stretch" data-src="../media/deep_potential/gaia_sel_mollweide_count_magma.svg"></img>
           </section>
         </section>
 
@@ -1266,10 +1271,10 @@
         </section>
 
         <section>
-          <section class="full-height" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
+          <section data-background-video="../media/bayestar/Galactic_anticenter_in_Bayestar2019.mp4" data-background-video-loop="true" class="full-height">
             <h2>How do dust properties vary?</h2>
             <div class="footer">
-              <p><a href="https://ui.adsabs.harvard.edu/abs/1998ApJ...500..525S/abstract">Schlegel, Finkbeiner &amp; Davis (1998; &ldquo;SFD&rdquo;)</a></p>
+              <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...887...93G">Green <em>et al.</em> (2019)</a></p>
             </div>
           </section>
 
@@ -1377,29 +1382,29 @@
           </section>
 
           <section data-transition="slide-in none-out">
-            <h4>How to extract astrophysical information from these spectra?</h4>
+            <h3>How to extract astrophysical information from these spectra?</h3>
             <img class="r-stretch" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_xp.svg"></img>
           </section>
           <section data-transition="none-in none-out">
-            <h4>How to extract astrophysical information from these spectra?</h4>
+            <h3>How to extract astrophysical information from these spectra?</h3>
             <img class="r-stretch" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_1.svg"></img>
           </section>
           <section data-transition="none-in none-out">
-            <h4>How to extract astrophysical information from these spectra?</h4>
+            <h3>How to extract astrophysical information from these spectra?</h3>
             <img class="r-stretch" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_0p.svg"></img>
           </section>
           <section data-transition="none-in slide-out">
-            <h4>How to extract astrophysical information from these spectra?</h4>
+            <h3>How to extract astrophysical information from these spectra?</h3>
             <img class="r-stretch" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_2.svg"></img>
           </section>
 
           <section class="compact">
-            <h4>Structure of forward model of stellar spectra</h4>
+            <h3>Structure of forward model of stellar spectra</h3>
             <img data-src="../media/bprp/bprp_nn_structure_xi_dark_withobs.svg"></img>
           </section>
 
           <section class="compact">
-            <h4>Model vs. Observations</h4>
+            <h3>Model vs. Observations</h3>
             <img class="r-stretch" data-src="../media/bprp/chi2_example_dark.svg"></img>
           </section>
 
@@ -1421,8 +1426,15 @@
             </div>
           </section>
 
-          <section class="compact">
-            <img class="r-stretch" data-src="../media/xp_rv/extcurve_comp_v2_vs_G23_panelA.svg"></img>
+          <section class="compact" data-transition="slide-in none-out">
+            <h3>Learned extinction curve</h3>
+            <img class="r-stretch" data-src="../media/xp_rv/extcurve_v2_wide.svg"></img>
+            <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green (2024)</a></p>
+          </section>
+
+          <section class="compact" data-transition="none-in slide-out">
+            <h3>Learned extinction curve</h3>
+            <img class="r-stretch" data-src="../media/xp_rv/extcurve_v2_wide_annotated.svg"></img>
             <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green (2024)</a></p>
           </section>
         </section>
@@ -1571,7 +1583,7 @@
           </section>
 
           <section data-transition="slide-in none-out" class="compact">
-            <img class="r-stretch" data-src="../media/dust/PAH_scaling.svg"></img>
+            <img class="r-stretch" data-src="../media/dust/PAH_scaling_annotated.svg"></img>
             <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023ApJ...948...55H/abstract">Hensley &amp; Draine (2023)</a> dust model.</p>
           </section>
 
@@ -1625,7 +1637,7 @@
             <div class="stroke-text-dark">
               <h4>At intermediate densities, growth of PAHs seems to drive R(V) variation.</h4>
               <h4 class="fragment space-top">This significant revision of the prevailing view was made possible by our dust R(V) measurements of 130 million sightlines.</h4>
-              <h4 class="fragment space-top">We aim to follow-up this hypothesis with JWST observations.</h4>
+              <h4 class="fragment space-top">We aim to follow-up this hypothesis with JWST observations, and in the UV (2175&nbsp;Å).</h4>
             </div>
           </section>
         </section>
@@ -1724,9 +1736,9 @@
             <div class="r-stretch"></div>
           </section>
 
-          <section class="" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg" data-auto-animate>
+          <section class="" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg" data-auto-animate>
             <h2>Milky Way Dynamics and Dust</h2>
-            <div class="r-stretch"></div>
+            <img class="r-stretch" data-src="../media/misc/missions_across_spectrum_withuvex.svg"></img>
           </section>
         </section>
 
