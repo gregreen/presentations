@@ -22,11 +22,11 @@
      inkscape:pagecheckerboard="true"
      inkscape:document-units="pt"
      showgrid="false"
-     inkscape:zoom="1.1119792"
-     inkscape:cx="167.71897"
-     inkscape:cy="334.08899"
-     inkscape:window-width="2048"
-     inkscape:window-height="1088"
+     inkscape:zoom="1.2380995"
+     inkscape:cx="180.51862"
+     inkscape:cy="216.05696"
+     inkscape:window-width="1440"
+     inkscape:window-height="836"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -414,11 +414,41 @@
          d="M 208 10.800781 L 211 10.800781 L 211 251.039062 L 208 251.039062 Z M 208 10.800781 "
          id="path145" />
     </clipPath>
+    <clipPath
+       id="clip2-0">
+      <path
+         d="m 187,10.800781 h 3 V 251.03906 h -3 z m 0,0"
+         id="path142-5" />
+    </clipPath>
+    <clipPath
+       id="clip2-0-3">
+      <path
+         d="m 187,10.800781 h 3 V 251.03906 h -3 z m 0,0"
+         id="path142-5-7" />
+    </clipPath>
   </defs>
   <path
      style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
      d="M 46.203125,251.03906 H 421.19922 V 10.800781 H 46.203125 Z m 0,0"
      id="path152" />
+  <rect
+     style="opacity:0.1;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.7;stroke-linecap:butt;stroke-linejoin:round;paint-order:stroke markers fill"
+     id="rect100568"
+     width="64.745895"
+     height="240.338"
+     x="174.38301"
+     y="10.751" />
+  <text
+     xml:space="preserve"
+     style="font-size:14px;line-height:1.25;font-family:sans-serif;opacity:0.6;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round"
+     x="184.76086"
+     y="242.13776"
+     id="text105223"><tspan
+       sodipodi:role="line"
+       id="tspan105221"
+       style="fill:#ffffff;stroke-width:0.75"
+       x="184.76086"
+       y="242.13776">visible</tspan></text>
   <g
      clip-path="url(#clip1)"
      clip-rule="nonzero"
@@ -599,47 +629,54 @@
      d="m 421.19922,10.80078 v 2"
      id="path230" />
   <g
-     style="fill:#ffffff;fill-opacity:1"
-     id="g234">
+     style="fill:#ffffff;fill-opacity:1;stroke-width:1"
+     id="g234"
+     transform="matrix(0.99999743,0,0,1,34.197126,0)">
     <use
        xlink:href="#glyph1-1"
        x="216.34268"
        y="274.65363"
        id="use232"
        width="100%"
-       height="100%" />
+       height="100%"
+       style="stroke-width:1" />
   </g>
   <g
-     style="fill:#ffffff;fill-opacity:1"
-     id="g244">
+     style="fill:#ffffff;fill-opacity:1;stroke-width:1"
+     id="g244"
+     transform="matrix(0.99999743,0,0,1,34.197126,0)">
     <use
        xlink:href="#glyph2-1"
        x="226.49458"
        y="274.65363"
        id="use236"
        width="100%"
-       height="100%" />
+       height="100%"
+       style="stroke-width:1" />
     <use
        xlink:href="#glyph2-2"
        x="230.4637"
        y="274.65363"
        id="use238"
        width="100%"
-       height="100%" />
+       height="100%"
+       style="stroke-width:1" />
     <use
        xlink:href="#glyph2-3"
        x="237.09883"
        y="274.65363"
        id="use240"
        width="100%"
-       height="100%" />
+       height="100%"
+       style="stroke-width:1" />
     <use
        xlink:href="#glyph2-4"
        x="247.04552"
        y="274.65363"
        id="use242"
        width="100%"
-       height="100%" />
+       height="100%"
+       style="stroke-width:1" />
   </g>
   <path
      style="fill:none;stroke:#ffffff;stroke-width:0.8;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-opacity:1"
@@ -864,7 +901,8 @@
      id="path344" />
   <g
      style="fill:#ffffff;fill-opacity:1"
-     id="g348">
+     id="g348"
+     transform="translate(0,-60.987131)">
     <use
        xlink:href="#glyph5-1"
        x="18.27198"
@@ -875,7 +913,8 @@
   </g>
   <g
      style="fill:#ffffff;fill-opacity:1"
-     id="g352">
+     id="g352"
+     transform="translate(0,-60.987131)">
     <use
        xlink:href="#glyph6-1"
        x="18.381556"
@@ -886,7 +925,8 @@
   </g>
   <g
      style="fill:#ffffff;fill-opacity:1"
-     id="g356">
+     id="g356"
+     transform="translate(0,-60.987131)">
     <use
        xlink:href="#glyph7-1"
        x="18.27198"
@@ -897,7 +937,8 @@
   </g>
   <g
      style="fill:#ffffff;fill-opacity:1"
-     id="g360">
+     id="g360"
+     transform="translate(0,-60.987131)">
     <use
        xlink:href="#glyph6-2"
        x="18.381556"
@@ -908,7 +949,8 @@
   </g>
   <g
      style="fill:#ffffff;fill-opacity:1"
-     id="g364">
+     id="g364"
+     transform="translate(0,-60.987131)">
     <use
        xlink:href="#glyph7-2"
        x="18.27198"
@@ -919,7 +961,8 @@
   </g>
   <g
      style="fill:#ffffff;fill-opacity:1"
-     id="g368">
+     id="g368"
+     transform="translate(0,-60.987131)">
     <use
        xlink:href="#glyph5-1"
        x="18.27198"
@@ -930,7 +973,8 @@
   </g>
   <g
      style="fill:#ffffff;fill-opacity:1"
-     id="g372">
+     id="g372"
+     transform="translate(0,-60.987131)">
     <use
        xlink:href="#glyph6-1"
        x="18.381556"
@@ -941,7 +985,8 @@
   </g>
   <g
      style="fill:#ffffff;fill-opacity:1"
-     id="g376">
+     id="g376"
+     transform="translate(0,-60.987131)">
     <use
        xlink:href="#glyph7-1"
        x="18.27198"
@@ -952,7 +997,8 @@
   </g>
   <g
      style="fill:#ffffff;fill-opacity:1"
-     id="g380">
+     id="g380"
+     transform="translate(0,-60.987131)">
     <use
        xlink:href="#glyph8-1"
        x="19.766361"
@@ -963,7 +1009,8 @@
   </g>
   <g
      style="fill:#ffffff;fill-opacity:1"
-     id="g384">
+     id="g384"
+     transform="translate(0,-60.987131)">
     <use
        xlink:href="#glyph6-2"
        x="18.381556"
@@ -988,4 +1035,49 @@
      style="fill:none;stroke:#ffffff;stroke-width:0.8;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:10;stroke-opacity:1"
      d="M 46.203125,10.80078 H 421.19922"
      id="path400" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round"
+     x="182.95125"
+     y="274.64136"
+     id="text116483"><tspan
+       sodipodi:role="line"
+       id="tspan116481"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke-width:0.75"
+       x="182.95125"
+       y="274.64136">Wavelength</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round"
+     x="-218.31201"
+     y="18.246593"
+     id="text116483-4"
+     transform="rotate(-90)"><tspan
+       sodipodi:role="line"
+       id="tspan116481-0"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke-width:0.75"
+       x="-218.31201"
+       y="18.246593">Normalized Extinction</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:14px;line-height:1.25;font-family:sans-serif;opacity:0.6;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round"
+     x="296.30984"
+     y="242.13809"
+     id="text105223-4"><tspan
+       sodipodi:role="line"
+       id="tspan105221-4"
+       style="fill:#ffffff;stroke-width:0.75"
+       x="296.30984"
+       y="242.13809">IR</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:14px;line-height:1.25;font-family:sans-serif;opacity:0.6;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round"
+     x="99.609032"
+     y="242.13809"
+     id="text105223-6"><tspan
+       sodipodi:role="line"
+       id="tspan105221-7"
+       style="fill:#ffffff;stroke-width:0.75"
+       x="99.609032"
+       y="242.13809">UV</tspan></text>
 </svg>
