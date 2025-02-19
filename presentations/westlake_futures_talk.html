@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Research Plan</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="../icon.ico">
+
+    <link rel="stylesheet" href="../revealjs/dist/reveal.css">
+    <link rel="stylesheet" href="../revealjs/dist/theme/night.css" id="theme">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../revealjs/plugin/highlight/monokai.css" id="highlight-theme">
+
+    <!-- Custom CSS files go here -->
+
+    <script src="../js/d3.min.js" charset="utf-8"></script>
+    <!--<script src="https://d3js.org/d3.v7.min.js"></script>-->
+  </head>
+
+  <style>
+    /* Override theme variables */
+    :root {
+      --r-background-color: #000;
+      --r-main-font-size: 16pt;
+      --r-heading2-size: 2.50em;
+      --r-heading4-size: 1.25em;
+      --r-link-color: #f3d7ac;
+      --r-link-color-hover: #ffcc7d;
+    }
+
+    /* Slide controls (arrows): make less prominent */
+    aside.controls {
+      opacity: 0.5;
+      transform: scale(0.7);
+    }
+
+    /* Image grid */
+    .image-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      justify-content: center;
+    }
+
+    .image-grid .grid-item {
+      flex: 1 1 28%;  /* Grow, shrink, basis */
+      max-width: 35%;
+      position: relative;
+      /*border: solid white 1px;*/
+    }
+
+    .image-grid .item-title {
+      font-size: 14pt;
+      margin-top: 3px;
+      margin-bottom: 1px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .image-grid .grid-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      margin: 8px;
+      margin-top: 4px;
+    }
+
+    .image-grid .image-caption {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin: 0;
+      padding: 0px 10px;
+      font-size: 8pt;
+    }
+
+    .image-grid .image-caption a {
+      font-size: 8pt;
+      color: white;
+      opacity: 50%;
+    }
+
+    .image-grid .image-caption a:hover {
+      font-size: 8pt;
+      color: white;
+      opacity: 70%;
+    }
+
+    /* Code blocks */
+    .reveal pre.code-wrapper{
+      display: inline-block;
+      text-align: center;
+      font-size: 0.75em;
+      line-height: 1.3em;
+    }
+    .reveal pre code {
+      display: inline-block;
+      padding: 10px;
+    }
+
+    /* Stroke text */
+    .stroke-text-dark, .stroke-text-dark p,
+    .stroke-text-dark a {
+      text-stroke: 1px black;
+      -webkit-text-stroke: 1px black;
+      paint-order: stroke fill;
+    }
+    .stroke-text-light {
+      text-stroke: 1px white rgba(255,255,255,0.3);
+      -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+      paint-order: stroke fill;
+    }
+
+    .stroke-text-dark-thick, .stroke-text-dark-thick p {
+      text-stroke: 5px black;
+      -webkit-text-stroke: 5px black;
+      paint-order: stroke fill;
+    }
+    h1.stroke-text-dark-thick, h2.stroke-text-dark-thick,
+    .stroke-text-dark-thick h1, .stroke-text-dark-thick h2 {
+      text-stroke: 8px black;
+      -webkit-text-stroke: 8px black;
+      paint-order: stroke fill;
+    }
+
+    .stroke-text-light {
+      text-stroke: 1px white rgba(255,255,255,0.7);
+      -webkit-text-stroke: 1px rgba(255,255,255,0.7);
+      paint-order: stroke fill;
+    }
+    .stroke-text-light-thick {
+      text-stroke: 5px white rgba(255,255,255,0.8);
+      -webkit-text-stroke: 5px rgba(255,255,255,0.8);
+      paint-order: stroke fill;
+    }
+
+    /* Attribution text */
+    p.attribution, span.attribution {
+      font-size: 70%;
+      color: #aaa;
+      margin-top: 0;
+      /*margin: calc(0.5 * var(--r-block-margin)) 0;*/
+    }
+    p.attribution a, span.attribution a {
+      color: #ddf;
+    }
+    h1 span.attribution, h2 span.attribution, h3 span.attribution, h4 span.attribution {
+      font-size: 100%;
+    }
+
+    /* Compact */
+    .compact *:not(.MathJax_Display *, .MathJax *)
+    {
+      margin: calc(0.3 * var(--r-block-margin)) 0 !important;
+    }
+
+    .compact-p p {
+      margin: calc(0.3 * var(--r-block-margin)) 0 !important;
+    }
+
+    .compact img {
+      max-width: 100%;
+    }
+
+    /* Footer (bottom of slide)
+       .footer only works if the slide is .full-height */
+    section.full-height {
+      height: 100%;
+    }
+
+    div.footer {
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      text-align: center;
+    }
+
+    div.abs-bottom-right {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+    }
+    div.abs-bottom-right * {
+      float: right;
+    }
+
+    div.abs-bottom-left {
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+    }
+    div.abs-bottom-left * {
+      float: left;
+    }
+
+    /* .abs-vcenter only works if the slide is .full-height.
+       Use in slides that have .footer, to center rest of content.
+     */
+    div.abs-vcenter {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      transform: translate(-50%,-50%);
+    }
+
+    /* Vertically center content in container */
+    .vertical-center {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      flex-direction: column;
+    }
+
+    /* Slide-specific vertical centering override */
+    .reveal .slides section[data-vertical-align-top]{
+      top: 0 !important;
+    }
+
+    /* Invert colors - useful for adapting graphics for dark slides. */
+    img.invert-colors, video.invert-colors {
+      filter: invert(1);
+    }
+
+    /* Image width */
+    img.half-width, video.half-width {
+      width: 50%;
+      max-width: 50%;
+    }
+    img.limit-width, video.limit-width {
+      max-width: 70%;
+    }
+    img.full-width, div.full-width {
+      width: 100%;
+    }
+
+    /* Item placement in r-stack environment */
+    .reveal .r-stack .align-top {
+      margin: initial;
+    }
+
+    /* Basic slide layouts */
+    .multicol {
+      display: flex;
+      flex-direction: row;
+    }
+    .multicol.vcenter {
+      align-items: center;
+    }
+    .multicol > div {
+      flex-basis: 50%;
+    }
+    .multicol > div.wide {
+      flex-basis: 67%;
+    }
+    .multicol > div.wider {
+      flex-basis: 100%;
+    }
+    .multicol > div.widest {
+      flex-basis: 120%;
+    }
+
+    .multicol > div {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+    /* Margins */
+    .space-top {
+      margin-top: calc(3 * var(--r-block-margin)) !important;
+    }
+    .space-top-slight {
+      margin-top: calc(2 * var(--r-block-margin)) !important;
+    }
+    .space-top-large {
+      margin-top: calc(5 * var(--r-block-margin)) !important;
+    }
+
+    /* Text alignment */
+    .align-left {
+      text-align: left;
+    }
+
+    /* Text size */
+    .shrink-text {
+      font-size: 67%;
+    }
+
+    /* iframe borders */
+    iframe {
+      border: none;
+    }
+
+    body.invert-bg .backgrounds {
+      filter: invert(1);
+    }
+
+    /* Stroke text */
+    h1.stroke-black {
+      text-shadow:
+         1px  0px 0 #000,
+         0px  1px 0 #000,
+        -1px  0px 0 #000,
+         0px -1px 0 #000,
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+    }
+
+    /* Custom color definitions */
+    .star-color {
+      /*color: rgb(116,211,255);*/
+      color: #99ccff;
+    }
+    .model-color {
+      /*color: rgb(255,130,116);*/
+      color: #ff6767;
+    }
+
+    /* Slide numbers */
+    .reveal .slide-number {
+      /*right: inherit;*/
+      /*left: 8px;*/
+      right: 62px;
+      bottom: 48px;
+      transform: translateX(50%);
+      backdrop-filter: blur(1.5px);
+      font-size: 12pt;
+      font-weight: bold;
+    }
+
+    .reveal .slide-number-delimiter {
+      margin: 0 0;
+    }
+
+    .triangle-container {
+      position: relative;
+      width: 100%;
+      height: 400px; /* Adjust based on your needs */
+      margin: 0 auto;
+    }
+
+    .triangle-box {
+      position: absolute;
+      padding: 20px;
+      min-width: 60px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 45%;
+    }
+  </style>
+
+  <body>
+
+    <div class="reveal">
+      <div class="slides">
+
+        <!--
+          Title
+        -->
+
+        <section class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+          <div style="position:absolute; top:45%; left:50%; width:95%; transform:translate(-50%,-50%);" class="stroke-text-dark">
+            <h2>Future Research Plan</h2>
+            <h3 class="space-top">Westlake University</h3>
+            <h3>20&nbsp;February&nbsp;2025</h3>
+            <div class="space-top compact">
+              <h3>Gregory M. Green</h3>
+              <p>(Sofja Kovalevskaja Group Leader, MPIA, Heidelberg)</p>
+            </div>
+          </div>
+          <div class="abs-bottom-right">
+            <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="half-width" style="width:40%; filter:contrast(0.5) brightness(1.2);"></img>
+          </div>
+          <div class="abs-bottom-left">
+            <img data-src="../media/logos/MPIA_horizontal.svg" class="half-width" style="filter:contrast(0.5) brightness(1.0);"></img>
+          </div>
+        </section>
+
+        <!--
+          Overview
+        -->
+
+        <section data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
+          <div style="position:relative; width:100%; height:500px; margin:0 auto;">
+            <div class="triangle-box" style="top:0%; left: 50%; transform: translateX(-50%);">
+              <h2>Computational methods</h2>
+            </div>
+            <div class="triangle-box fragment" style="top:50%; right:55%; transform:translateY(-50%) rotate(-45deg) scaleX(600%) scaleY(200%);" data-fragment-index=1>
+              ⟵
+            </div>
+            <div class="triangle-box fragment" style="top:50%; left:55%; transform:translateY(-50%) rotate(45deg) scaleX(600%) scaleY(200%);" data-fragment-index=2>
+              ⟶
+            </div>
+            <div class="triangle-box fragment" style="bottom:0%; left:0%;" data-fragment-index=1>
+              <h2>Milky Way Dynamics</h2>
+            </div>
+            <div class="triangle-box fragment" style="bottom:0%; right:0%;" data-fragment-index=2>
+              <h2>Interstellar Medium</h2>
+            </div>
+          </div>
+        </section>
+
+        <!--
+          Computational Methods
+        -->
+        
+        <section>
+          <section data-auto-animate>
+            <h2>Computational Methods</h2>
+          </section>
+          <section data-auto-animate>
+            <h2>Computational Methods</h2>
+            <p style="display:inline;">Machine-learning tools</p>
+          </section>
+          <section data-auto-animate>
+            <h2>Computational Methods</h2>
+            <p style="display:inline;">Machine-learning tools</p><p style="display:inline;"> + physics / inference</p>
+          </section>
+        </section>
+
+        <!--
+          Milky Way Dynamics
+        -->
+
+        <section>
+          <section data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
+            <h2>Milky Way Dynamics</h2>
+          </section>
+
+          <section>
+            <h2>Milky Way Dynamics: Questions</h2>
+            <div class="multicol vcenter">
+              <div style="display:flex; justify-content:center;">
+                <div style="text-align:left; width:fit-content;">
+                  <h3 style="text-align:left;" class="fragment" data-fragment-index=1>Dark Matter</h3>
+                  <ul>
+                    <li class="fragment" data-fragment-index=2>substructure</li>
+                    <li class="fragment" data-fragment-index=3>cusp / core</li>
+                    <li class="fragment" data-fragment-index=4>local DM density</li>
+                  </ul>
+                  <h3 style="text-align:left;" class="fragment space-top-slight" data-fragment-index=5>Baryons</h3>
+                  <ul>
+                    <li class="fragment" data-fragment-index=6>bar</li>
+                    <li class="fragment" data-fragment-index=7>spiral arms</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="wide">
+                <div class="r-stack">
+                  <img data-src="../media/deep_potential/barred_nbody_true_vs_model_dm_vs_r_t80_truth.svg" style="width:100%;" class="fragment" data-fragment-index=2></img>
+                  <img data-src="../media/misc/milky-way-artist-impression.jpg" style="width:100%;" class="fragment" data-fragment-index=5></img>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2>Milky Way Dynamics: Methods</h2>
+            <div class="multicol vcenter">
+              <div>
+                <p style="font-size:150%">
+                  $$
+                  \Phi_{\mathrm{grav}}\left(\vec{r}\class{fragment}{,t}\right)^{
+                    \class{fragment}{
+                      \raise{7pt}{\nearrow}
+                      \raise{14pt}{+\left[ \mathrm{Fe/H} \right]}
+                    }
+                  }_{
+                    \class{fragment}{
+                      \raise{-7pt}{\searrow}
+                      \raise{-14pt}{\mathrm{external} \\ \mathrm{galaxies} \\ \hspace{0.5em}< 6\mathrm{D}}
+                    }
+                  }
+                  $$
+                </p>
+              </div>
+              <div class="wide">
+                <img data-src="../media/deep_potential/deep_potential_explanatory_figure.svg" style="width:100%;"></img>
+              </div>
+            </div>
+          </section>
+
+          <section class="full-height" data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
+            <h2>Milky Way Dynamics: Data &ndash; Gaia</h2>
+            <div class="abs-vcenter">
+              <div class="multicol vcenter">
+                <div style="margin-right:20px;">
+                  <img class="full-width" style="transform:rotate(45deg) translateY(-12%);" data-src="../media/gaia/gaia_spacecraft.png"></img>
+                </div>
+                <div class="widest">
+                  <h3 class="fragment">Gaia data will get even better</h3>
+                  <ul>
+                    <li class="fragment">DR3 (June 2022): 34 months of data.</li>
+                    <li class="fragment">DR4 (late 2026): 66 months of data, many more raw spectra.</li>
+                    <li class="fragment">DR5 (2030?): 120 months of data.</li>
+                  </ul>
+                  <div class="fragment space-top">
+                    <h4>Error scalings with survey time:</h4>
+                    <p>
+                      $\sigma_{\varpi} \propto T^{-1/2}$. DR5 parallax errors ~50% of DR3.
+                    </p>
+                    <p>
+                      $\sigma_{\mu} \propto T^{-3/2}$. DR5 proper-motion errors ~15% of DR3.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="footer">
+              <p class="attribution" style="opacity:50%;"><a href="https://sci.esa.int/s/8D04j58">ESA/Gaia/DPAC; A. Moitinho and M. Barros</a>, <a href="https://esahubble.org/images/heic1719f/">ESA/ATG medialab</a></p>
+            </div>
+          </section>
+
+          <section>
+            <h2>Milky Way Dynamics: Data &ndash; SDSS-V</h2>
+            <div class="multicol vcenter">
+              <div>
+                <p>Medium- and high-resolution spectroscopy of millions of stars in the Galactic Plane.</p>
+              </div>
+              <div class="wider">
+                <div class="compact">
+                  <img data-src="../media/sdss/Galactic_Genesis_faceon_dark.png" style="width:100%;"></img>
+                  <p class="attribution" style="opacity:70%;"><a href="https://arxiv.org/abs/1711.03234">Credit: Kollmeier <em>et al.</em> (2017)</a></p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2>Milky Way Dynamics: Data &ndash; Roman</h2>
+            <h3>Galactic Roman Infrared Plane Survey (GRIPS)</h3>
+            <p>1000 deg<sup>2</sup>, 120 billion sources, 3 photometric bands.
+              <span class="fragment"> + Proper motions?</span>
+            </p>
+            <img data-src="../media/roman/grips_footprint.jpg" style="width:100%;"></img>
+            <p class="attribution" style="opacity:70%;"><a href="https://arxiv.org/abs/2307.07642">Credit: Paladini <em>et al.</em> (2023)</a></p>
+          </section>
+        </section>
+
+        <!--
+          Interstellar Medium
+        -->
+
+        <section>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
+            <h2>The Interstellar Medium</h2>
+          </section>
+
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darkest.jpg">
+            <h2>The Interstellar Medium: Questions</h2>
+            <p class="fragment space-top-slight" style="font-size:170%;">Extinction curve: $A\left(\lambda, \ell, b\right)$</p>
+            <p class="fragment space-top-slight" style="font-size:120%;">
+              $$
+                \left.
+                  \begin{array}{c}
+                    \mathrm{grain\ size} \\
+                    \mathrm{composition\ (PAH)}
+                  \end{array}
+                \right\}
+                =
+                \underset{
+                  \style{display:inline-block; transform:rotate(-150deg)}{
+                    \class{fragment}{
+                      \xrightarrow{\hspace{8em}}
+                    }
+                  }
+                }{
+                  f\left(I_{\ast}, \mathrm{history}\right)
+                }
+                \\[2.2em]
+                \class{fragment}{
+                  \begin{array}{c}
+                    \text{dust physics}\\[-0.3em]
+                    \text{in the MW}
+                  \end{array}
+                }
+                \class{fragment}{
+                  \xrightarrow{\hspace{5em}}
+                  \text{dust at high $z$}
+                }
+              $$
+            </p>
+          </section>
+
+          <section>
+            <h2>The Interstellar Medium: Methods</h2>
+            <p class="fragment" style="font-size:140%;" data-fragment-index=1>ML <span class="fragment" data-fragment-index=2>+ spectral modeling</span> <span class="fragment" data-fragment-index=3>+ 3D inversion</span></p>
+            <div class="r-stretch" style="position:relative;">
+                <img class="fragment current-visible" data-fragment-index=2 style="height:80%;" data-src="../media/bprp/model_flux_vs_dwarfs_1panel_nolines.svg"></img>
+                <video class="fragment" data-fragment-index=3 data-src="../media/bayestar/Galactic_anticenter_in_Bayestar2019.mp4" data-autoplay style="height: 100%;position: absolute;top: 0px;left: 50%;transform: translateX(-50%);" loop>
+            </div>
+          </section>
+
+          <section data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
+            <h2>The Interstellar Medium: Data</h2>
+            <h3>Low-resolution spectra from the UV to the mid-IR</h3>
+            <img class="r-stretch" data-src="../media/misc/missions_across_spectrum_withuvex.svg"></img>
+          </section>
+
+          <section data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
+            <h2>The Interstellar Medium: Data</h2>
+
+            <div class="multicol vcenter">
+              <div>
+                <img class="full-width" style="transform:matrix(-1,0,0,1,0,0);" data-src="../media/jwst/JWST_model.png"></img>
+              </div>
+              <div>
+                <h2>JWST</h2>
+                <h4 class="fragment space-top">Ex.: Is there a connection between PAH chemistry and R(V)?</h4>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darkest.jpg">
+            <h2>Milky Way Dynamics and ISM</h2>
+            <h3>Data-rich environment over the next 10 years.</h3>
+            <h4 class="fragment">The data will be better than the models.</h4>
+            <h4 class="fragment">Improvement of computational methods will be central to progress.</h4>
+          </section>
+        </section>
+
+      </div> <!--slides-->
+    </div> <!--reveal-->
+
+    <script src="../revealjs/dist/reveal.js"></script>
+    <script src="../revealjs/plugin/math/math.js"></script>
+    <script src="../revealjs/plugin/notes/notes.js"></script>
+    <script src="../revealjs/plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        history: true,
+        transition: 'linear',
+        //slideNumber: 'h.v',
+
+        /*
+        math: {
+          // mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          TeX: {
+            Macros: {
+              R: '\\mathbb{R}',
+              set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+            }
+          }
+        },
+        */
+        plugins: [ RevealMath.MathJax3 ],
+        mathjax3: {
+          //mathjax: "https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.7/tex-mml-chtml.js",
+          mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-chtml.js",
+          //mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-chtml-nofont.js",
+          //mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-svg-nofont.js",
+          loader: {load: ['[tex]/html','[tex]/cancel','[tex]/color']},
+          tex: {packages: {'[+]': ['html','cancel','color']}},
+          //chtml: {
+          //  fontURL: "../js/mathjax-4.0.0-beta.7/output/chtml/fonts/woff-v2"
+          //}
+        },
+
+        sortFragmentsOnSync: false,
+
+        pdfMaxPagesPerSlide: 1,
+
+        plugins: [ RevealMath.MathJax3, RevealNotes, RevealHighlight ]
+      });
+    </script>
+
+    <!-- Custom scripts go here -->
+
+  </body>
+</html>
