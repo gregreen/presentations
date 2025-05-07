@@ -5,10 +5,16 @@
                 n_intermediate=10, n_circles=50,
                 wl_B=440, wl_V=550) {
       // Find container
-      const container = d3.select('#Rv-grain-plot-container');
+      const container_id = '#Rv-grain-plot-container'
+      const container = d3.select(container_id);
       //var container_width = parseInt(container.style('width'));
-      var container_width = parseInt(d3.select('body').style('--slide-width'));
-      var container_height = parseInt(d3.select('body').style('--slide-height'));
+      if(d3.select('body').style('--slide-width') == '100%px') {
+        var container_width = $(container_id).width(),
+            container_height = $(container_id).height();
+      } else {
+        var container_width = parseInt(d3.select('body').style('--slide-width'));
+        var container_height = parseInt(d3.select('body').style('--slide-height'));
+      }
       console.log(container_width + 'x' + container_height);
 
       // Margins, width, height, etc.

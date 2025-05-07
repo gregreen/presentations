@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Extinction curve variation</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="../icon.ico">
+
+    <link rel="stylesheet" href="../revealjs/dist/reveal.css">
+    <link rel="stylesheet" href="../revealjs/dist/theme/night.css" id="theme">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../revealjs/plugin/highlight/monokai.css" id="highlight-theme">
+
+    <!-- Custom CSS files go here -->
+
+    <!--<script src="../js/d3.min.js" charset="utf-8"></script>-->
+    <!--<script src="https://d3js.org/d3.v7.min.js"></script>-->
+  </head>
+
+  <style>
+    /* Override theme variables */
+    :root {
+      --r-background-color: #000;
+      --r-main-font-size: 16pt;
+      --r-heading1-size: 4.00em;
+      --r-heading2-size: 2.83em;
+      --r-heading3-size: 2.00em;
+      --r-heading4-size: 1.41em;
+      --r-heading-margin: 15px;
+      --r-block-margin: 10px;
+      --r-link-color: #f3d7ac;
+      --r-link-color-hover: #ffcc7d;
+    }
+
+    /* Slide controls (arrows): make less prominent */
+    aside.controls {
+      opacity: 0.3;
+      transform: scale(0.5);
+    }
+
+    /* Multi-column layout */
+    .multicol {
+      display: flex;
+      flex-direction: row;
+      gap: 1.5rem;
+    }
+    .multicol.compact {
+      gap: 0.5rem;
+    }
+    .column {
+      flex: 1;
+    }
+    .column.wide {
+      flex: 1.44;
+    }
+    .column.wider {
+      flex: 2.08;
+    }
+    .column.widest {
+      flex: 3;
+    }
+    .column.v-center {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    /* Multi-row layout */
+    .multirow {
+      display: flex !important;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .multirow.compact {
+      gap: 0.5rem;
+    }
+    .row {
+      flex: 1;
+    }
+    .row.h-center {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .row.no-expand {
+      flex: 0 0 auto;
+    }
+    .row.squeeze {
+      min-height: 0;
+    }
+
+    /* Expand media to fill container */
+    .expand-media {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 0;
+    }
+    .expand-media img, .expand-media video {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      min-width: 0%;
+      min-height: 0%;
+      object-fit: contain;
+    }
+
+    section.full-height, .multirow.full-height, .multicol.full-height {
+      height: 100% !important;
+    }
+
+    /* Layout with content pushed to top and bottom */
+    .v-expand-center {
+      display: flex !important;
+      flex-direction: column;
+      height: 100%;
+      justify-content: space-between;
+    }
+
+    /* Header and Footer */
+    section.has-footer, section.has-header {
+      height: 100%;
+      display: flex !important;
+      flex-direction: column;
+      justify-content: center;
+    }
+    div.footer {
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: row;
+    }
+    div.header {
+      position: absolute;
+      top: 0px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: row;
+    }
+    div.footer .left, div.header .left, .multicol .left {
+      margin-right: auto;
+    }
+    div.footer .center, div.header .center, .multicol .center {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    div.footer .right, div.header .right, .multicol .right{
+      margin-left: auto;
+    }
+
+    /* Attribution text */
+    .reveal .attribution {
+      font-size: 0.7em;
+      color: #aaa;
+      margin-top: 0;
+    }
+    .reveal .attribution a {
+      color: #ddf;
+    }
+
+    /* Text styling */
+    .stroke {
+      -webkit-text-stroke: 1px black;
+      paint-order: stroke fill;
+    }
+    h1.stroke, .stroke h1 {
+      -webkit-text-stroke: 5px black;
+      paint-order: stroke fill;
+    }
+    h3.stroke, .stroke h3 {
+      -webkit-text-stroke: 3px black;
+      paint-order: stroke fill;
+    }
+
+    .stroke-superthick {
+      -webkit-text-stroke: 10px black !important;
+      paint-order: stroke fill;
+    }
+
+    .blur-bg {
+      backdrop-filter: blur(10px);
+    }
+
+    .reveal .dark {
+      color: black;
+    }
+
+    /* Put borders around each element, to show the layout */
+    .show-layout * {
+      border: cyan;
+      border-style: dotted;
+    }
+
+    /* Image grid */
+    .image-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      justify-content: center;
+    }
+
+    .image-grid .grid-item {
+      flex: 1 1 28%;  /* Grow, shrink, basis */
+      max-width: 35%;
+      position: relative;
+      /*border: solid white 1px;*/
+    }
+
+    .image-grid .item-title {
+      font-size: 14pt;
+      margin-top: 3px;
+      margin-bottom: 1px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .image-grid .grid-item img {
+      width: 100%;
+      height: 25vh;
+      object-fit: cover;
+      margin: 8px;
+      margin-top: 4px;
+    }
+
+    .image-grid .image-caption {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin: 0;
+      padding: 0px 10px;
+      font-size: 8pt;
+    }
+
+    .image-grid .image-caption a {
+      font-size: 8pt;
+      color: white;
+      opacity: 50%;
+    }
+
+    .image-grid .image-caption a:hover {
+      font-size: 8pt;
+      color: white;
+      opacity: 70%;
+    }
+  </style>
+
+  <body>
+
+    <div class="reveal">
+      <div class="slides">
+
+        <!--
+          Title
+        -->
+
+        <!--
+        <section class="has-footer" data-background-video="../media/xp_rv/zg25_orbit_anticenter.mp4" data-background-video-loop>
+          <h2>Variation of the dust extinction curve</h2>
+          <h3>A 3D perspective from Gaia</h3>
+          <h3>Gregory M. Green</h3>
+          <h4>(Max Planck Institute for Astronomy, Heidelberg)</h4>
+          <h4>STScI Spring Symposium, 12 May 2025</h4>
+          <div class="footer">
+            <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="left" style="width:350px; filter:contrast(0.5) brightness(1.2);"></img>
+            <img data-src="../media/logos/MPIA_horizontal.svg" class="right" style="width:350px; filter:contrast(0.5) brightness(1.0);"></img>
+          </div>
+        </section>
+        -->
+
+        <section class="v-expand-center" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+          <div>
+            <h2>Variation of the dust extinction curve</h2>
+            <h3>A 3D perspective from Gaia</h3>
+          </div>
+          <div>
+            <h4>Gregory M. Green, Max Planck Institute for Astronomy, Heidelberg</h4>
+            <h4>STScI Spring Symposium, 12 May 2025</h4>
+            <div class="multicol">
+              <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="left" style="width:350px; filter:contrast(0.5) brightness(1.2);"></img>
+              <img data-src="../media/logos/MPIA_horizontal.svg" class="right" style="width:350px; filter:contrast(0.5) brightness(1.0);"></img>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <section>
+            <h1>What is dust?</h1>
+          </section>
+
+          <section>
+            <h1>Why do we care?</h1>
+          </section>
+
+          <section>
+            <h3>Dust is crucial for understanding...</h3>
+            <div class="image-grid">
+              <div class="grid-item fragment">
+                <p class="item-title">Star formation</p>
+                <img data-src="../media/misc/bok_globules_eso1322a.jpg"></img>
+                <p class="image-caption"><a href="https://www.eso.org/public/unitedkingdom/images/eso1322a">ESO</a></p>
+              </div>
+              <div class="grid-item fragment">
+                <p class="item-title">Planet formation</p>
+                <img data-src="../media/misc/protoplanetary_disk_continuum_hltauri_eso1436a.jpg"></img>
+                <p class="image-caption"><a href="https://www.eso.org/public/unitedkingdom/images/eso1436a">ALMA (ESO/NAOJ/NRAO)</a></p>
+              </div>
+              <div class="grid-item fragment">
+                <p class="item-title">CMB foregrounds</p>
+                <img data-src="../media/misc/Polarised_emission_from_Milky_Way_dust_square_zoom.jpg"></img>
+                <p class="image-caption"><a href="https://www.esa.int/ESA_Multimedia/Images/2015/02/Polarised_emission_from_Milky_Way_dust">ESA/Planck Collaboration</a></p>
+              </div>
+              <div class="grid-item fragment">
+                <p class="item-title">Stellar population synthesis</p>
+                <img data-src="../media/misc/stellar_pop_synthesis_conroy2013.svg" style="object-fit:contain;"></img>
+                <p class="image-caption"><a href="https://doi.org/10.1146/annurev-astro-082812-141017">Conroy (2013)</a></p>
+              </div>
+              <div class="grid-item fragment">
+                <p class="item-title">Large-scale structure</p>
+                <img data-src="../media/misc/desi_1yr_noirlab2408b.jpg"></img>
+                <p class="image-caption"><a href="https://noirlab.edu/public/images/noirlab2408b/">DESI Collaboration/NOIRLab/NSF/AURA/R. Proctor</a></p>
+              </div>
+              <div class="grid-item fragment">
+                <p class="item-title">Chemistry of the ISM</p>
+                <img data-src="../media/misc/Messier17_gemini1306a.jpg"></img>
+                <p class="image-caption"><a href="https://noirlab.edu/public/images/gemini1306a/">International Gemini Observatory/AURA</a></p>
+              </div>
+            </div>
+          </section>
+
+          <section data-background-image="../media/dust/planck_dust_allsky.jpg" data-background-size="contain" class="v-expand-center stroke">
+            <div class="multicol">
+              <h3 class="left">Dust emission</h3>
+            </div>
+            <div class="multicol"><p class="left attribution"><a href="https://www.jpl.nasa.gov/images/pia18913-milky-way-untangled/">(Planck, ESA/NASA/JPL-Caltech)</a></p></div>
+          </section>
+
+          <section data-background-video="../media/decaps/dust_cloud_zoomin_postprocessed.webm" data-background-size="cover" data-background-video-loop class="v-expand-center stroke">
+            <div class="multicol">
+              <h3 class="left">Dust extinction</h3>
+            </div>
+            <div class="multicol"><p class="left attribution"><a href="http://decaps.skymaps.info/">(DECaPS)</a></p></div>
+          </section>
+        </section>
+
+        <section>
+          <section data-background-image="../media/dust/sfd_fullsky_cartesian.jpg" data-background-size="cover" class="v-expand-center stroke">
+            <div class="multicol">
+              <h3 class="left">Dust map from FIR extinction</h3>
+            </div>
+            <div class="multicol"><p class="left attribution"><a href="https://ui.adsabs.harvard.edu/abs/1998ApJ...500..525S/abstract">(Schlegel, Finkbeiner &amp; Davis 1998)</a></p></div>
+          </section>
+        </section>
+
+        <section>
+          <section id="stars-and-dust-plot-container" class="has-header">
+            <div class="header stroke-superthick">
+              <h3 class="left">Mapping dust in 3D with stars</h3>
+            </div>
+            <span id="problem-show-stars" class="fragment" data-fragment-index="2"></span>
+            <span id="problem-show-reddening" class="fragment" data-fragment-index="3"></span>
+            <span id="problem-highlight-los" class="fragment" data-fragment-index="4"></span>
+            <span id="problem-show-arrow" class="fragment" data-fragment-index="5"></span>
+            <span id="problem-show-temp" class="fragment" data-fragment-index="6"></span>
+          </section>
+
+          <section class="full-height" data-transition="slide-in none-out">
+            <div class="multirow full-height">
+              <div class="row no-expand">
+                <h3>Mapping dust along one sightline</h3>
+              </div>
+              <div class="row expand-media">
+                <img data-src="../media/bayestar/reddening_vs_distance_explanation_0.jpg"></img>
+              </div>
+            </div>
+          </section>
+          <section class="full-height" data-transition="none-in none-out">
+            <div class="multirow full-height">
+              <div class="row no-expand">
+                <h3>Mapping dust along one sightline</h3>
+              </div>
+              <div class="row expand-media">
+                <img data-src="../media/bayestar/reddening_vs_distance_explanation_1.jpg"></img>
+              </div>
+            </div>
+          </section>
+          <section class="full-height" data-transition="none-in none-out">
+            <div class="multirow full-height">
+              <div class="row no-expand">
+                <h3>Mapping dust along one sightline</h3>
+              </div>
+              <div class="row expand-media">
+                <img data-src="../media/bayestar/reddening_vs_distance_explanation_2.jpg"></img>
+              </div>
+            </div>
+          </section>
+          <section class="full-height" data-transition="none-in none-out">
+            <div class="multirow full-height">
+              <div class="row no-expand">
+                <h3>Mapping dust along one sightline</h3>
+              </div>
+              <div class="row expand-media">
+                <img data-src="../media/bayestar/reddening_vs_distance_explanation_3.jpg"></img>
+              </div>
+            </div>
+          </section>
+          <section class="full-height" data-transition="none-in none-out">
+            <div class="multirow full-height">
+              <div class="row no-expand">
+                <h3>Mapping dust along one sightline</h3>
+              </div>
+              <div class="row expand-media">
+                <img data-src="../media/bayestar/reddening_vs_distance_explanation_4.jpg"></img>
+              </div>
+            </div>
+          </section>
+          <section class="full-height" data-transition="none-in none-out">
+            <div class="multirow full-height">
+              <div class="row no-expand">
+                <h3>Mapping dust along one sightline</h3>
+              </div>
+              <div class="row expand-media">
+                <img data-src="../media/bayestar/reddening_vs_distance_explanation_5.jpg"></img>
+              </div>
+            </div>
+          </section>
+          <section class="full-height" data-transition="none-in none-out">
+            <div class="multirow full-height">
+              <div class="row no-expand">
+                <h3>Mapping dust along one sightline</h3>
+              </div>
+              <div class="row expand-media">
+                <img data-src="../media/bayestar/reddening_vs_distance_explanation_6.jpg"></img>
+              </div>
+            </div>
+          </section>
+          <section class="full-height" data-transition="none-in none-out">
+            <div class="multirow full-height">
+              <div class="row no-expand">
+                <h3>Mapping dust along one sightline</h3>
+              </div>
+              <div class="row expand-media">
+                <img data-src="../media/bayestar/reddening_vs_distance_explanation_7.jpg"></img>
+              </div>
+            </div>
+          </section>
+          <section class="full-height" data-transition="none-in none-out">
+            <div class="multirow full-height">
+              <div class="row no-expand">
+                <h3>Mapping dust along one sightline</h3>
+              </div>
+              <div class="row expand-media">
+                <img data-src="../media/bayestar/reddening_vs_distance_explanation_8.jpg"></img>
+              </div>
+            </div>
+          </section>
+          <section class="full-height" data-transition="none-in slide-out">
+            <div class="multirow full-height">
+              <div class="row no-expand">
+                <h3>Mapping dust along one sightline</h3>
+              </div>
+              <div class="row expand-media">
+                <img data-src="../media/bayestar/reddening_vs_distance_explanation_9.jpg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section class="has-footer expand-media" data-transition="slide-in none-out">
+            <img data-src="../media/bayestar/bayestar19_0to500pc.svg"></img>
+            <div class="footer">
+              <p class="left attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...887...93G">(Green <em>et al</em> 2019)</a></p>
+            </div>
+          </section>
+          <section class="has-footer expand-media" data-transition="none-in none-out">
+            <img data-src="../media/bayestar/bayestar19_500to1000pc.svg"></img>
+            <div class="footer">
+              <p class="left attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...887...93G">(Green <em>et al</em> 2019)</a></p>
+            </div>
+          </section>
+          <section class="has-footer expand-media" data-transition="none-in slide-out">
+            <img data-src="../media/bayestar/bayestar19_1000to2000pc.svg"></img>
+            <div class="footer">
+              <p class="left attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...887...93G">(Green <em>et al</em> 2019)</a></p>
+            </div>
+          </section>
+
+          <section data-background-video="../media/bayestar/Galactic_anticenter_in_Bayestar2019.mp4" data-background-video-loop="true" class="has-footer">
+            <div class="footer">
+              <p class="left attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...887...93G">Green <em>et al.</em> (2019)</a></p>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section class="full-height">
+            <div class="multirow full-height">
+              <div class="row no-expand">
+                <h3>&ldquo;Pencil-beam&rdquo; effect &amp; regularization</h3>
+              </div>
+              <div class="row squeeze">
+                <div class="multicol compact full-height">
+                  <div class="column r-stack expand-media">
+                    <img data-src="../media/bayestar/birdseye_surf_density_scale8000_z300.jpg"></img>
+                    <img class="fragment" data-fragment-index=1 data-src="../media/edenhofer23/edenhofer_bayestar_birdseye_overlay.svg"></img>
+                  </div>
+                  <div class="column expand-media">
+                    <img class="fragment" data-fragment-index=1 data-src="../media/edenhofer23/edenhofer_birdseye.jpg"></img>
+                  </div>
+                </div>
+              </div>
+              <div class="row no-expand">
+                <div class="multicol">
+                  <p class="left attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...887...93G">Green <em>et al.</em> (2019)</a></p>
+                  <p class="right attribution fragment" data-fragment-index=1><a href="https://ui.adsabs.harvard.edu/abs/2024A%26A...685A..82E/abstract">Edenhofer <em>et al.</em> (2024)</a></p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Data</h1>
+          </section>
+          
+          <section class="has-footer" data-background-image="../media/ps1/ps1-dome.jpg">
+            <div class="header multicol">
+              <div class="column wide">
+              </div>
+              <div class="column">
+                <div class="multirow expand-media">
+                  <div>
+                    <h3 class="dark">Pan-STARRS 1</h3>
+                    <p class="dark">(and other photometric surveys)</p>
+                  </div>
+                  <img class="fragment" data-src="../media/ps1/ps1_transmission_lighttheme_transparent.svg"></img>
+                </div>
+              </div>
+            </div>
+            <div class="footer">
+              <p class="attribution left"><a href="https://panstarrs.stsci.edu/">(Rob Ratkowski)</a></p>
+            </div>
+          </section>
+
+          <section class="has-footer" data-background-video="../media/gaia/esa_parallax.mp4" data-background-video-loop="true">
+            <div class="header">
+              <h2 class="right stroke-superthick">Gaia parallaxes</h2>
+            </div>
+            <div class="footer">
+              <p class="attribution left"><a href="https://sci.esa.int/s/A1Yp2qA">(ESA/Gaia/DPAC)</a></p>
+            </div>
+          </section>
+
+          <section class="has-footer">
+            <div class="multicol full-height squeeze">
+              <div class="column expand-media">
+                <img data-src="../media/euclid/NISP_grism_commissioning_data.jpg"></img>
+              </div>
+              <div class="column full-height">
+                <div class="multirow full-height">
+                  <div class="row no-expand">
+                    <h3>Gaia BP/RP spectrophotometry</h3>
+                    <h4>(&ldquo;XP spectra&rdquo;)</h4>
+                  </div>
+                  <div class="row expand-media">
+                    <img data-src="../media/bprp/BP_RP_2d_spectra.png" class="fragment"></img>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="footer">
+              <p class="center attribution">(ESA/Euclid/Euclid Consortium/NASA, CC BY-SA 3.0 IGO)</p>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section class="full-height" data-transition="slide-in none-out">
+            <div class="multirow full-height compact">
+              <h3 class="row no-expand">The dust &ldquo;extinction curve&rdquo;</h3>
+              <div class="row r-stack expand-media">
+                <img class="" data-src="../media/dust/extinction_curve_hensley_draine_2003.svg"></img>
+                <img class="fragment" data-src="../media/dust/extinction_curve_hensley_draine_2003_wRv2175.svg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section id="Rv-grain-plot-slide" class="full-height" data-state="Rv-grain-plot-slide">
+            <div class="multirow full-height">
+              <h4 class="row no-expand">The extinction curve and grain-size distribution</h4>
+              <div class="row" id="Rv-grain-plot-container" style="width:100%; height:100%;"></div>
+            </div>
+            <div id="high-Rv" class="fragment"></div>
+          </section>
+
+          <section data-auto-animate class="has-footer" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
+            <div class="header"><h1 class="stroke">Dust density</h1></div>
+          </section>
+          <section data-auto-animate class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background.jpg">
+            <div class="header"><h1 class="stroke">Dust R(V)</h1></div>
+          </section>
+        </section>
+
+        <section>
+          <section class="full-height">
+            <div class="multirow squeeze full-height">
+              <div class="row no-expand">
+                <h3>How to extract information from XP spectra?</h3>
+              </div>
+              <div class="row expand-media r-stack">
+                <img data-fragment-index=1 class="fragment fade-out" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_xp.svg"></img>
+                <img data-fragment-index=1 class="fragment current-visible" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_1.svg"></img>
+                <img data-fragment-index=2 class="fragment current-visible" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_0p.svg"></img>
+                <img data-fragment-index=3 class="fragment" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_2.svg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section class="full-height">
+            <div class="multirow squeeze full-height">
+              <div class="row no-expand">
+                <h3>Structure of forward model of stellar spectra</h3>
+              </div>
+              <div class="row expand-media r-stack">
+                <img data-fragment-index=1 class="fragment fade-out" data-src="../media/bprp/bprp_nn_structure_xi_dark_withobs.svg"></img>
+                <img data-fragment-index=1 class="fragment current-visible" data-src="../media/bprp/bprp_nn_structure_xi_dark_withobs_stellarparams.svg"></img>
+                <img data-fragment-index=2 class="fragment current-visible" data-src="../media/bprp/bprp_nn_structure_xi_dark_withobs_modelparams.svg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section class="full-height">
+            <div class="multirow squeeze full-height compact">
+              <div class="row no-expand">
+                <h3>Model vs. Observations</h3>
+              </div>
+              <div class="row expand-media">
+                <img data-src="../media/bprp/chi2_example_dark.svg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section class="compact">
+            <h3>Train model with 2.4 million stars ...</h3>
+          </section>
+
+          <section class="has-footer">
+            <div class="multicol full-height">
+              <div class="column expand-media r-stack">
+                <img class="fragment fade-out" data-fragment-index=0 data-src="../media/bprp/model_flux_vs_dwarfs_1panel_nolines.svg"></img>
+                <img class="full-width fragment current-visible" data-fragment-index=0 data-src="../media/bprp/model_flux_vs_dwarfs_1panel_hlines.svg"></img>
+                <img class="full-width fragment" data-fragment-index=1 data-src="../media/bprp/model_flux_vs_dwarfs_1panel_metallines.svg"></img>
+              </div>
+              <div class="column v-center">
+                <h3>Learned stellar models of Gaia XP spectra</h3>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
+              </div>
+            </div>
+          </section>
+
+          <section class="has-footer">
+            <div class="multirow squeeze full-height compact">
+              <div class="row no-expand">
+                <h3>Learned extinction curve</h3>
+              </div>
+              <div class="row expand-media r-stack">
+                <img class="fragment fade-out" data-fragment-index=1 data-src="../media/xp_rv/extcurve_v2_wide.svg"></img>
+                <img class="fragment" data-fragment-index=1 data-src="../media/xp_rv/extcurve_v2_wide_annotated.svg"></img>
+              </div>
+            </div>
+            <div class="footer">
+              <p class="left attribution"><a href="https://ui.adsabs.harvard.edu/abs/2025Sci...387.1209Z/abstract">Zhang &amp; Green (2025)</a></p>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
+            <h2 class="stroke-text-dark">Learned stellar parameters</h2>
+            <h4 class="fragment stroke-text-dark">Use XP spectra, NIR photometry &amp; Gaia parallaxes to learn parameters of 220 million stars.</h4>
+            <h4 class="fragment stroke-text-dark">LAMOST spectra <em>not</em> used for parameter inference.</h4>
+          </section>
+
+          <section>
+            <h3>Infer dust R(V) for every star ...</h3>
+            <p class="fragment">Remove stars with bad $\chi^2/\mathrm{dof}$, low extinction, ...</p>
+            <p class="fragment">~130 million R(V) measurements with XP (<span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green 2025</a></span>)</p>
+          </section>
+
+          <section class="has-footer expand-media" data-transition="slide-in none-out">
+            <img class="" data-src="../media/xp_rv/Rv_sky_with_zoom_ins.svg"></img>
+            <div class="footer">
+              <p class="left attribution"><a href="https://ui.adsabs.harvard.edu/abs/2025Sci...387.1209Z/abstract">Zhang &amp; Green (2025)</a></p>
+            </div>
+          </section>
+
+          <section class="has-footer" data-transition="none-in slide-out">
+            <div class="multicol full-height">
+              <div class="column wide expand-media">
+                <img class="" data-src="../media/xp_rv/Rv_sky_with_zoom_ins.svg"></img>
+              </div>
+              <div class="column compact expand-media r-stack">
+                <img data-fragment-index=1 class="full-width fragment fade-out" data-src="../media/xp_rv/Rv_vs_E_Perseus.svg"></img>
+                <img data-fragment-index=1 class="full-width fragment current-visible" data-src="../media/xp_rv/Rv_vs_E_OrionA.svg"></img>
+                <img data-fragment-index=2 class="full-width fragment current-visible" data-src="../media/xp_rv/Rv_vs_E_Taurus.svg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section class="has-footer">
+            <div class="multicol full-height compact">
+              <div class="column widest expand-media r-stack">
+                <img class="fragment fade-out" data-fragment-index=1 data-src="../media/xp_rv/Rv_birdseye_density_overlay_nolabels_1panel.svg"></img>
+                <img class="fragment current-visible" data-fragment-index=1 data-src="../media/xp_rv/Rv_birdseye_wo_Ostars_1panel.svg"></img>
+                <img class="fragment" data-fragment-index=2 data-src="../media/xp_rv/Rv_birdseye_w_Ostars_1panel.svg"></img>
+              </div>
+              <div class="column v-center">
+                <h3>R(V) in the Galactic plane</h3>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2025Sci...387.1209Z/abstract">Zhang &amp; Green (2025)</a></p>
+              </div>
+            </div>
+          </section>
+
+          <section class="full-height">
+            <div class="multirow full-height compact">
+              <h3 class="row no-expand">R(V) in the Magellanic Clouds</h3>
+              <div class="row expand-media">
+                <img class="" data-src="../media/xp_rv/LMC_SMC_Rv.svg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
+            <h3 class="stroke">For the first time, we can &ldquo;see&rdquo; the dust properties throughout much of the Milky Way in 3D.</h3>
+          </section>
+
+          <section>
+            <h2>Surprising results:</h2>
+            <ol style="font-size:130%;">
+              <li class="fragment">U-shaped relation between density &amp; R(V).</li>
+              <li class="fragment">Star-formation / UV radiation correlated with high R(V).</li>
+            </ol>
+          </section>
+
+          <section class="has-footer">
+            <div class="multicol full-height compact">
+              <div class="column wide expand-media">
+                <video data-autoplay loop data-src="../media/dust/pah_gallery.mp4"></video>
+              </div>
+              <div class="column v-center">
+                <h3>Role of Polycyclic Aromatic Hydrocarbons (PAHs)?</h3>
+              </div>
+            </div>
+            <div class="footer">
+              <p class="left attribution"><a href="https://www.astrochemistry.org/pahdb/theoretical/3.20/default/details/57">(models from PAHdb)</a></p>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+            <h2 class="stroke">Is there information in the extinction curve beyond R(V)?</h2>
+            <p class="stroke">Green, Zhang, &amp; Zhang (<a style="color:white;" href="https://arxiv.org/abs/2410.22537">arXiv:2410.22537</a>)</p>
+          </section>
+
+          <section class="expand-media full-height">
+            <img data-src="../media/beyond_rv/A_normalization_darkbg.svg" class=""></img>
+          </section>
+
+          <section class="has-footer">
+            <div class="multirow squeeze full-height compact">
+              <div class="row no-expand">
+                <h3>Component decomposition of extinction curves</h3>
+              </div>
+              <div class="row expand-media r-stack">
+                <img class="fragment fade-out" data-fragment-index=1 data-src="../media/beyond_rv/skymap_components_darkbg_panel0.svg"></img>
+                <img class="fragment" data-fragment-index=1 data-src="../media/beyond_rv/skymap_components_darkbg_panel1.svg"></img>
+              </div>
+            </div>
+            <div class="footer">
+              <!--
+              <p class="left attribution"><a href="https://arxiv.org/abs/2410.22537">Green, Zhang &amp; Zhang (2025)</a></p>
+              -->
+            </div>
+          </section>
+
+          <section class="full-height">
+            <div class="multirow squeeze full-height compact">
+              <div class="row no-expand r-stack">
+                <h3 class="fragment fade-out" data-fragment-index=1>&ldquo;Dust-like&rdquo; spatial patterns in lowest-order components</h3>
+                <h3 class="fragment" data-fragment-index=1>&ldquo;Gaia-like&rdquo; spatial patterns in lowest-order components</h3>
+              </div>
+              <div class="row expand-media r-stack">
+                <img class="fragment fade-out" data-fragment-index=1 data-src="../media/beyond_rv/skymap_components_zoomin_0to3.svg"></img>
+                <img class="fragment" data-fragment-index=1 data-src="../media/beyond_rv/skymap_components_zoomin_4to7.svg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section class="full-height">
+            <div class="multicol full-height">
+              <div class="column wide expand-media">
+                <img data-src="../media/beyond_rv/feature_fits_1panel.svg"></img>
+              </div>
+              <div class="column v-center">
+                <h4>A new broad feature at ~850&nbsp;nm</h4>
+                <div class="fragment">
+                  <p>Confirmation of broad feature at ~770&nbsp;nm</p>
+                  <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2021MNRAS.501.2487M/abstract">(Maíz Apellániz+ 2021)</a></p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="full-height">
+            <div class="multirow full-height compact">
+              <h3 class="row no-expand">Maps of 770 &amp; 850&nbsp;nm features</h3>
+              <div class="row expand-media">
+                <img class="" data-src="../media/beyond_rv/skymap_features_2panel_darkbg.svg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2>All of these feature are of unknown origin.</h2>
+          </section>
+        </section>
+        
+        <section>
+          <section class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+            <h2 class="stroke">New frontier in dust mapping: R(V) and beyond.</h2>
+            <h4 class="stroke fragment">Gaia XP spectra reveal abundant extinction curve variation.</h4>
+            <h4 class="stroke fragment">We don't know what causes it.</h4>
+          </section>
+          <section class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+            <h1 class="stroke">Questions?</h1>
+          </section>
+        </section>
+
+      </div> <!--slides-->
+    </div> <!--reveal-->
+
+    <script src="../revealjs/dist/reveal.js"></script>
+    <script src="../revealjs/plugin/math/math.js"></script>
+    <script src="../revealjs/plugin/notes/notes.js"></script>
+    <script src="../revealjs/plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        disableLayout: false,
+        /*
+        width: 960,
+        height: 700,
+        */
+        width: "100%",
+        height: "100%",
+
+        history: true,
+        transition: 'linear',
+        //slideNumber: 'h.v',
+
+        /*
+        math: {
+          // mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          TeX: {
+            Macros: {
+              R: '\\mathbb{R}',
+              set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+            }
+          }
+        },
+        */
+        plugins: [ RevealMath.MathJax3 ],
+        mathjax3: {
+          //mathjax: "https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.7/tex-mml-chtml.js",
+          mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-chtml.js",
+          //mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-chtml-nofont.js",
+          //mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-svg-nofont.js",
+          loader: {load: ['[tex]/html','[tex]/cancel','[tex]/color']},
+          tex: {packages: {'[+]': ['html','cancel','color']}},
+          //chtml: {
+          //  fontURL: "../js/mathjax-4.0.0-beta.7/output/chtml/fonts/woff-v2"
+          //}
+        },
+
+        sortFragmentsOnSync: false,
+
+        pdfMaxPagesPerSlide: 1,
+
+        plugins: [ RevealMath.MathJax3, RevealNotes, RevealHighlight ]
+      });
+    </script>
+
+    <!-- jQuery -->
+    <script src="../js/jquery-3.6.1.min.js"></script>
+    <!-- d3 -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>-->
+
+    <!-- Custom scripts go here -->
+    <script src="js/stars_and_dust_plot_v7.js"></script>
+    <script src="js/Rv_grain_animation.js"></script>
+
+  </body>
+</html>
