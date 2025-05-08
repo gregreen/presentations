@@ -37,6 +37,8 @@
       --r-link-color-hover: #ffcc7d;
     }
 
+    /* Print settings */
+
     /* Slide controls (arrows): make less prominent */
     aside.controls {
       opacity: 0.3;
@@ -107,6 +109,7 @@
       min-width: 0%;
       min-height: 0%;
       object-fit: contain;
+      margin: 0;
     }
 
     section.full-height, .multirow.full-height, .multicol.full-height {
@@ -130,7 +133,7 @@
     }
     div.footer {
       position: absolute;
-      bottom: 0px;
+      bottom: 2%;
       width: 100%;
       text-align: center;
       display: flex;
@@ -174,8 +177,20 @@
       -webkit-text-stroke: 5px black;
       paint-order: stroke fill;
     }
+    h2.stroke, .stroke h2 {
+      -webkit-text-stroke: 2px black;
+      paint-order: stroke fill;
+    }
     h3.stroke, .stroke h3 {
       -webkit-text-stroke: 3px black;
+      paint-order: stroke fill;
+    }
+    h4.stroke, .stroke h4 {
+      -webkit-text-stroke: 2px black;
+      paint-order: stroke fill;
+    }
+    p.stroke, .stroke p, span.stroke, .stroke span {
+      -webkit-text-stroke: 1px black;
       paint-order: stroke fill;
     }
 
@@ -197,6 +212,22 @@
       border: cyan;
       border-style: dotted;
     }
+
+    /* Uncomment below to show all layouts */
+    /*
+    section.present div {
+      border: 1px dotted rgba(0, 255, 255, 0.5)
+    }
+    section.present {
+      border: 2px solid rgba(255, 0, 0, 0.5)
+    }
+    section.present img {
+      border: 1px dashed rgba(0, 255, 0, 0.5)
+    }
+    section.present :is(h1, h2, h3, h4, p, span, a) {
+      border: 1px groove rgba(255, 255, 0, 0.5)
+    }
+    */
 
     /* Image grid */
     .image-grid {
@@ -343,9 +374,15 @@
 
           <section data-background-video="../media/decaps/dust_cloud_zoomin_postprocessed.webm" data-background-size="cover" data-background-video-loop class="v-expand-center stroke">
             <div class="multicol">
-              <h3 class="left">Dust extinction</h3>
+              <h3 class="left blur-bg">Dust extinction</h3>
             </div>
-            <div class="multicol"><p class="left attribution"><a href="http://decaps.skymaps.info/">(DECaPS)</a></p></div>
+            <div class="multicol">
+              <p class="left attribution blur-bg">
+                (<a href="http://decaps.skymaps.info/">DECaPS</a>,
+                 <a href="https://ui.adsabs.harvard.edu/abs/2023ApJS..264...28S/abstract">Saydjari+ 2023</a>,
+                 <a href="https://ui.adsabs.harvard.edu/abs/2018ApJS..234...39S/abstract">Schlafly+ 2018</a>)
+              </p>
+            </div>
           </section>
         </section>
 
@@ -681,10 +718,16 @@
         </section>
 
         <section>
-          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
-            <h2 class="stroke-text-dark">Learned stellar parameters</h2>
-            <h4 class="fragment stroke-text-dark">Use XP spectra, NIR photometry &amp; Gaia parallaxes to learn parameters of 220 million stars.</h4>
-            <h4 class="fragment stroke-text-dark">LAMOST spectra <em>not</em> used for parameter inference.</h4>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg" class="stroke has-footer">
+            <div class="header">
+              <h2 class="center">Learned stellar parameters</h2>
+            </div>
+            <div class="footer">
+              <div class="center">
+                <h4 class="fragment">Use XP spectra, NIR photometry &amp; Gaia parallaxes to learn parameters of 220 million stars.</h4>
+                <h4 class="fragment">LAMOST spectra <em>not</em> used for parameter inference.</h4>
+              </div>
+            </div>
           </section>
 
           <section>
@@ -769,9 +812,36 @@
             <p class="stroke">Green, Zhang, &amp; Zhang (<a style="color:white;" href="https://arxiv.org/abs/2410.22537">arXiv:2410.22537</a>)</p>
           </section>
 
-          <section class="expand-media full-height">
-            <img data-src="../media/beyond_rv/A_normalization_darkbg.svg" class=""></img>
+          <section class="full-height">
+            <div class="multicol full-height">
+              <div class="column wide expand-media r-stack">
+                <img class="fragment fade-out" data-fragment-index=1 data-src="../media/beyond_rv/empirical_extcurve_example_flux0.svg"></img>
+                <img class="fragment current-visible" data-fragment-index=1 data-src="../media/beyond_rv/empirical_extcurve_example_flux1.svg"></img>
+                <img class="fragment current-visible" data-fragment-index=2 data-src="../media/beyond_rv/empirical_extcurve_example_flux2.svg"></img>
+                <img class="fragment current-visible" data-fragment-index=3 data-src="../media/beyond_rv/empirical_extcurve_example_extinction0.svg"></img>
+                <img class="fragment current-visible" data-fragment-index=4 data-src="../media/beyond_rv/empirical_extcurve_example_extinction1.svg"></img>
+                <img class="fragment" data-fragment-index=5 data-src="../media/beyond_rv/empirical_extcurve_example_deltaA.svg"></img>
+              </div>
+              <div class="column v-center">
+                <h3>&ldquo;Empirical&rdquo; extinction curves
+              </div>
+            </div>
           </section>
+
+          <section class="full-height">
+            <div class="multirow full-height compact">
+              <h3 class="row no-expand">Extinction-curve <em>shapes</em></h3>
+              <div class="row expand-media">
+                <img data-src="../media/beyond_rv/A_normalization_darkbg.svg"></img>
+              </div>
+              <h4 class="row no-expand fragment" style="margin-bottom: 5%;">
+                Decomposition: &nbsp;&nbsp;
+                $\displaystyle r_i\left(\lambda\right) = \sum_{k=1}^{16} b_{ik} \, g_k\left(\lambda\right)$
+                .
+              </h4>
+            </div>
+          </section>
+
 
           <section class="has-footer">
             <div class="multirow squeeze full-height compact">
@@ -809,7 +879,7 @@
                 <img data-src="../media/beyond_rv/feature_fits_1panel.svg"></img>
               </div>
               <div class="column v-center">
-                <h4>A new broad feature at ~850&nbsp;nm</h4>
+                <h3>A new broad feature at ~850&nbsp;nm</h3>
                 <div class="fragment">
                   <p>Confirmation of broad feature at ~770&nbsp;nm</p>
                   <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2021MNRAS.501.2487M/abstract">(Maíz Apellániz+ 2021)</a></p>
@@ -835,7 +905,7 @@
         <section>
           <section class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
             <h2 class="stroke">New frontier in dust mapping: R(V) and beyond.</h2>
-            <h4 class="stroke fragment">Gaia XP spectra reveal abundant extinction curve variation.</h4>
+            <h4 class="stroke fragment">130 million Gaia XP spectra reveal abundant extinction curve variation.</h4>
             <h4 class="stroke fragment">We don't know what causes it.</h4>
           </section>
           <section class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
@@ -859,6 +929,8 @@
         */
         width: "100%",
         height: "100%",
+        //width: 1244,
+        //height: 700,
 
         history: true,
         transition: 'linear',
@@ -895,6 +967,22 @@
 
         plugins: [ RevealMath.MathJax3, RevealNotes, RevealHighlight ]
       });
+    </script>
+
+    <script>
+      // In print mode, set "top:0" for every slide.
+      // Revealjs sets many erroneous "top" values. Setting them to 0
+      // makes the slides render reasonably well (but not completely correctly).
+      if(window.location.search.match(/print-pdf/gi)) {
+        Reveal.addEventListener('ready', function() {
+          setTimeout(() => {
+            console.log('Fixing slides for printing ...');
+            document.querySelectorAll('.slides section').forEach(slide => {
+              slide.style.cssText = 'top:0 !important; left:0 !important; position:relative !important;';
+            });
+          }, 5000);
+        });
+      }
     </script>
 
     <!-- jQuery -->
