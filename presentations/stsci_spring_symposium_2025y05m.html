@@ -562,6 +562,33 @@
         </section>
 
         <section>
+          <section class="full-height" data-transition="slide-in none-out">
+            <div class="multirow full-height compact">
+              <h3 class="row no-expand">The dust &ldquo;extinction curve&rdquo;</h3>
+              <div class="row r-stack expand-media">
+                <img class="" data-src="../media/dust/extinction_curve_hensley_draine_2003.svg"></img>
+                <img class="fragment" data-src="../media/dust/extinction_curve_hensley_draine_2003_wRv2175.svg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section id="Rv-grain-plot-slide" class="full-height" data-state="Rv-grain-plot-slide">
+            <div class="multirow full-height">
+              <h4 class="row no-expand">The extinction curve and grain-size distribution</h4>
+              <div class="row" id="Rv-grain-plot-container" style="width:100%; height:100%;"></div>
+            </div>
+            <div id="high-Rv" class="fragment"></div>
+          </section>
+
+          <section data-auto-animate class="has-footer" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
+            <div class="header"><h1 class="stroke">Dust density</h1></div>
+          </section>
+          <section data-auto-animate class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background.jpg">
+            <div class="header"><h1 class="stroke">Dust R(V)</h1></div>
+          </section>
+        </section>
+
+        <section>
           <section>
             <h1>Data</h1>
           </section>
@@ -614,33 +641,6 @@
             <div class="footer">
               <p class="center attribution">(ESA/Euclid/Euclid Consortium/NASA, CC BY-SA 3.0 IGO)</p>
             </div>
-          </section>
-        </section>
-
-        <section>
-          <section class="full-height" data-transition="slide-in none-out">
-            <div class="multirow full-height compact">
-              <h3 class="row no-expand">The dust &ldquo;extinction curve&rdquo;</h3>
-              <div class="row r-stack expand-media">
-                <img class="" data-src="../media/dust/extinction_curve_hensley_draine_2003.svg"></img>
-                <img class="fragment" data-src="../media/dust/extinction_curve_hensley_draine_2003_wRv2175.svg"></img>
-              </div>
-            </div>
-          </section>
-
-          <section id="Rv-grain-plot-slide" class="full-height" data-state="Rv-grain-plot-slide">
-            <div class="multirow full-height">
-              <h4 class="row no-expand">The extinction curve and grain-size distribution</h4>
-              <div class="row" id="Rv-grain-plot-container" style="width:100%; height:100%;"></div>
-            </div>
-            <div id="high-Rv" class="fragment"></div>
-          </section>
-
-          <section data-auto-animate class="has-footer" data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
-            <div class="header"><h1 class="stroke">Dust density</h1></div>
-          </section>
-          <section data-auto-animate class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background.jpg">
-            <div class="header"><h1 class="stroke">Dust R(V)</h1></div>
           </section>
         </section>
 
@@ -720,19 +720,18 @@
         <section>
           <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg" class="stroke has-footer">
             <div class="header">
-              <h2 class="center">Learned stellar parameters</h2>
+              <h2 class="center">Inferring parameters of stars and dust</h2>
             </div>
             <div class="footer">
               <div class="center">
-                <h4 class="fragment">Use XP spectra, NIR photometry &amp; Gaia parallaxes to learn parameters of 220 million stars.</h4>
+                <h4 class="fragment">We use XP spectra, NIR photometry &amp; Gaia parallaxes to infer parameters of 220 million stars.</h4>
                 <h4 class="fragment">LAMOST spectra <em>not</em> used for parameter inference.</h4>
               </div>
             </div>
           </section>
 
           <section>
-            <h3>Infer dust R(V) for every star ...</h3>
-            <p class="fragment">Remove stars with bad $\chi^2/\mathrm{dof}$, low extinction, ...</p>
+            <p>Remove stars with bad $\chi^2/\mathrm{dof}$, low extinction, ...</p>
             <p class="fragment">~130 million R(V) measurements with XP (<span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green 2025</a></span>)</p>
           </section>
 
@@ -836,7 +835,25 @@
               </div>
               <h4 class="row no-expand fragment" style="margin-bottom: 5%;">
                 Decomposition: &nbsp;&nbsp;
-                $\displaystyle r_i\left(\lambda\right) = \sum_{k=1}^{16} b_{ik} \, g_k\left(\lambda\right)$
+                $
+                  \displaystyle
+                  r_{
+                    \hspace{-0.7em}
+                    \underset{\scriptstyle\color{cyan}\text{star}}{\underset{\color{cyan}\uparrow}{i}}
+                  }
+                  \hspace{-0.6em}
+                  \left(\lambda\right) =
+                    \sum_{
+                      \hspace{-2.0em}
+                      \underset{\scriptstyle\color{cyan}\text{component}}{\underset{\color{cyan}\uparrow}{k}}
+                      \hspace{-2.0em}
+                      =1
+                    }^{16}
+                    \hspace{-1.0em}
+                    \overset{\color{cyan}\text{coefficients}}{\overset{\color{cyan}\bigg\downarrow}{ b_{ik} }}
+                    \hspace{-0.7em}
+                    \overset{\color{cyan}\text{basis}}{\overset{\color{cyan}\downarrow}{ g_k\!\left(\lambda\right) }}
+                $
                 .
               </h4>
             </div>
@@ -911,6 +928,10 @@
           <section class="full-height" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
             <h1 class="stroke">Questions?</h1>
           </section>
+        </section>
+
+        <section>
+          $$\underset{\text{Annotation}}{\underset{\uparrow}{\text{y}}} \hspace{-1.5em} + \hspace{-1.5em} \overset{\text{Annotation}}{\overset{\downarrow}{z}}$$
         </section>
 
       </div> <!--slides-->
