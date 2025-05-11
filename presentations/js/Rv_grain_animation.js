@@ -27,7 +27,7 @@
         left: 65
       };
       this.full_width = 0.9*container_width;
-      this.full_height = 0.8*container_height;
+      this.full_height = 0.95*container_height;
       this.width = this.full_width - this.margin.left - this.margin.right;
       this.height = this.full_height - this.margin.top - this.margin.bottom;
 
@@ -372,12 +372,16 @@
     const wl_B = 440.0;
     const wl_V = 555.0;
 
+    // Force a reflow
+    const plotContainer = document.getElementById('Rv-grain-plot-slide');
+    plotContainer.offsetHeight; // Accessing this property triggers a reflow
+    
     // Create animation instance
     const animation = new CurveAnimation(x, y0, y1, c0, c1,
                                          v0, v1, c_fg, c_bg);
 
     // Force a reflow
-    const plotContainer = document.getElementById('Rv-grain-plot-slide');
+    //const plotContainer = document.getElementById('Rv-grain-plot-slide');
     plotContainer.offsetHeight; // Accessing this property triggers a reflow
 
     // Add listeners
@@ -396,7 +400,20 @@
   };
 
   // Immediately initialize the plot
-  initRvPlot();
+  //initRvPlot();
+
+  // Initialize the plot when the slide is first shown
+  var plotInitialized = false;
+
+  Reveal.on('slidechanged', (event) => {
+    if(!plotInitialized) {
+      if(event.currentSlide.id == "Rv-grain-plot-slide") {
+        console.log("Intializing R(V) / grain-size animation.");
+        initRvPlot();
+        plotInitialized = true;
+      }
+    }
+  });
 
   // Initialize plots
   //(function() {
