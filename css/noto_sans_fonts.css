@@ -1,0 +1,87 @@
+/* Main font (Noto Sans) */
+
+/* Regular/Roman Variable Font */
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('../fonts/noto-sans/NotoSans-VariableFont_wdth\,wght.ttf') format('truetype-variations');
+  font-weight: 100 900;  /* Supports all weights from 100-900 */
+  font-stretch: 75% 125%;  /* Supports width variations */
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Italic Variable Font */
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('../fonts/noto-sans/NotoSans-Italic-VariableFont_wdth\,wght.ttf') format('truetype-variations');
+  font-weight: 100 900;  /* Supports all weights from 100-900 */
+  font-stretch: 75% 125%;  /* Supports width variations */
+  font-style: italic;
+  font-display: swap;
+}
+
+/*
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('../fonts/noto-sans/NotoSans-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('../fonts/noto-sans/NotoSans-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('../fonts/noto-sans/NotoSans-Black.woff2') format('woff2');
+  font-weight: extra-bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('../fonts/noto-sans/NotoSans-Black.woff2') format('woff2');
+  font-weight: black;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('../fonts/noto-sans/NotoSans-Italic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('../fonts/noto-sans/NotoSans-Bold-Italic.woff2') format('woff2');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+*/
+
+/* Apply font family to reveal.js with fallbacks */
+.reveal {
+  /* First try Noto Sans for Latin, then generic fallbacks */
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: bold;
+}
