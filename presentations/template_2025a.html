@@ -11,6 +11,7 @@
     <link rel="icon" href="../icon.ico">
 
     <link rel="stylesheet" href="../css/noto_sans_fonts.css">
+    <link rel="stylesheet" href="../css/jost_font.css">
     <link rel="stylesheet" href="../revealjs/dist/reveal.css">
     <link rel="stylesheet" href="../revealjs/dist/theme/night.css" id="theme">
 
@@ -26,8 +27,8 @@
   <style>
     /* Override theme variables */
     :root {
-      --r-heading-font: 'Noto Sans', sans-serif;
-      --r-heading-font-weight: bold;
+      --r-heading-font: 'Jost', sans-serif;
+      --r-heading-font-weight: 600;
       --r-main-font: 'Noto Sans', sans-serif;
       --r-background-color: #000;
       --r-main-font-size: 30px;
@@ -113,6 +114,15 @@
       margin-bottom: auto;
     }
 
+    .multicol > div, .multirow > div {
+      overflow: hidden;
+    }
+
+    .reveal section .r-stack > .v-center {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
     section {
       display: flex !important;
       flex-direction: column;
@@ -143,6 +153,15 @@
     }
     .multirow > * {
       flex: 1;
+    }
+    .multirow > .tall {
+      flex: 1.44;
+    }
+    .multirow > .taller {
+      flex: 2.08;
+    }
+    .multirow > .tallest {
+      flex: 3;
     }
     .multirow > :is(h1, h2, h3, h4, p) {
       flex: 0 0 auto;
@@ -342,6 +361,39 @@
       color: white;
       opacity: 70%;
     }
+
+    img.full-height {
+      height: 100%;
+      width: auto;
+      max-width: none;
+    }
+
+    img.full-width {
+      width: 100%;
+      height: auto;
+      max-height: none;
+    }
+
+    img.stretch-to-fill {
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      object-fit: cover;
+      object-position: var(--x, center) var(--y, center);
+    }
+    img.stretch-to-fill.left {
+      --x: left;
+    }
+    img.stretch-to-fill.right {
+      --x: right;
+    }
+    img.stretch-to-fill.bottom {
+      --y: bottom;
+    }
+    img.stretch-to-fill.top {
+      --y: top;
+    }
   </style>
 
   <body>
@@ -415,8 +467,76 @@
 
         <section>
           <section class="multicol">
-            <img class="full-height" data-src="../media/jwst/Carina_Nebula_JWST.jpg"></img>
-            <div></div>
+            <div>
+              <img class="stretch-to-fill right top" data-src="../media/jwst/Carina_Nebula_JWST.jpg"></img>
+            </div>
+            <div class="widest">
+              <h1>Slide with banner image</h1>
+              <h2>(on left)</h2>
+            </div>
+          </section>
+
+          <section class="multirow">
+            <div>
+              <img class="stretch-to-fill" data-src="../media/jwst/Carina_Nebula_JWST.jpg"></img>
+            </div>
+            <div class="tallest">
+              <h1>Slide with banner image</h1>
+              <h2>(on top)</h2>
+            </div>
+          </section>
+
+          <section class="multirow">
+            <div class="r-stack">
+              <img class="stretch-to-fill top" data-src="../media/jwst/Carina_Nebula_JWST.jpg"></img>
+              <h1 class="v-center stroke">Title overlaid on banner</h1>
+            </div>
+            <div class="tallest">
+              <p>A black stroke is used to make the text more clearly visible on top of the banner image.</p>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Fragments</h1>
+          </section>
+
+          <section class="multicol">
+            <div class="wide v-center">
+              <div class="r-stack">
+                <img class="fragment fade-out" data-fragment-index=1 data-src="../media/dust/planck_dust_allsky.jpg"></img>
+                <img class="fragment" data-fragment-index=1 data-src="../media/jwst/Carina_Nebula_JWST.jpg"></img>
+              </div>
+              <div class="r-stack">
+                <p class="fragment fade-out" data-fragment-index=1>(Planck)</p>
+                <p class="fragment" data-fragment-index=1>(JWST)</p>
+              </div>
+            </div>
+            <div>
+              <h2>Image stacking</h2>
+              <ol>
+                <li>Planck all-sky dust map.</li>
+                <li class="fragment" data-fragment-index=1>JWST image of Carina Nebula.</li>
+              </ol>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Collisionless Boltzmann Equation</h1>
+            <p>
+               $$
+               \frac{\mathrm{d}f}{\mathrm{d}t} =
+               \partial_t f + \left\{ \mathcal{H} , f \right\} =
+               \partial_t f
+               + \vec{v}\cdot\nabla_{\vec{x}}f
+               - \nabla_{\vec{x}}\Phi\cdot\nabla_{\vec{v}}f
+               = 0
+               \, .
+               $$
+            </p>
           </section>
         </section>
 
