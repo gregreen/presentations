@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="674.11212"
+   height="288.19824"
+   viewBox="0 0 674.11212 288.19824"
+   version="1.1"
+   id="svg950"
+   sodipodi:docname="harmonized_params_pair_loss_diagram_v3.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview952"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="1.4134082"
+     inkscape:cx="117.80036"
+     inkscape:cy="131.95055"
+     inkscape:window-width="1440"
+     inkscape:window-height="836"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg950"
+     fit-margin-top="4"
+     lock-margins="true"
+     fit-margin-left="4"
+     fit-margin-right="4"
+     fit-margin-bottom="4" />
+  <!-- Arrowhead marker -->
+  <ellipse
+     cx="441.4379"
+     cy="326.94681"
+     fill="none"
+     stroke="#00aa80"
+     stroke-width="4"
+     stroke-dasharray="4, 4"
+     id="circle948"
+     rx="80"
+     ry="130"
+     style="fill:#00aa80;fill-opacity:0.1;stroke:#00aa80;stroke-opacity:0.5"
+     transform="rotate(-20)" />
+  <defs
+     id="defs908">
+    <rect
+       x="59.501174"
+       y="215.2508"
+       width="113.67207"
+       height="25.675506"
+       id="rect4537" />
+    <marker
+       id="arrow"
+       viewBox="0 0 10 10"
+       refX="5"
+       refY="5"
+       markerWidth="6"
+       markerHeight="6"
+       orient="auto">
+      <path
+         d="M 0,0 10,5 0,10 Z"
+         fill="#000000"
+         id="path905" />
+    </marker>
+    <marker
+       id="arrow-0"
+       viewBox="0 0 10 10"
+       refX="5"
+       refY="5"
+       markerWidth="6"
+       markerHeight="6"
+       orient="auto">
+      <path
+         d="M 0,0 10,5 0,10 Z"
+         fill="#0088ff"
+         id="path905-7" />
+    </marker>
+    <rect
+       x="59.501175"
+       y="215.25079"
+       width="113.67207"
+       height="25.675507"
+       id="rect4537-0" />
+    <rect
+       x="59.501175"
+       y="215.25079"
+       width="113.67207"
+       height="25.675507"
+       id="rect4537-0-0" />
+  </defs>
+  <!-- Left uncertainty circle around x1 -->
+  <ellipse
+     cx="189.93687"
+     cy="106.01635"
+     fill="none"
+     stroke="#00aa80"
+     stroke-width="4"
+     stroke-dasharray="4, 4"
+     id="circle910"
+     rx="80"
+     ry="100"
+     transform="rotate(30)"
+     style="opacity:1;fill:#00aa80;fill-opacity:0.1;stroke:#00aa80;stroke-opacity:0.5" />
+  <!-- Point x1 and label -->
+  <circle
+     cx="111.48206"
+     cy="186.7813"
+     r="4"
+     fill="#000000"
+     id="circle912" />
+  <text
+     x="96.482056"
+     y="206.7813"
+     font-size="18"
+     id="text914"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;font-family:MathJax_Math;-inkscape-font-specification:'MathJax_Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">x₁</text>
+  <text
+     x="187.96291"
+     y="239.67482"
+     font-size="18"
+     id="text914-2"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;font-family:MathJax_Math;-inkscape-font-specification:'MathJax_Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#00aa80;fill-opacity:1">C₁</text>
+  <!-- Point x1+δ -->
+  <!-- Vertical dashed arrow δ -->
+  <line
+     x1="111.38676"
+     y1="186.62796"
+     x2="75.610527"
+     y2="93.246704"
+     stroke="#000000"
+     stroke-width="2"
+     stroke-dasharray="6, 4"
+     marker-end="url(#arrow)"
+     id="line920" />
+  <text
+     x="100.81215"
+     y="145.49022"
+     font-size="16px"
+     id="text922"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;font-family:MathJax_Math;-inkscape-font-specification:'MathJax_Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">δ₁</text>
+  <!-- s₁ path from left to middle -->
+  <!-- Manually place s₁ arrow -->
+  <text
+     x="181.22951"
+     y="52.649834"
+     font-size="18px"
+     id="text928"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;font-family:MathJax_Math;-inkscape-font-specification:'MathJax_Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#0088ff;fill-opacity:1">s₁</text>
+  <!-- Middle circle f₁(x₁+δ) -->
+  <text
+     x="313.55484"
+     y="22.210938"
+     font-size="18px"
+     id="text932"
+     style="font-size:24px;font-family:MathJax_Math">f₁(x₁+δ₁)</text>
+  <!-- s₂ path from middle to right -->
+  <path
+     d="m 315.53708,34.136299 c 80,14.999997 120,29.999997 180,14.999997"
+     fill="none"
+     stroke="#000000"
+     stroke-width="3"
+     marker-end="url(#arrow-0)"
+     id="path934"
+     style="stroke:#0088ff;stroke-opacity:1" />
+  <text
+     x="388.71143"
+     y="69.141907"
+     font-size="18px"
+     id="text936"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;font-family:MathJax_Math;-inkscape-font-specification:'MathJax_Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#0088ff;fill-opacity:1">s₂</text>
+  <!-- Endpoint Q = f₂⁻¹(f₁(x₁+δ)) -->
+  <circle
+     cx="508.63788"
+     cy="46.246078"
+     r="4"
+     fill="#000000"
+     id="circle938" />
+  <text
+     x="509.63788"
+     y="34.246078"
+     font-size="18px"
+     id="text940"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;font-family:MathJax_Math;-inkscape-font-specification:'MathJax_Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">f₂⁻¹∘f₁(x₁+δ₁)</text>
+  <!-- Dashed arrow from Q down to x₂ -->
+  <line
+     x1="508.63806"
+     y1="46.246078"
+     x2="526.63788"
+     y2="156.24609"
+     stroke="#000000"
+     stroke-width="2"
+     stroke-dasharray="6, 4"
+     id="line942"
+     style="stroke:#000000;stroke-opacity:0.5" />
+  <!-- Point x₂ and label -->
+  <circle
+     cx="526.63788"
+     cy="156.24609"
+     r="4"
+     fill="#000000"
+     id="circle944" />
+  <text
+     x="529.63788"
+     y="173.24611"
+     font-size="18px"
+     id="text946"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;font-family:MathJax_Math;-inkscape-font-specification:'MathJax_Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">x₂</text>
+  <!-- Right uncertainty circle around x₂ -->
+  <path
+     d="M 71.871816,82.691106 C 151.87182,32.691101 201.87182,22.691101 301.87182,32.691103"
+     fill="none"
+     stroke="#000000"
+     stroke-width="3"
+     marker-end="url(#arrow-0)"
+     id="path934-0"
+     style="stroke:#0088ff;stroke-opacity:1;marker-end:url(#arrow-0)" />
+  <circle
+     cx="315.53708"
+     cy="34.136299"
+     r="4"
+     fill="#000000"
+     id="circle912-1" />
+  <text
+     x="3.1600001"
+     y="82.363403"
+     font-size="18px"
+     id="text932-6"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;font-family:MathJax_Math;-inkscape-font-specification:'MathJax_Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">x₁+δ₁</text>
+  <circle
+     cx="71.871819"
+     cy="82.691101"
+     r="4"
+     fill="#000000"
+     id="circle916" />
+  <text
+     x="449.38638"
+     y="252.65324"
+     font-size="18"
+     id="text914-2-9"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;font-family:MathJax_Math;-inkscape-font-specification:'MathJax_Math, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#00aa80;fill-opacity:1">C₂</text>
+  <text
+     xml:space="preserve"
+     id="text4535"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;line-height:1.25;font-family:'Latin Modern Sans';-inkscape-font-specification:'Latin Modern Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;white-space:pre;shape-inside:url(#rect4537);opacity:0.4"
+     transform="matrix(1.0000014,0,0,1,5.3357895,-4.4556728)"><tspan
+       x="59.501953"
+       y="232.6287"
+       id="tspan30866">(catalog 1)</tspan></text>
+  <text
+     xml:space="preserve"
+     id="text4535-2"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;line-height:1.25;font-family:'Latin Modern Sans';-inkscape-font-specification:'Latin Modern Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;white-space:pre;shape-inside:url(#rect4537-0);opacity:0.4"
+     transform="matrix(1.0000014,0,0,1,438.39179,-37.990673)"><tspan
+       x="59.501953"
+       y="232.6287"
+       id="tspan30868">(catalog 2)</tspan></text>
+  <text
+     xml:space="preserve"
+     id="text4535-2-1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;line-height:1.25;font-family:'Latin Modern Sans';-inkscape-font-specification:'Latin Modern Sans, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;white-space:pre;shape-inside:url(#rect4537-0-0);opacity:0.4;stroke-width:0.999998"
+     transform="matrix(1.0000045,0,0,1,204.3746,-169.54033)"><tspan
+       x="59.501953"
+       y="232.6287"
+       id="tspan30870">(harmonized)</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:18.6667px;line-height:1.25;font-family:sans-serif;letter-spacing:0px"
+     x="1.6960037"
+     y="19.999975"
+     id="text23155"><tspan
+       sodipodi:role="line"
+       id="tspan23153"
+       x="1.6960037"
+       y="19.999975"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:21.3333px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">(a)</tspan></text>
+</svg>

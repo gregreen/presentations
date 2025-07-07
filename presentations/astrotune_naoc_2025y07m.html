@@ -1,0 +1,1015 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Astrotune</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="../icon.ico">
+
+    <link rel="stylesheet" href="../css/noto_sans_fonts.css">
+    <link rel="stylesheet" href="../css/jost_font.css">
+    <link rel="stylesheet" href="../revealjs/dist/reveal.css">
+    <link rel="stylesheet" href="../revealjs/dist/theme/night.css" id="theme">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../revealjs/plugin/highlight/monokai.css" id="highlight-theme">
+
+    <!-- Custom CSS files go here -->
+
+    <!--<script src="../js/d3.min.js" charset="utf-8"></script>-->
+    <!--<script src="https://d3js.org/d3.v7.min.js"></script>-->
+  </head>
+
+  <style>
+    /* Override theme variables */
+    :root {
+      --r-heading-font: 'Jost', sans-serif;
+      --r-heading-font-weight: 600;
+      --r-main-font: 'Noto Sans', sans-serif;
+      --r-background-color: #000;
+      --r-main-font-size: 30px;
+      --r-heading1-size: 4.00em;
+      --r-heading2-size: 2.83em;
+      --r-heading3-size: 2.00em;
+      --r-heading4-size: 1.41em;
+      --r-heading-margin: 0.2em;
+      --r-block-margin: 0.15em;
+      --r-link-color: #f3d7ac;
+      --r-link-color-hover: #ffcc7d;
+    }
+
+    /* Adjust the base size at different breakpoints */
+    @media (max-width: 1536px) {
+      :root {
+        --r-main-font-size: 24px; /* Slightly smaller base on tablets */
+      }
+    }
+
+    @media (max-width: 1024px) {
+      :root {
+        --r-main-font-size: 20px; /* Slightly smaller base on tablets */
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --r-main-font-size: 18px; /* Slightly smaller base on tablets */
+      }
+    }
+
+    @media (max-width: 480px) {
+      :root {
+        --r-main-font-size: 14px; /* Smaller base on phones */
+      }
+    }
+
+    .reveal :is(h1, h2, h3, h4) {
+      margin: 0 0 var(--r-heading-margin) 0;
+    }
+
+    .reveal .compact :is(h1, h2, h3, h4) {
+      margin: 0 0 calc(var(--r-heading-margin)*0.5) 0;
+    }
+
+    .reveal .compact p {
+      margin: 0 calc(var(--r-block-margin)*0.5);
+    }
+
+    /* Print settings */
+
+    /* Slide controls (arrows): make less prominent */
+    aside.controls {
+      opacity: 0.3;
+      transform: scale(0.5);
+    }
+
+    /* Multi-column layout */
+    .multicol {
+      display: flex;
+      flex-direction: row;
+      gap: 1.0rem;
+      min-height: 0;
+    }
+    .multicol.compact, .compact .multicol {
+      gap: 0.5rem;
+    }
+    .multicol > * {
+      flex: 1;
+    }
+    .multicol > .wide {
+      flex: 1.44;
+    }
+    .multicol > .wider {
+      flex: 2.08;
+    }
+    .multicol > .widest {
+      flex: 3;
+    }
+    .multicol > .v-center {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    .multicol > div, .multirow > div {
+      overflow: hidden;
+    }
+
+    .reveal section .r-stack > .v-center {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    section {
+      display: flex !important;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    section > div {
+      max-height: 100%;
+    }
+
+    section > .multicol {
+      flex: 1;
+    }
+
+    .reveal img, .reveal video {
+      width: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      min-height: 0;
+      object-fit: contain;
+      margin: 0;
+    }
+
+    /* Most videos/images in this presentation have wrong color scheme */
+    .reveal video, .reveal img {
+      filter: invert(1) hue-rotate(180deg);
+    }
+    .reveal .brighten img, .reveal img.brighten {
+      filter: invert(1) hue-rotate(180deg) brightness(1.5);
+    }
+    /* Override color inversion? */
+    .reveal .preserve img,
+    .reveal img.preserve,
+    .reveal .preserve video,
+    .reveal video.preserve,
+    .reveal .slide-background img,
+    .reveal .slide-background video {
+      filter: none;
+    }
+
+    /* Multi-row layout */
+    .multirow {
+      display: flex !important;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .multirow.compact, .compact .multirow {
+      gap: 0.3rem;
+    }
+    .multirow > * {
+      flex: 1;
+    }
+    .multirow > .tall {
+      flex: 1.44;
+    }
+    .multirow > .taller {
+      flex: 2.08;
+    }
+    .multirow > .tallest {
+      flex: 3;
+    }
+    .multirow > :is(h1, h2, h3, h4, p) {
+      flex: 0 0 auto;
+    }
+    .row.h-center {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .row.no-expand {
+      flex: 0 0 auto;
+    }
+    .row.squeeze {
+      min-height: 0;
+    }
+
+    /* Expand media to fill container */
+    .expand-media {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 0;
+    }
+    .expand-media img, .expand-media video {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      min-width: 0%;
+      min-height: 0%;
+      object-fit: contain;
+      margin: 0;
+    }
+
+    section.full-height, .multirow.full-height, .multicol.full-height {
+      height: 100% !important;
+    }
+
+    /* Layout with content pushed to top and bottom */
+    .v-expand-center {
+      display: flex !important;
+      flex-direction: column;
+      height: 100%;
+      justify-content: space-between;
+    }
+
+    /* Header and Footer */
+    section.has-footer, section.has-header {
+      height: 100%;
+      display: flex !important;
+      flex-direction: column;
+      justify-content: center;
+    }
+    div.footer {
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: row;
+    }
+    div.header {
+      position: absolute;
+      top: 0px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: row;
+    }
+    div.footer .left, div.header .left, .multicol .left {
+      margin-right: auto;
+    }
+    div.footer .center, div.header .center, .multicol .center {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    div.footer .right, div.header .right, .multicol .right{
+      margin-left: auto;
+    }
+
+    /* Attribution text */
+    .reveal .attribution {
+      font-size: 0.7em;
+      color: #aaa;
+      margin-top: 0;
+    }
+    .reveal .attribution a {
+      color: #ddf;
+    }
+
+    /* Text styling */
+    .stroke {
+      -webkit-text-stroke: 1px black;
+      paint-order: stroke fill;
+    }
+    h1.stroke, .stroke h1 {
+      -webkit-text-stroke: 5px black;
+      paint-order: stroke fill;
+    }
+    h2.stroke, .stroke h2 {
+      -webkit-text-stroke: 2px black;
+      paint-order: stroke fill;
+    }
+    h3.stroke, .stroke h3 {
+      -webkit-text-stroke: 3px black;
+      paint-order: stroke fill;
+    }
+    h4.stroke, .stroke h4 {
+      -webkit-text-stroke: 2px black;
+      paint-order: stroke fill;
+    }
+    p.stroke, .stroke p, span.stroke, .stroke span {
+      -webkit-text-stroke: 1px black;
+      paint-order: stroke fill;
+    }
+
+    .stroke-superthick {
+      -webkit-text-stroke: 10px black !important;
+      paint-order: stroke fill;
+    }
+
+    .blur-bg {
+      backdrop-filter: blur(10px);
+    }
+
+    .reveal .dark {
+      color: black;
+    }
+
+    /* Put borders around each element, to show the layout */
+    .show-layout * {
+      border: cyan;
+      border-style: dotted;
+    }
+
+    /* Uncomment below to show all layouts */
+    section.present div {
+      border: 1px dotted rgba(0, 255, 255, 0.5)
+    }
+    section.present {
+      border: 2px solid rgba(255, 0, 0, 0.5)
+    }
+    section.present img {
+      border: 1px dashed rgba(0, 255, 0, 0.5)
+    }
+    section.present :is(h1, h2, h3, h4, p, span, a) {
+      border: 1px groove rgba(255, 255, 0, 0.5)
+    }
+
+    img.full-height {
+      height: 100%;
+      width: auto;
+      max-width: none;
+    }
+
+    img.full-width {
+      width: 100%;
+      height: auto;
+      max-height: none;
+    }
+
+    img.stretch-to-fill {
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      object-fit: cover;
+      object-position: var(--x, center) var(--y, center);
+    }
+    img.stretch-to-fill.left {
+      --x: left;
+    }
+    img.stretch-to-fill.right {
+      --x: right;
+    }
+    img.stretch-to-fill.bottom {
+      --y: bottom;
+    }
+    img.stretch-to-fill.top {
+      --y: top;
+    }
+
+    #survey-table {
+      border-collapse: collapse;
+      /*width: 100%;*/
+    }
+    #survey-table th {
+      font-family: 'Jost';
+      font-size: 140%;
+      text-align: center;
+    }
+    #survey-table th, #survey-table td {
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+    #survey-table td {
+      text-align: right;
+    }
+    #survey-table thead {
+      background-color: #444; /* Header row background */
+    }
+    #survey-table tbody tr:nth-child(even) {
+      background-color: #222; /* Alternating row background */
+    }
+  </style>
+
+  <body>
+
+    <div class="reveal">
+      <div class="slides">
+
+        <!--
+          Title
+        -->
+
+        <section class="v-expand-center" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+          <div>
+            <h1>Astrotune</h1>
+            <h3>Bringing stellar parameter catalogs into harmony</h3>
+          </div>
+          <div>
+            <h4>Gregory M. Green, Max Planck Institute for Astronomy, Heidelberg</h4>
+            <h4>NAOC, Beijing, 8 July 2025</h4>
+            <div class="multicol" style="gap:40%;">
+              <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="left" style="width:30%; filter:contrast(0.5) brightness(1.2);"></img>
+              <img data-src="../media/logos/MPIA_horizontal.svg" class="right" style="width:30%; filter:contrast(0.5) brightness(1.0);"></img>
+            </div>
+          </div>
+        </section>
+
+        <!--
+          Motivation
+        -->
+
+        <section>
+          <section class="v-center">
+            <h2>Many large stellar spectroscopic surveys</h2>
+          </section>
+
+          <section>
+            <h2>SDSS APOGEE (DR17)</h2>
+            <img data-src="../media/apogee/apogee_dr17_sky_coverage.jpg" class="preserve"></img>
+            <div class="footer">
+              <p class="left attribution"><a href="https://www.sdss4.org/dr17/irspec/dr_synopsis/">(credit: C. Hayes)</a></p>
+            </div>
+          </section>
+
+          <section>
+            <h2>LAMOST (DR10)</h2>
+            <img data-src="../media/lamost/lamost_sky_coverage_dr10.jpg" class="preserve"></img>
+            <div class="footer">
+              <p class="left attribution"><a href="https://www.lamost.org/public/node/465?locale=en">(credit: LAMOST)</a></p>
+            </div>
+          </section>
+
+          <section>
+            <h2>GALAH (DR4)</h2>
+            <img data-src="../media/galah/galah_dr4_skymap.png" class="preserve"></img>
+            <div class="footer">
+              <p class="left attribution"><a href="https://www.galah-survey.org/details/workflow/">(credit: Sven Buder)</a></p>
+            </div>
+          </section>
+
+          <section>
+            <h2>SDSS-V</h2>
+            <img data-src="../media/sdss/Galactic_Genesis_faceon_dark.png" class="preserve"></img>
+            <div class="footer">
+              <p class="left attribution"><a href="https://arxiv.org/abs/1711.03234">(credit: Kollmeier <em>et al.</em> 2017)</a></p>
+            </div>
+          </section>
+
+          <section>
+            <h2>DESI (DR1)</h2>
+            <img data-src="../media/desi/desi_dr1_mws.jpg"></img>
+            <div class="footer">
+              <p class="left attribution"><a href="https://data.desi.lbl.gov/doc/releases/dr1/vac/mws/">(credit: DESI)</a></p>
+            </div>
+          </section>
+
+          <section>
+            <h2>Multiple stellar parameter catalogs per survey</h2>
+            <h4 class="fragment"><em>E.g.</em>, LAMOST</h4>
+            <div class="fragment">
+              <h4>vs.</h4>
+              <h4>LAMOST Data-Driven Payne</h4>
+            </div>
+            <div class="fragment">
+              <h4>vs.</h4>
+              <h4>LAMOST HotPayne</h4>
+            </div>
+            <div class="fragment">
+              <h4>vs.</h4>
+              <h4>LAMOST Cycle-StarNet for M-dwarfs.</h4>
+            </div>
+          </section>
+
+          <section class="multirow">
+            <h2>Different catalogs disagree</h2>
+            <div class="r-stack">
+              <img data-src="../media/astrotune/kiel_density_pairs_2_3_input.svg" class="fragment current-visible"></img>
+              <img data-src="../media/astrotune/kiel_density_pairs_0_8_input.svg" class="fragment current-visible"></img>
+              <img data-src="../media/astrotune/kiel_density_pairs_8_9_input.svg" class="fragment current-visible"></img>
+            </div>
+          </section>
+        </section>
+
+        <!--
+          Method
+        -->
+
+        <section>
+          <section>
+            <h1>&ldquo;Astrotune&rdquo;</h1>
+            <h4 class="fragment">Autotune for your stellar parameters.</h4>
+          </section>
+
+          <section class="multirow brighten">
+            <h2>Mapping to the &ldquo;harmonized&rdquo; space</h2>
+            <img data-src="../media/astrotune/harmonized_params_bijections.svg"></img>
+          </section>
+
+          <section class="multirow">
+            <h2>Mapping to the &ldquo;harmonized&rdquo; space</h2>
+            <div class="multicol">
+              <div class="wide">
+                <img data-src="../media/astrotune/parameter_trajectories_0.svg"></img>
+              </div>
+              <div class="v-center">
+                <p>Integrate trajectory in parameter space $\vec\Theta$:
+                <p>$$\frac{\mathrm{d}\vec\Theta}{\mathrm{d}t} = \vec{v}\left(\vec\Theta,t\right) \, .$$
+                <p>Integrate from $t = 0$ to $1$ ($t$ is just an integration variable).</p>
+                <p class="fragment">Different mapping for each catalog.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="multirow brighten">
+            <h2>&ldquo;Pair loss&rdquo;: How well do the catalogs agree?</h2>
+            <img data-src="../media/astrotune/harmonized_params_pair_loss_diagram.svg"></img>
+          </section>
+
+          <section class="multirow brighten">
+            <h2>Regularizing the mappings</h2>
+            <div class="multicol">
+              <div class="v-center">
+                <h4>What we want:</h4>
+                <ul>
+                  <li class="fragment">Pairs of surveys to agree.</li>
+                  <li class="fragment">&ldquo;Minimal&rdquo; transformation.</li>
+                  <li class="fragment">No data? &rArr; Don't change parameters.</li>
+                </ul>
+              </div>
+              <div class="v-center wide">
+                <img data-src="../media/astrotune/harmonized_params_divergence_loss_diagram.svg" class="fragment"></img>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section class="multicol">
+            <div class="wide v-center">
+              <table border="1" id="survey-table">
+                <thead>
+                  <tr>
+                    <th>Survey</th>
+                    <th># of Paired Stars</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>LAMOST DD-Payne (DR9)</td><td>834,289</td></tr>
+                  <tr><td>LAMOST MRS</td><td>627,582</td></tr>
+                  <tr><td>APOGEE (DR17)</td><td>350,483</td></tr>
+                  <tr><td>DESI (DR1)</td><td>288,311</td></tr>
+                  <tr><td>SDSS-V (ASPCAP)</td><td>250,144</td></tr>
+                  <tr><td>LAMOST M-Stars (Ding)</td><td>198,267</td></tr>
+                  <tr><td>LAMOST M-Dwarfs (Zhang)</td><td>190,443</td></tr>
+                  <tr><td>GALAH (DR4)</td><td>155,090</td></tr>
+                  <tr><td>LAMOST HotPayne</td><td>71,704</td></tr>
+                  <tr><td>SDSS-V (BOSSNet)</td><td>64,151</td></tr>
+                  <tr><td>RAVE (DR6)</td><td>59,956</td></tr>
+                  <tr><td>DESI (Zhang)</td><td>47,569</td></tr>
+                  <tr><td>VMP (Li)</td><td>198</td></tr>
+                  <tr><td>PIGS</td><td>103</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="v-center">
+              <h2>Input catalogs</h2>
+            </div>
+          </section>
+
+          <section class="preserve">
+            <h2>Input catalogs</h2>
+            <img data-src="../media/astrotune/catalogs_overview_orig.svg"></img>
+          </section>
+
+          <section class="multirow">
+            <div></div>
+            <div>
+              <h4>Everything is implemented in a machine-learning framework (Tensorflow).</h4>
+              <h4 class="fragment">Model optimization: stochastic gradient descent on batches of pairs.</h4>
+            </div>
+            <div></div>
+          </section>
+        </section>
+
+        <!--
+          Results
+        -->
+
+        <section>
+          <section>
+            <h1>Results</h1>
+          </section>
+
+          <section class="multicol">
+            <div class="wider r-stack">
+              <video data-src="../media/astrotune/kiel_control_0_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+              <video data-src="../media/astrotune/kiel_control_1_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+              <video data-src="../media/astrotune/kiel_control_2_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+              <video data-src="../media/astrotune/kiel_control_3_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+              <video data-src="../media/astrotune/kiel_control_4_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+              <video data-src="../media/astrotune/kiel_control_5_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+              <video data-src="../media/astrotune/kiel_control_6_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+              <video data-src="../media/astrotune/kiel_control_7_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+              <video data-src="../media/astrotune/kiel_control_8_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+              <video data-src="../media/astrotune/kiel_control_9_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+            </div>
+            <div>
+              <h3>Transforming individual surveys</h3>
+            </div>
+          </section>
+
+          <section class="multicol">
+            <div class="wider r-stack">
+              <video data-src="../media/astrotune/kiel_pair_0_4_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+              <video data-src="../media/astrotune/kiel_pair_0_3_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+              <video data-src="../media/astrotune/kiel_pair_0_2_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+              <video data-src="../media/astrotune/kiel_pair_0_8_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+              <video data-src="../media/astrotune/kiel_pair_8_9_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+              <video data-src="../media/astrotune/kiel_pair_0_5_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+              <video data-src="../media/astrotune/kiel_pair_0_7_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+              <video data-src="../media/astrotune/kiel_pair_5_7_lq.mp4" data-autoplay loop class="fragment current-visible"></video>
+            </div>
+            <div>
+              <h3>Harmonizing pairs of surveys</h3>
+            </div>
+          </section>
+
+          <section class="multirow">
+            <h3>Harmonizing pairs of surveys</h3>
+            <div class="r-stack">
+              <div class="fragment current-visible">
+                <h4>APOGEE (DR17) + LAMOST (DD-Payne)</h4>
+                <video data-src="../media/astrotune/param1v1_diff_pair_0_4_lq.mp4" data-autoplay loop></video>
+              </div>
+              <div class="fragment current-visible">
+                <h4>APOGEE (DR17) + GALAH (DR4)</h4>
+                <video data-src="../media/astrotune/param1v1_diff_pair_0_3_lq.mp4" data-autoplay loop></video>
+              </div>
+              <div class="fragment current-visible">
+                <h4>APOGEE (DR17) + DESI (DR1)</h4>
+                <video data-src="../media/astrotune/param1v1_diff_pair_0_8_lq.mp4" data-autoplay loop></video>
+              </div>
+              <div class="fragment current-visible">
+                <h4>DESI (DR1) + DESI (EDR, Zhang <em>et al.</em>)</h4>
+                <video data-src="../media/astrotune/param1v1_diff_pair_8_9_lq.mp4" data-autoplay loop></video>
+              </div>
+            </div>
+          </section>
+
+          <section class="multirow">
+            <h3>Metallicity systematics</h3>
+            <div class="r-stack">
+              <img data-src="../media/astrotune/feh_correlation_0_3.svg" class="fragment fade-out" data-fragment-index=1></img>
+              <img data-src="../media/astrotune/feh_correlation_0_8.svg" class="fragment" data-fragment-index=1></img>
+            </div>
+            <p class="fragment" data-fragment-index=2>Systematic trends removed. <span class="fragment" data-fragment-index=3>Scatter decreases!?</span></p>
+            <p class="fragment">&rArr; Transformation also depends on $T_{\mathrm{eff}}$ and $\log g$.</p>
+          </section>
+        </section>
+
+        <section>
+          <section class="preserve">
+              <div class="r-stack">
+                <h2 class="fragment fade-out" data-fragment-index=1>Input catalogs</h2>
+                <h2 class="fragment" data-fragment-index=1>Harmonized catalogs</h2>
+              </div>
+              <div class="r-stack">
+                <img data-src="../media/astrotune/catalogs_overview_orig.svg" class="fragment fade-out" data-fragment-index=1></img>
+                <img data-src="../media/astrotune/catalogs_overview_harm.svg" class="fragment" data-fragment-index=1></img>
+              </div>
+          </section>
+
+          <section>
+            <h2>Harmonized catalog</h2>
+            <img data-src="../media/astrotune/harmonized_catalog_overview.svg" class="preserve"></img>
+            <p>~8.4 million unique stars with high-SNR measurements.</p>
+          </section>
+        </section>
+
+        <!--
+          Example usage
+        -->
+
+        <section class="preserve">
+          <section>
+            <h2>Example science use case:</h2>
+            <h2>The dust extinction curve</h2>
+            <h4 class="fragment">Work conducted with Xiangyu Zhang (张翔宇).</h4>
+          </section>
+
+          <section data-background-video="../media/bayestar/Galactic_anticenter_in_Bayestar2019.mp4" data-background-video-loop="true">
+            <h2>3D Dust Mapping</h2>
+            <div class="footer">
+              <p class="left attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...887...93G">Green <em>et al.</em> (2019)</a></p>
+            </div>
+          </section>
+
+          <section class="full-height" data-transition="slide-in none-out">
+            <div class="multirow full-height compact">
+              <h3 class="row no-expand">The dust &ldquo;extinction curve&rdquo;</h3>
+              <div class="row r-stack expand-media">
+                <img class="" data-src="../media/dust/extinction_curve_hensley_draine_2003.svg"></img>
+                <img class="fragment" data-src="../media/dust/extinction_curve_hensley_draine_2003_wRv2175.svg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section id="Rv-grain-plot-slide" class="full-height" data-state="Rv-grain-plot-slide">
+            <div class="multirow full-height">
+              <h3 class="row no-expand">The extinction curve and grain-size distribution</h3>
+              <div class="row" id="Rv-grain-plot-container" style="width:100%; height:100%;"></div>
+            </div>
+            <div id="high-Rv" class="fragment"></div>
+          </section>
+
+          <section data-auto-animate data-background-image="../media/dust/sfd_fullsky_cartesian.jpg">
+            <h1 class="stroke">Dust density</h1>
+          </section>
+          <section data-auto-animate data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background.jpg">
+            <h1 class="stroke">Dust R(V)</h1>
+          </section>
+        </section>
+
+        <section class="preserve">
+          <section>
+            <h1>Data</h1>
+          </section>
+
+          <section data-background-video="../media/gaia/esa_parallax.mp4" data-background-video-loop="true">
+            <div class="header">
+              <h2 class="right stroke-superthick">Gaia parallaxes</h2>
+            </div>
+            <div class="footer">
+              <p class="attribution left"><a href="https://sci.esa.int/s/A1Yp2qA">(credit: ESA/Gaia/DPAC)</a></p>
+            </div>
+          </section>
+
+          <section class="has-footer">
+            <div class="multicol full-height squeeze">
+              <div class="column expand-media">
+                <img data-src="../media/euclid/NISP_grism_commissioning_data.jpg"></img>
+              </div>
+              <div class="column full-height">
+                <div class="multirow full-height">
+                  <div class="row no-expand">
+                    <h3>Gaia BP/RP spectrophotometry</h3>
+                    <h4>(&ldquo;XP spectra&rdquo;)</h4>
+                  </div>
+                  <div class="row expand-media">
+                    <img data-src="../media/bprp/BP_RP_2d_spectra.png" class="fragment"></img>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="footer">
+              <p class="center attribution">(credit: ESA/Euclid/Euclid Consortium/NASA, CC BY-SA 3.0 IGO)</p>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section class="preserve">
+            <div class="multirow">
+              <h3>How to extract information from XP spectra?</h3>
+              <div class="r-stack">
+                <img data-fragment-index=1 class="fragment fade-out" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_xp.svg"></img>
+                <img data-fragment-index=1 class="fragment current-visible" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_1.svg"></img>
+                <img data-fragment-index=2 class="fragment current-visible" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_0p.svg"></img>
+                <img data-fragment-index=3 class="fragment" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_2.svg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section class="multicol">
+            <div class="wider">
+              <img data-src="../media/bprp/crossmatch_kiel.svg"></img>
+            </div>
+            <div class="v-center">
+              <h2>Training data</h2>
+              <p>(&ldquo;Ground truth&rdquo;)</p>
+              <p>LAMOST Data-Driven Payne + LAMOST HotPayne</p>
+              <p>2.4 million stars.</p>
+              <p class="fragment">Sharp cut at $T_{\mathrm{eff}} \approx 7000\,\mathrm{K}$.</p>
+            </div>
+          </section>
+
+          <section class="multicol preserve">
+            <div class="r-stack wider">
+              <img class="fragment fade-out" data-fragment-index=0 data-src="../media/bprp/model_flux_vs_dwarfs_1panel_nolines.svg"></img>
+              <img class="full-width fragment current-visible" data-fragment-index=0 data-src="../media/bprp/model_flux_vs_dwarfs_1panel_hlines.svg"></img>
+              <img class="full-width fragment" data-fragment-index=1 data-src="../media/bprp/model_flux_vs_dwarfs_1panel_metallines.svg"></img>
+            </div>
+            <div class="v-center">
+              <h3>Learned stellar models of Gaia XP spectra</h3>
+              <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
+            </div>
+          </section>
+
+          <section class="preserve">
+            <h3>Learned extinction curve</h3>
+            <img data-src="../media/xp_rv/extcurve_v2_wide.svg"></img>
+            <div class="footer">
+              <p class="left attribution"><a href="https://ui.adsabs.harvard.edu/abs/2025Sci...387.1209Z/abstract">Zhang &amp; Green (2025)</a></p>
+            </div>
+          </section>
+        </section>
+
+        <section class="preserve">
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg" class="stroke v-expand-center">
+            <h2 class="center">Inferring parameters of stars and dust</h2>
+            <div class="center">
+              <h4 class="fragment">We use XP spectra, NIR photometry &amp; Gaia parallaxes to infer parameters of 220 million stars.</h4>
+              <h4 class="fragment">LAMOST spectra <em>not</em> used for parameter inference.</h4>
+            </div>
+          </section>
+
+          <section>
+            <p>Remove stars with bad $\chi^2/\mathrm{dof}$, low extinction, ...</p>
+            <p class="fragment">~130 million R(V) measurements with XP (<span class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green 2025</a></span>)</p>
+          </section>
+
+          <section data-transition="slide-in none-out">
+            <img data-src="../media/xp_rv/Rv_sky_with_zoom_ins.svg"></img>
+            <div class="footer">
+              <p class="left attribution"><a href="https://ui.adsabs.harvard.edu/abs/2025Sci...387.1209Z/abstract">Zhang &amp; Green (2025)</a></p>
+            </div>
+          </section>
+
+          <section data-transition="none-in slide-out">
+            <div class="multicol">
+              <div class="v-center wide">
+                <img data-src="../media/xp_rv/Rv_sky_with_zoom_ins.svg"></img>
+              </div>
+              <div class="r-stack">
+                <img data-fragment-index=1 class="fragment fade-out" data-src="../media/xp_rv/Rv_vs_E_Perseus.svg"></img>
+                <img data-fragment-index=1 class="fragment current-visible" data-src="../media/xp_rv/Rv_vs_E_OrionA.svg"></img>
+                <img data-fragment-index=2 class="fragment current-visible" data-src="../media/xp_rv/Rv_vs_E_Taurus.svg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="multicol">
+              <div class="widest r-stack">
+                <img class="fragment fade-out" data-fragment-index=1 data-src="../media/xp_rv/Rv_birdseye_density_overlay_nolabels_1panel.svg"></img>
+                <img class="fragment current-visible" data-fragment-index=1 data-src="../media/xp_rv/Rv_birdseye_wo_Ostars_1panel.svg"></img>
+                <img class="fragment" data-fragment-index=2 data-src="../media/xp_rv/Rv_birdseye_w_Ostars_1panel.svg"></img>
+              </div>
+              <div class="v-center">
+                <h3>R(V) in the Galactic plane</h3>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2025Sci...387.1209Z/abstract">Zhang &amp; Green (2025)</a></p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div class="multirow">
+              <h3>R(V) in the Magellanic Clouds</h3>
+              <div>
+                <img data-src="../media/xp_rv/LMC_SMC_Rv.svg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_darker_pale.jpg">
+            <h3 class="stroke">For the first time, we can &ldquo;see&rdquo; the dust properties throughout much of the Milky Way in 3D.</h3>
+          </section>
+
+          <section>
+            <h2>Surprising results:</h2>
+            <ol style="font-size:130%;">
+              <li class="fragment">U-shaped relation between density &amp; R(V).</li>
+              <li class="fragment">Star-formation / UV radiation correlated with high R(V).</li>
+            </ol>
+          </section>
+
+          <section>
+            <div class="multicol">
+              <div class="wide">
+                <video data-autoplay loop data-src="../media/dust/pah_gallery.mp4"></video>
+              </div>
+              <div class="v-center">
+                <h3>Role of Polycyclic Aromatic Hydrocarbons (PAHs)?</h3>
+                <p><a href="https://ui.adsabs.harvard.edu/abs/2025ApJ...979L..17Z/abstract">(Zhang, Hensley &amp; Green 2025)</a></p>
+              </div>
+            </div>
+            <div class="footer">
+              <p class="left attribution"><a href="https://www.astrochemistry.org/pahdb/theoretical/3.20/default/details/57">(models from PAHdb)</a></p>
+            </div>
+          </section>
+        </section>
+
+        <!--
+          Conclusions
+        -->
+
+        <section>
+          <section class="multirow">
+            <div>
+              <h2>How will astotune help?</h2>
+            </div>
+            <div>
+              <h4 class="fragment">Larger training catalog</h4>
+              <h4 class="fragment">...covering more of parameter space</h4>
+              <h4 class="fragment">...without sharp cuts between surveys.</h4>
+            </div>
+            <div>
+              <h4 class="fragment">More dust R(V) measurements based on high-resolution spectroscopy.</h4>
+            </div>
+          </section>
+
+          <section class="preserve">
+            <h2>Many more scientific use cases</h2>
+            <h4 class="fragment">...in Galactic archaeology</h4>
+            <h4 class="fragment">...and Milky Way dynamics</h4>
+            <img class="fragment" data-src="../media/astrotune/catalogs_overview_harm.svg"></img>
+          </section>
+        </section>
+
+        <section>
+          <h1 class="stroke">Questions?</h1>
+          <video data-src="../media/astrotune/kiel_control_0_lq.mp4" data-autoplay loop></video>
+        </section>
+
+      </div> <!--slides-->
+    </div> <!--reveal-->
+
+    <script src="../revealjs/dist/reveal.js"></script>
+    <script src="../revealjs/plugin/math/math.js"></script>
+    <script src="../revealjs/plugin/notes/notes.js"></script>
+    <script src="../revealjs/plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        disableLayout: false,
+        /*
+        width: 960,
+        height: 700,
+        */
+        width: "100%",
+        height: "100%",
+        //width: 1244,
+        //height: 700,
+
+        history: true,
+        transition: 'linear',
+        //slideNumber: 'h.v',
+
+        /*
+        math: {
+          // mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          TeX: {
+            Macros: {
+              R: '\\mathbb{R}',
+              set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+            }
+          }
+        },
+        */
+        plugins: [ RevealMath.MathJax3 ],
+        mathjax3: {
+          //mathjax: "https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.7/tex-mml-chtml.js",
+          mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-chtml.js",
+          //mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-chtml-nofont.js",
+          //mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-svg-nofont.js",
+          loader: {load: ['[tex]/html','[tex]/cancel','[tex]/color']},
+          tex: {packages: {'[+]': ['html','cancel','color']}},
+          //chtml: {
+          //  fontURL: "../js/mathjax-4.0.0-beta.7/output/chtml/fonts/woff-v2"
+          //}
+        },
+
+        sortFragmentsOnSync: false,
+
+        pdfMaxPagesPerSlide: 1,
+
+        plugins: [ RevealMath.MathJax3, RevealNotes, RevealHighlight ]
+      });
+    </script>
+
+    <script>
+      // In print mode, set "top:0" for every slide.
+      // Revealjs sets many erroneous "top" values. Setting them to 0
+      // makes the slides render reasonably well (but not completely correctly).
+      if(window.location.search.match(/print-pdf/gi)) {
+        Reveal.addEventListener('ready', function() {
+          setTimeout(() => {
+            console.log('Fixing slides for printing ...');
+            document.querySelectorAll('.slides section').forEach(slide => {
+              slide.style.cssText = 'top:0 !important; left:0 !important; position:relative !important;';
+            });
+          }, 5000);
+        });
+      }
+    </script>
+
+    <!-- jQuery -->
+    <script src="../js/jquery-3.6.1.min.js"></script>
+    <!-- d3 -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>-->
+
+    <!-- Custom scripts go here -->
+    <script src="js/stars_and_dust_plot_v7.js"></script>
+    <script src="js/Rv_grain_animation.js"></script>
+
+  </body>
+</html>
