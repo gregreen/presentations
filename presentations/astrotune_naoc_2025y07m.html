@@ -511,11 +511,13 @@
               <div class="wide">
                 <img data-src="../media/astrotune/parameter_trajectories_0.svg"></img>
               </div>
-              <div class="v-center">
+              <div class="multirow">
                 <p>Integrate trajectory in parameter space $\vec\Theta$:
-                <p>$$\frac{\mathrm{d}\vec\Theta}{\mathrm{d}t} = \vec{v}\left(\vec\Theta,t\right) \, .$$
+                <p>$$\frac{\mathrm{d}\vec\Theta}{\mathrm{d}t} = \vec{v}(\vec\Theta,t) \, .$$
                 <p>Integrate from $t = 0$ to $1$ ($t$ is just an integration variable).</p>
                 <p class="fragment">Different mapping for each catalog.</p>
+                <p class="fragment">The mappings are invertible.</p>
+                <p class="fragment">$\vec{v}(\vec\Theta,t)$ is implemented as a neural network.</p>
               </div>
             </div>
           </section>
@@ -684,6 +686,18 @@
             <img data-src="../media/astrotune/harmonized_catalog_overview.svg" class="preserve"></img>
             <p>~8.4 million unique stars with high-SNR measurements.</p>
           </section>
+
+          <section class="multicol">
+            <div class="wide">
+              <video data-src="../media/astrotune/kiel_control_0_lq.mp4" loop data-autoplay></img>
+            </div>
+            <div class="v-center">
+              <h2>Caveats</h2>
+              <p class="fragment">Astrotune removes systematic differences.</p>
+              <p class="fragment">It does not determine ground truth.</p>
+              <p class="fragment">Like Übercal for photometry.</p>
+            </div>
+          </section>
         </section>
 
         <!--
@@ -698,7 +712,7 @@
           </section>
 
           <section data-background-video="../media/bayestar/Galactic_anticenter_in_Bayestar2019.mp4" data-background-video-loop="true">
-            <h2>3D Dust Mapping</h2>
+            <h2 class="stroke">3D dust mapping</h2>
             <div class="footer">
               <p class="left attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...887...93G">Green <em>et al.</em> (2019)</a></p>
             </div>
@@ -882,7 +896,9 @@
               <li class="fragment">Star-formation / UV radiation correlated with high R(V).</li>
             </ol>
           </section>
+        </section>
 
+        <section class="preserve">
           <section>
             <div class="multicol">
               <div class="wide">
@@ -897,6 +913,72 @@
               <p class="left attribution"><a href="https://www.astrochemistry.org/pahdb/theoretical/3.20/default/details/57">(models from PAHdb)</a></p>
             </div>
           </section>
+
+          <section data-transition="slide-in none-out">
+            <img data-src="../media/dust/PAH_scaling.svg"></img>
+            <div class="footer">
+              <p class="attribution left"><a href="https://ui.adsabs.harvard.edu/abs/2023ApJ...948...55H/abstract">Hensley &amp; Draine (2023)</a> dust model.</p>
+            </div>
+          </section>
+
+          <section data-transition="none-in slide-out">
+            <video data-autoplay loop data-src="../media/dust/PAH_scaling.mp4"></video>
+            <div class="footer">
+              <p class="attribution left"><a href="https://ui.adsabs.harvard.edu/abs/2023ApJ...948...55H/abstract">Hensley &amp; Draine (2023)</a> dust model.</p>
+            </div>
+          </section>
+
+          <section>
+            <video data-autoplay loop data-src="../media/dust/PAH_scaling_optical.mp4"></video>
+            <div class="footer">
+              <p class="attribution left"><a href="https://ui.adsabs.harvard.edu/abs/2023ApJ...948...55H/abstract">Hensley &amp; Draine (2023)</a> dust model.</p>
+            </div>
+          </section>
+
+          <section class="multicol">
+            <div class="wide v-center">
+              <video data-autoplay loop data-src="../media/dust/PAH_scaling_optical.mp4"></video>
+            </div>
+            <div class="v-center">
+              <p>As PAH mass increases, optical extinction becomes steeper <span style="color:gray;">(R(V) decreases)</span>.</p>
+              <p class="fragment">Requires less mass to change R(V) than accretion onto silicates.</p>
+              <p class="fragment">Importance of 2175 Å bump.</p>
+            </div>
+          </section>
+
+          <section>
+            <h4>R(V) vs. PAH fraction</h4>
+            <div class="multicol">
+              <div class="multirow">
+                <img data-src="../media/xp_rv/LMC_Rv.svg"></img>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green (2024)</a></p>
+              </div>
+              <div class="multirow">
+                <img data-src="../media/xp_rv/LMC_qPAH_Chastenet_etal_2019.svg"></img>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...876...62C/abstract">Chastenet+ (2019)</a></p>
+              </div>
+            </div>
+            <p>PAH destruction &rArr; high R(V).</p>
+            <p class="fragment">Ionizing radiation in star-forming regions.</p>
+          </section>
+
+          <section class="compact">
+            <h4>R(V) vs. PAH fraction</h4>
+            <div class="multicol vcenter">
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/LMC_Rv.svg"></img>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2024arXiv240714594Z/abstract">Zhang &amp; Green (2024)</a></p>
+              </div>
+              <div>
+                <img class="full-width" data-src="../media/xp_rv/LMC_qPAH_Chastenet_etal_2019.svg"></img>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2019ApJ...876...62C/abstract">Chastenet+ (2019)</a></p>
+              </div>
+              <div>
+                <p>PAH destruction &rArr; high R(V).</p>
+                <p class="fragment">Ionizing radiation in star-forming regions.</p>
+              </div>
+            </div>
+          </section>
         </section>
 
         <!--
@@ -904,6 +986,14 @@
         -->
 
         <section>
+          <section class="preserve">
+            <div class="multirow">
+              <h4>130 million dust R(V) measurements &amp; new hypothesis about PAHs</h4>
+              <img data-src="../media/bprp/empirical_forward_modeling_zxy_dark_2.svg"></img>
+              <h4>...based on combination of large stellar parameter catalog &amp; Gaia XP</h4>
+            </div>
+          </section>
+
           <section class="multirow">
             <div>
               <h2>How will astotune help?</h2>
@@ -911,10 +1001,11 @@
             <div>
               <h4 class="fragment">Larger training catalog</h4>
               <h4 class="fragment">...covering more of parameter space</h4>
+              <h4 class="fragment">...without systematic differences</h4>
               <h4 class="fragment">...without sharp cuts between surveys.</h4>
             </div>
             <div>
-              <h4 class="fragment">More dust R(V) measurements based on high-resolution spectroscopy.</h4>
+              <h4 class="fragment">Also, more dust R(V) measurements based on high-resolution spectroscopy.</h4>
             </div>
           </section>
 
@@ -927,8 +1018,14 @@
         </section>
 
         <section>
-          <h1 class="stroke">Questions?</h1>
-          <video data-src="../media/astrotune/kiel_control_0_lq.mp4" data-autoplay loop></video>
+          <section class="multicol">
+            <div class="v-center">
+              <video data-src="../media/astrotune/kiel_control_0_lq.mp4" data-autoplay loop></video>
+            </div>
+            <div class="v-center">
+              <h1 class="stroke">Questions?</h1>
+            </div>
+          </section>
         </section>
 
       </div> <!--slides-->
