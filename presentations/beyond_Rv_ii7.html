@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Beyond R(V)</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="../icon.ico">
+
+    <link rel="stylesheet" href="../css/noto_sans_fonts.css">
+    <link rel="stylesheet" href="../css/jost_font.css">
+    <link rel="stylesheet" href="../revealjs/dist/reveal.css">
+    <link rel="stylesheet" href="../revealjs/dist/theme/night.css" id="theme">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../revealjs/plugin/highlight/monokai.css" id="highlight-theme">
+
+    <!-- Custom CSS files go here -->
+
+    <!--<script src="../js/d3.min.js" charset="utf-8"></script>-->
+    <!--<script src="https://d3js.org/d3.v7.min.js"></script>-->
+  </head>
+
+  <style>
+    /* Override theme variables */
+    :root {
+      --r-heading-font: 'Jost', sans-serif;
+      --r-heading-font-weight: 600;
+      --r-main-font: 'Noto Sans', sans-serif;
+      --r-background-color: #000;
+      --r-main-font-size: 30px;
+      --r-heading1-size: 4.00em;
+      --r-heading2-size: 2.83em;
+      --r-heading3-size: 2.00em;
+      --r-heading4-size: 1.41em;
+      --r-heading-margin: 0.2em;
+      --r-block-margin: 0.15em;
+      --r-link-color: #f3d7ac;
+      --r-link-color-hover: #ffcc7d;
+    }
+
+    /* Adjust the base size at different breakpoints */
+    @media (max-width: 1536px) {
+      :root {
+        --r-main-font-size: 24px; /* Slightly smaller base on tablets */
+      }
+    }
+
+    @media (max-width: 1024px) {
+      :root {
+        --r-main-font-size: 20px; /* Slightly smaller base on tablets */
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --r-main-font-size: 18px; /* Slightly smaller base on tablets */
+      }
+    }
+
+    @media (max-width: 480px) {
+      :root {
+        --r-main-font-size: 14px; /* Smaller base on phones */
+      }
+    }
+
+    /* Text element margins */
+    .reveal :is(h1, h2, h3, h4) {
+      margin: 0 0 var(--r-heading-margin) 0;
+    }
+
+    .reveal .compact :is(h1, h2, h3, h4) {
+      margin: 0 0 calc(var(--r-heading-margin)*0.5) 0;
+    }
+    .reveal .compact p {
+      margin: calc(var(--r-block-margin)*0.5) 0;
+    }
+
+    .reveal .noncompact :is(h1, h2, h3, h4) {
+      margin: 0 0 calc(var(--r-heading-margin)*4) 0;
+    }
+    .reveal .noncompact p {
+      margin: calc(var(--r-block-margin)*4) 0;
+    }
+
+    /* Print settings */
+
+    /* Slide controls (arrows): make less prominent */
+    aside.controls {
+      opacity: 0.3;
+      transform: scale(0.5);
+    }
+
+    /* Multi-column layout */
+    .multicol {
+      display: flex;
+      flex-direction: row;
+      gap: 1.0rem;
+      min-height: 0;
+    }
+    .multicol.compact, .compact .multicol {
+      gap: 0.5rem;
+    }
+    .multicol > * {
+      flex: 1;
+    }
+    .multicol > .wide {
+      flex: 1.44;
+    }
+    .multicol > .wider {
+      flex: 2.08;
+    }
+    .multicol > .widest {
+      flex: 3;
+    }
+    .multicol > .v-center {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    .multicol > div, .multirow > div {
+      overflow: hidden;
+    }
+
+    .reveal section .r-stack > .v-center,
+    .reveal section.v-center > * {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    section {
+      display: flex !important;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    section > div {
+      max-height: 100%;
+    }
+
+    section > .multicol {
+      flex: 1;
+    }
+
+    .reveal img, .reveal video {
+      width: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      min-height: 0;
+      object-fit: contain;
+      margin: 0;
+    }
+
+    /* Invert / brighten images */
+    .reveal video.invert, .reveal img.invert {
+      filter: invert(1) hue-rotate(180deg);
+    }
+    .reveal video.invert.brighten, .reveal img.invert.brighten {
+      filter: invert(1) hue-rotate(180deg) brightness(1.5);
+    }
+    .reveal video.brighten, .reveal img.brighten {
+      filter: brightness(1.5);
+    }
+
+    /* Multi-row layout */
+    .multirow {
+      display: flex !important;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .multirow.compact, .compact .multirow {
+      gap: 0.3rem;
+    }
+    .multirow > * {
+      flex: 1;
+    }
+    .multirow > .tall {
+      flex: 1.44;
+    }
+    .multirow > .taller {
+      flex: 2.08;
+    }
+    .multirow > .tallest {
+      flex: 3;
+    }
+    .multirow > :is(h1, h2, h3, h4, p) {
+      flex: 0 0 auto;
+    }
+    /*
+    .row.h-center {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .row.squeeze {
+      min-height: 0;
+    }
+    */
+    .multirow > .no-expand {
+      flex: 0 0 auto;
+    }
+
+    /* Layout with content pushed to top and bottom */
+    .v-expand-center {
+      display: flex !important;
+      flex-direction: column;
+      height: 100%;
+      justify-content: space-between;
+    }
+
+    /* Header and Footer */
+    section.has-footer, section.has-header {
+      height: 100%;
+      display: flex !important;
+      flex-direction: column;
+      justify-content: center;
+    }
+    div.footer {
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: row;
+    }
+    div.header {
+      position: absolute;
+      top: 0px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: row;
+    }
+    div.footer .left, div.header .left, .multicol .left {
+      margin-right: auto;
+    }
+    div.footer .center, div.header .center, .multicol .center {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    div.footer .right, div.header .right, .multicol .right{
+      margin-left: auto;
+    }
+
+    /* Attribution text */
+    .reveal .attribution {
+      font-size: 0.7em;
+      color: #aaa;
+      margin-top: 0;
+    }
+    .reveal .attribution a {
+      color: #ddf;
+    }
+
+    /* Text styling */
+    .stroke {
+      -webkit-text-stroke: 1px black;
+      paint-order: stroke fill;
+    }
+    h1.stroke, .stroke h1 {
+      -webkit-text-stroke: 5px black;
+      paint-order: stroke fill;
+    }
+    h2.stroke, .stroke h2 {
+      -webkit-text-stroke: 2px black;
+      paint-order: stroke fill;
+    }
+    h3.stroke, .stroke h3 {
+      -webkit-text-stroke: 3px black;
+      paint-order: stroke fill;
+    }
+    h4.stroke, .stroke h4 {
+      -webkit-text-stroke: 2px black;
+      paint-order: stroke fill;
+    }
+    p.stroke, .stroke p, span.stroke, .stroke span {
+      -webkit-text-stroke: 1px black;
+      paint-order: stroke fill;
+    }
+
+    .stroke-superthick {
+      -webkit-text-stroke: 10px black !important;
+      paint-order: stroke fill;
+    }
+
+    .blur-bg {
+      backdrop-filter: blur(10px);
+    }
+
+    .reveal .dark {
+      color: black;
+    }
+
+    /* Put borders around each element, to show the layout */
+    .show-layout * {
+      border: cyan;
+      border-style: dotted;
+    }
+
+    /* Uncomment below to show all layouts */
+    section.present div {
+      border: 1px dotted rgba(0, 255, 255, 0.5)
+    }
+    section.present {
+      border: 2px solid rgba(255, 0, 0, 0.5)
+    }
+    section.present img {
+      border: 1px dashed rgba(0, 255, 0, 0.5)
+    }
+    section.present :is(h1, h2, h3, h4, p, span, a) {
+      border: 1px groove rgba(255, 255, 0, 0.5)
+    }
+
+    /* Image sizing */
+    img.full-height {
+      height: 100%;
+      width: auto;
+      max-width: none;
+    }
+
+    img.full-width {
+      width: 100%;
+      height: auto;
+      max-height: none;
+    }
+
+    img.stretch-to-fill {
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      object-fit: cover;
+      object-position: var(--x, center) var(--y, center);
+    }
+    img.stretch-to-fill.left {
+      --x: left;
+    }
+    img.stretch-to-fill.right {
+      --x: right;
+    }
+    img.stretch-to-fill.bottom {
+      --y: bottom;
+    }
+    img.stretch-to-fill.top {
+      --y: top;
+    }
+  </style>
+
+  <body>
+
+    <div class="reveal">
+      <div class="slides">
+
+        <!--
+          Title
+        -->
+
+        <section class="v-expand-center" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+          <div>
+            <h1>The extinction curve beyond R(V)</h1>
+          </div>
+          <div>
+            <h4>Gregory M. Green, Max Planck Institute for Astronomy, Heidelberg</h4>
+            <h4>Interstellar Institute 7, Institut Pascal, U. Paris-Saclay, 25 July 2025</h4>
+            <div class="multicol" style="gap:40%;">
+              <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="left" style="width:30%; filter:contrast(0.5) brightness(1.2);"></img>
+              <img data-src="../media/logos/MPIA_horizontal.svg" class="right" style="width:30%; filter:contrast(0.5) brightness(1.0);"></img>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <section class="multirow">
+            <h2>The dust extinction curve</h2>
+            <div class="r-stack">
+              <img data-fragment-index=0 class="fragment fade-out" data-src="../media/dust/extinction_curve_hensley_draine_2003.svg"></img>
+              <img data-fragment-index=0 class="fragment" data-src="../media/dust/extinction_curve_hensley_draine_2003_wRv2175.svg"></img>
+            </div>
+          </section>
+
+          <section id="Rv-grain-plot-slide" data-state="Rv-grain-plot-slide" class="multirow">
+            <h3>The extinction curve and grain-size distribution</h3>
+            <div id="Rv-grain-plot-container"></div>
+            <div id="high-Rv" class="fragment no-expand"></div>
+          </section>
+
+          <section>
+            <h3>Is all variation explained by R(V)?</h3>
+            <div class="multicol fragment">
+              <div class="multirow">
+                <img data-src="../media/dust/fitzpatrick99_fig2_uv_extcurves.svg"></img>
+                <p class="attribution">(<a href="https://ui.adsabs.harvard.edu/abs/1999PASP..111...63F/abstract">Fitzpatrick 1999</a>)</p>
+              </div>
+              <div class="v-center noncompact">
+                <h4>In the UV: No.</h4>
+                <p class="fragment"><a href="https://ui.adsabs.harvard.edu/abs/2013ApJ...771...68P/abstract">Peek &amp; Schiminovich (2013)</a> showed this using galaxy colors.</p>
+                <h4 class="fragment">What about in the optical?</h4>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section class="v-expand-center" data-background-video="../media/gaia/esa_parallax.mp4" data-background-video-loop="true">
+            <h2 class="right stroke-superthick">Gaia parallaxes</h2>
+            <p class="attribution left"><a href="https://sci.esa.int/s/A1Yp2qA">(ESA/Gaia/DPAC)</a></p>
+          </section>
+
+          <section>
+            <div class="multicol">
+              <div class="multirow">
+                <img data-src="../media/euclid/NISP_grism_commissioning_data.jpg"></img>
+                <p class="fragment attribution">(ESA/Euclid/Euclid Consortium/NASA, CC BY-SA 3.0 IGO)</p>
+              </div>
+              <div class="multirow">
+                <h3>Gaia BP/RP spectrophotometry</h3>
+                <h4>(&ldquo;XP spectra&rdquo;)</h4>
+                <img data-src="../media/bprp/BP_RP_2d_spectra.png" class="fragment"></img>
+              </div>
+            </div>
+          </section>
+
+          <section class="multirow">
+            <h3>How to extract information from XP spectra?</h3>
+            <div class="r-stack">
+              <img data-fragment-index=1 class="fragment fade-out" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_xp.svg"></img>
+              <img data-fragment-index=1 class="fragment current-visible" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_1.svg"></img>
+              <img data-fragment-index=2 class="fragment current-visible" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_0p.svg"></img>
+              <img data-fragment-index=3 class="fragment" data-src="../media/bprp/empirical_forward_modeling_zxy_dark_2.svg"></img>
+            </div>
+          </section>
+
+          <section class="v-center">
+            <h3>Train model with 2.4 million stars ...</h3>
+          </section>
+
+          <section class="multicol">
+            <div class="multirow wider">
+              <div class="r-stack">
+                <img class="fragment fade-out" data-fragment-index=0 data-src="../media/bprp/model_flux_vs_dwarfs_1panel_nolines.svg"></img>
+                <img class="fragment current-visible" data-fragment-index=0 data-src="../media/bprp/model_flux_vs_dwarfs_1panel_hlines.svg"></img>
+                <img class="fragment" data-fragment-index=1 data-src="../media/bprp/model_flux_vs_dwarfs_1panel_metallines.svg"></img>
+              </div>
+            </div>
+            <div class="v-center">
+              <h3>Learned stellar models of Gaia XP spectra</h3>
+              <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2023arXiv230303420Z/abstract">(Zhang, Green &amp; Rix 2023)</a></p>
+            </div>
+          </section>
+
+          <section class="has-footer">
+            <div class="multirow squeeze full-height compact">
+              <div class="row no-expand">
+                <h3>Learned extinction curve</h3>
+              </div>
+              <div class="row expand-media r-stack">
+                <img class="fragment fade-out" data-fragment-index=1 data-src="../media/xp_rv/extcurve_v2_wide.svg"></img>
+                <img class="fragment" data-fragment-index=1 data-src="../media/xp_rv/extcurve_v2_wide_annotated.svg"></img>
+              </div>
+            </div>
+            <div class="footer">
+              <p class="left attribution"><a href="https://ui.adsabs.harvard.edu/abs/2025Sci...387.1209Z/abstract">Zhang &amp; Green (2025)</a></p>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section class="multirow">
+            <div class="multicol">
+              <div class="v-center">
+                <h3>R(V) in the Galactic plane</h3>
+              </div>
+              <div class="widest">
+                <img data-src="../media/xp_rv/Rv_sky_with_zoom_ins.svg"></img>
+              </div>
+            </div>
+            <div class="footer">
+              <p class="left attribution"><a href="https://ui.adsabs.harvard.edu/abs/2025Sci...387.1209Z/abstract">Zhang &amp; Green (2025)</a></p>
+            </div>
+          </section>
+
+          <section class="multicol">
+            <div class="widest">
+              <img class="current-visible" data-fragment-index=1 data-src="../media/xp_rv/Rv_birdseye_wo_Ostars_1panel.svg"></img>
+            </div>
+            <div class="v-center">
+              <h3>R(V) in the Galactic plane</h3>
+              <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2025Sci...387.1209Z/abstract">Zhang &amp; Green (2025)</a></p>
+            </div>
+          </section>
+
+          <section class="multirow compact">
+            <h3>R(V) in the Magellanic Clouds</h3>
+            <img data-src="../media/xp_rv/LMC_SMC_Rv.svg"></img>
+          </section>
+        </section>
+
+        <section>
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+            <h2 class="stroke">Is there information in the extinction curve beyond R(V)?</h2>
+            <p class="stroke"><a style="color:white;" href="https://ui.adsabs.harvard.edu/abs/2024arXiv241022537G">Green, Zhang &amp; Zhang (2025)</a>)</p>
+          </section>
+
+          <section class="multicol">
+            <div class="wide">
+              <div class="r-stack">
+                <img class="fragment fade-out" data-fragment-index=1 data-src="../media/beyond_rv/empirical_extcurve_example_flux0.svg"></img>
+                <img class="fragment current-visible" data-fragment-index=1 data-src="../media/beyond_rv/empirical_extcurve_example_flux1.svg"></img>
+                <img class="fragment current-visible" data-fragment-index=2 data-src="../media/beyond_rv/empirical_extcurve_example_flux2.svg"></img>
+                <img class="fragment current-visible" data-fragment-index=3 data-src="../media/beyond_rv/empirical_extcurve_example_extinction0.svg"></img>
+                <img class="fragment current-visible" data-fragment-index=4 data-src="../media/beyond_rv/empirical_extcurve_example_extinction1.svg"></img>
+                <img class="fragment" data-fragment-index=5 data-src="../media/beyond_rv/empirical_extcurve_example_deltaA.svg"></img>
+              </div>
+            </div>
+            <div class="v-center">
+              <h3>&ldquo;Empirical&rdquo; extinction curves
+            </div>
+          </section>
+
+          <section class="multirow compact">
+            <h3>Extinction-curve <em>shapes</em></h3>
+            <img data-src="../media/beyond_rv/A_normalization_darkbg.svg"></img>
+            <h4 class="fragment">
+              Decomposition: &nbsp;&nbsp;
+              $
+                \displaystyle
+                r_{
+                  \hspace{-0.7em}
+                  \underset{\scriptstyle\color{cyan}\text{star}}{\underset{\color{cyan}\uparrow}{i}}
+                }
+                \hspace{-0.6em}
+                \left(\lambda\right) =
+                  \sum_{
+                    \hspace{-2.0em}
+                    \underset{\scriptstyle\color{cyan}\text{component}}{\underset{\color{cyan}\uparrow}{k}}
+                    \hspace{-2.0em}
+                    =1
+                  }^{16}
+                  \hspace{-1.0em}
+                  \overset{\color{cyan}\text{coefficients}}{\overset{\color{cyan}\bigg\downarrow}{ b_{ik} }}
+                  \hspace{-0.7em}
+                  \overset{\color{cyan}\text{basis}}{\overset{\color{cyan}\downarrow}{ g_k\!\left(\lambda\right) }}
+              $
+              .
+            </h4>
+          </section>
+
+          <section class="multirow compact">
+            <h3>Component decomposition of extinction curves</h3>
+            <div class="r-stack">
+              <img class="fragment fade-out" data-fragment-index=1 data-src="../media/beyond_rv/skymap_components_darkbg_panel0.svg"></img>
+              <img class="fragment" data-fragment-index=1 data-src="../media/beyond_rv/skymap_components_darkbg_panel1.svg"></img>
+            </div>
+          </section>
+
+          <section class="multirow compact">
+            <div class="r-stack no-expand">
+              <h3 class="fragment fade-out" data-fragment-index=1>&ldquo;Dust-like&rdquo; spatial patterns in lowest-order components</h3>
+              <h3 class="fragment" data-fragment-index=1>&ldquo;Gaia-like&rdquo; spatial patterns in lowest-order components</h3>
+            </div>
+            <div class="r-stack">
+              <img class="fragment fade-out" data-fragment-index=1 data-src="../media/beyond_rv/skymap_components_zoomin_0to3.svg"></img>
+              <img class="fragment" data-fragment-index=1 data-src="../media/beyond_rv/skymap_components_zoomin_4to7.svg"></img>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section class="multicol">
+            <div class="wide v-center">
+              <img data-src="../media/beyond_rv/feature_fits_1panel.svg"></img>
+            </div>
+            <div class="v-center noncompact">
+              <h3>A new broad feature at ~850&nbsp;nm</h3>
+              <div class="fragment">
+                <p>Confirmation of broad feature at ~770&nbsp;nm</p>
+                <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2021MNRAS.501.2487M/abstract">(Maíz Apellániz+ 2021)</a></p>
+              </div>
+            </div>
+          </section>
+
+          <section class="full-height">
+            <div class="multirow full-height compact">
+              <h3 class="row no-expand">Maps of 770 &amp; 850&nbsp;nm features</h3>
+              <div class="row expand-media">
+                <img class="" data-src="../media/beyond_rv/skymap_features_2panel_darkbg.svg"></img>
+              </div>
+            </div>
+          </section>
+
+          <section class="v-center">
+            <h2>All of these feature are of unknown origin.</h2>
+          </section>
+
+          <section class="multicol">
+            <div class="multirow v-center wide">
+              <img data-src="../media/beyond_rv/feature_correlations_darkbg.svg"></img>
+            </div>
+            <div class="v-center noncompact">
+              <h4>...but they correlate with one another and R(V).</h4>
+            </div>
+          </section>
+
+          <section class="multicol">
+            <div class="multirow v-center">
+              <img data-src="../media/dibs/beyondRv_DIB_response_coeffs_4panel_15272.png"></img>
+            </div>
+            <div class="v-center noncompact">
+              <h4>...and they correlate with diffuse interstellar bands (DIBs).</h4>
+              <p>(<a href="https://ui.adsabs.harvard.edu/abs/2025arXiv250707162S">Saydjari &amp; Green 2025</a>)</p>
+            </div>
+          </section>
+        </section>
+        
+        <section>
+          <section class="multicol">
+            <div>
+              <img class="stretch-to-fill left" data-src="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg"></img>
+            </div>
+            <div class="widest v-center">
+              <h2>New frontier in dust mapping:</h2>
+              <h2>R(V) and beyond.</h2>
+              <h4 class="fragment">130 million Gaia XP spectra reveal abundant extinction curve variation.</h4>
+              <h4 class="fragment">We don't know what causes it.</h4>
+            </div>
+          </section>
+
+          <section data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
+            <h1 class="stroke">Questions?</h1>
+          </section>
+        </section>
+
+      </div> <!--slides-->
+    </div> <!--reveal-->
+
+    <script src="../revealjs/dist/reveal.js"></script>
+    <script src="../revealjs/plugin/math/math.js"></script>
+    <script src="../revealjs/plugin/notes/notes.js"></script>
+    <script src="../revealjs/plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        disableLayout: false,
+        /*
+        width: 960,
+        height: 700,
+        */
+        width: "100%",
+        height: "100%",
+        //width: 1244,
+        //height: 700,
+
+        history: true,
+        transition: 'linear',
+        //slideNumber: 'h.v',
+
+        /*
+        math: {
+          // mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          TeX: {
+            Macros: {
+              R: '\\mathbb{R}',
+              set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+            }
+          }
+        },
+        */
+        plugins: [ RevealMath.MathJax3 ],
+        mathjax3: {
+          //mathjax: "https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.7/tex-mml-chtml.js",
+          mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-chtml.js",
+          //mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-chtml-nofont.js",
+          //mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-svg-nofont.js",
+          loader: {load: ['[tex]/html','[tex]/cancel','[tex]/color']},
+          tex: {packages: {'[+]': ['html','cancel','color']}},
+          //chtml: {
+          //  fontURL: "../js/mathjax-4.0.0-beta.7/output/chtml/fonts/woff-v2"
+          //}
+        },
+
+        sortFragmentsOnSync: false,
+
+        pdfMaxPagesPerSlide: 1,
+
+        plugins: [ RevealMath.MathJax3, RevealNotes, RevealHighlight ]
+      });
+    </script>
+
+    <script>
+      // In print mode, set "top:0" for every slide.
+      // Revealjs sets many erroneous "top" values. Setting them to 0
+      // makes the slides render reasonably well (but not completely correctly).
+      if(window.location.search.match(/print-pdf/gi)) {
+        Reveal.addEventListener('ready', function() {
+          setTimeout(() => {
+            console.log('Fixing slides for printing ...');
+            document.querySelectorAll('.slides section').forEach(slide => {
+              slide.style.cssText = 'top:0 !important; left:0 !important; position:relative !important;';
+            });
+          }, 5000);
+        });
+      }
+    </script>
+
+    <!-- jQuery -->
+    <script src="../js/jquery-3.6.1.min.js"></script>
+    <!-- d3 -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>-->
+
+    <!-- Custom scripts go here -->
+    <script src="js/stars_and_dust_plot_v7.js"></script>
+    <script src="js/Rv_grain_animation.js"></script>
+
+  </body>
+</html>

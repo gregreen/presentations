@@ -75,9 +75,15 @@
     .reveal .compact :is(h1, h2, h3, h4) {
       margin: 0 0 calc(var(--r-heading-margin)*0.5) 0;
     }
-
     .reveal .compact p {
-      margin: 0 calc(var(--r-block-margin)*0.5);
+      margin: calc(var(--r-block-margin)*0.5) 0;
+    }
+
+    .reveal .noncompact :is(h1, h2, h3, h4) {
+      margin: 0 0 calc(var(--r-heading-margin)*4) 0;
+    }
+    .reveal .noncompact p {
+      margin: calc(var(--r-block-margin)*4) 0;
     }
 
     /* Print settings */
@@ -392,8 +398,25 @@
             </div>
           </section>
 
-          <section class="compact" data-transition="none-in slide-out">
+          <section class="compact" data-transition="none-in none-out">
             <h2>Compact slide</h2>
+            <div class="multicol">
+              <div class="multirow wide">
+                <h3>Column title</h3>
+                <p>Images will stretch to fit.</p>
+                <img data-src="../media/dust/planck_dust_allsky.jpg"></img>
+                <img data-src="../media/dust/planck_dust_allsky.jpg"></img>
+                <p class="attribution">(attribution text)</p>
+              </div>
+              <div class="v-center">
+                <h3>Vertically centered content</h3>
+                <p>Lorem ipsum dolor sit amet.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="noncompact" data-transition="none-in slide-out">
+            <h2>&ldquo;Non-compact&rdquo; slide</h2>
             <div class="multicol">
               <div class="multirow wide">
                 <h3>Column title</h3>
