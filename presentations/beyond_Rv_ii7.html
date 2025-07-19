@@ -300,6 +300,7 @@
     }
 
     /* Uncomment below to show all layouts */
+    /*
     section.present div {
       border: 1px dotted rgba(0, 255, 255, 0.5)
     }
@@ -312,6 +313,7 @@
     section.present :is(h1, h2, h3, h4, p, span, a) {
       border: 1px groove rgba(255, 255, 0, 0.5)
     }
+    */
 
     /* Image sizing */
     img.full-height {
@@ -359,11 +361,12 @@
 
         <section class="v-expand-center" data-background-image="../media/xp_rv/Rv_fullsky_cartesian_background_vignetted_dark.jpg">
           <div>
-            <h1>The extinction curve beyond R(V)</h1>
+            <h1 class="stroke">The extinction curve:</h1>
+            <h1 class="stroke">beyond R(V)</h1>
           </div>
           <div>
-            <h4>Gregory M. Green, Max Planck Institute for Astronomy, Heidelberg</h4>
-            <h4>Interstellar Institute 7, Institut Pascal, U. Paris-Saclay, 25 July 2025</h4>
+            <h4 class="stroke">Gregory M. Green, Max Planck Institute for Astronomy, Heidelberg</h4>
+            <h4 class="stroke">Interstellar Institute 7, Institut Pascal, U. Paris-Saclay, 25 July 2025</h4>
             <div class="multicol" style="gap:40%;">
               <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="left" style="width:30%; filter:contrast(0.5) brightness(1.2);"></img>
               <img data-src="../media/logos/MPIA_horizontal.svg" class="right" style="width:30%; filter:contrast(0.5) brightness(1.0);"></img>
@@ -504,7 +507,7 @@
           </section>
 
           <section class="multicol">
-            <div class="wide">
+            <div class="wide v-center">
               <div class="r-stack">
                 <img class="fragment fade-out" data-fragment-index=1 data-src="../media/beyond_rv/empirical_extcurve_example_flux0.svg"></img>
                 <img class="fragment current-visible" data-fragment-index=1 data-src="../media/beyond_rv/empirical_extcurve_example_flux1.svg"></img>
@@ -610,6 +613,7 @@
             <div class="v-center noncompact">
               <h4>...and they correlate with diffuse interstellar bands (DIBs).</h4>
               <p>(<a href="https://ui.adsabs.harvard.edu/abs/2025arXiv250707162S">Saydjari &amp; Green 2025</a>)</p>
+              <p class="fragment">The extinction curve does not only change due to grain-size distribution. There are also chemical variations.</p>
             </div>
           </section>
         </section>
