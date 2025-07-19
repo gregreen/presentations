@@ -67,6 +67,7 @@
       }
     }
 
+    /* Text element margins */
     .reveal :is(h1, h2, h3, h4) {
       margin: 0 0 var(--r-heading-margin) 0;
     }
@@ -128,18 +129,33 @@
       flex-direction: column;
       height: 100%;
     }
+    
+    section > div {
+      max-height: 100%;
+    }
 
     section > .multicol {
       flex: 1;
     }
 
-    .reveal img {
+    .reveal img, .reveal video {
       width: 100%;
       max-width: 100%;
       max-height: 100%;
       min-height: 0;
       object-fit: contain;
       margin: 0;
+    }
+
+    /* Invert / brighten images */
+    .reveal video.invert, .reveal img.invert {
+      filter: invert(1) hue-rotate(180deg);
+    }
+    .reveal video.invert.brighten, .reveal img.invert.brighten {
+      filter: invert(1) hue-rotate(180deg) brightness(1.5);
+    }
+    .reveal video.brighten, .reveal img.brighten {
+      filter: brightness(1.5);
     }
 
     /* Multi-row layout */
@@ -166,37 +182,17 @@
     .multirow > :is(h1, h2, h3, h4, p) {
       flex: 0 0 auto;
     }
+    /*
     .row.h-center {
       margin-left: auto;
       margin-right: auto;
     }
-    .row.no-expand {
-      flex: 0 0 auto;
-    }
     .row.squeeze {
       min-height: 0;
     }
-
-    /* Expand media to fill container */
-    .expand-media {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 0;
-    }
-    .expand-media img, .expand-media video {
-      width: 100%;
-      height: 100%;
-      max-width: 100%;
-      max-height: 100%;
-      min-width: 0%;
-      min-height: 0%;
-      object-fit: contain;
-      margin: 0;
-    }
-
-    section.full-height, .multirow.full-height, .multicol.full-height {
-      height: 100% !important;
+    */
+    .multirow > .no-expand {
+      flex: 0 0 auto;
     }
 
     /* Layout with content pushed to top and bottom */
@@ -216,7 +212,7 @@
     }
     div.footer {
       position: absolute;
-      bottom: 2%;
+      bottom: 0px;
       width: 100%;
       text-align: center;
       display: flex;
@@ -310,58 +306,7 @@
       border: 1px groove rgba(255, 255, 0, 0.5)
     }
 
-    /* Image grid */
-    .image-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      justify-content: center;
-    }
-
-    .image-grid .grid-item {
-      flex: 1 1 28%;  /* Grow, shrink, basis */
-      max-width: 35%;
-      position: relative;
-      /*border: solid white 1px;*/
-    }
-
-    .image-grid .item-title {
-      font-size: 14pt;
-      margin-top: 3px;
-      margin-bottom: 1px;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    .image-grid .grid-item img {
-      width: 100%;
-      height: 25vh;
-      object-fit: cover;
-      margin: 8px;
-      margin-top: 4px;
-    }
-
-    .image-grid .image-caption {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      margin: 0;
-      padding: 0px 10px;
-      font-size: 8pt;
-    }
-
-    .image-grid .image-caption a {
-      font-size: 8pt;
-      color: white;
-      opacity: 50%;
-    }
-
-    .image-grid .image-caption a:hover {
-      font-size: 8pt;
-      color: white;
-      opacity: 70%;
-    }
-
+    /* Image sizing */
     img.full-height {
       height: 100%;
       width: auto;
@@ -503,12 +448,12 @@
           </section>
 
           <section class="multicol">
-            <div class="wide v-center">
+            <div class="wide v-center multirow">
               <div class="r-stack">
                 <img class="fragment fade-out" data-fragment-index=1 data-src="../media/dust/planck_dust_allsky.jpg"></img>
                 <img class="fragment" data-fragment-index=1 data-src="../media/jwst/Carina_Nebula_JWST.jpg"></img>
               </div>
-              <div class="r-stack">
+              <div class="r-stack no-expand">
                 <p class="fragment fade-out" data-fragment-index=1>(Planck)</p>
                 <p class="fragment" data-fragment-index=1>(JWST)</p>
               </div>
@@ -529,7 +474,7 @@
             <p>
                $$
                \frac{\mathrm{d}f}{\mathrm{d}t} =
-               \partial_t f + \left\{ \mathcal{H} , f \right\} =
+               \partial_t f + \left\{ f, \mathcal{H} \right\} =
                \partial_t f
                + \vec{v}\cdot\nabla_{\vec{x}}f
                - \nabla_{\vec{x}}\Phi\cdot\nabla_{\vec{v}}f
