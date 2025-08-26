@@ -23,6 +23,7 @@ Table of Contents
 * [Harvard-Heidelberg Star Formation 24](presentations/hhsf24_2024y12m.html): Dust beyond R(V) - variations in the optical dust extinction curve that are orthogonal to R(V).
 * [STScI Spring Symposium (2025)](presentations/stsci_spring_symposium_2025y05m.html): Variation of the dust extinction curve: A 3D perspective from Gaia.
 * [Interstellar Institute 7 (2025)](presentations/beyond_Rv_ii7.html): Dust beyond R(V) - variations in the optical extinction curve that are orthogonal to R(V).
+* [Queen's University - Deep Potential (2025)](presentations/deep_potential_queens_2025y08m.html): Application of Deep Potential to the Milky Way (<1 kpc).
 
 Initial setup
 -------------
