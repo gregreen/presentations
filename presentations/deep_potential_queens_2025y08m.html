@@ -193,6 +193,13 @@
       flex: 0 0 auto;
     }
 
+    .multirow.space-evenly {
+      justify-content: space-evenly;
+    }
+    .multirow.space-evenly > * {
+      flex: 0 0 auto;
+    }
+
     /* Layout with content pushed to top and bottom */
     .v-expand-center {
       display: flex !important;
@@ -291,7 +298,7 @@
     }
 
     /* Uncomment below to show all layouts */
-    /*
+    
     section.present div {
       border: 1px dotted rgba(0, 255, 255, 0.5)
     }
@@ -304,7 +311,7 @@
     section.present :is(h1, h2, h3, h4, p, span, a) {
       border: 1px groove rgba(255, 255, 0, 0.5)
     }
-    */
+    
 
     /* Image/video sizing */
     img.full-height, video.full-height {
@@ -366,7 +373,7 @@
           <img class="full-width" data-src="../media/deep_potential/barred_nbody_timesteps_background.svg"></img>
           <div>
             <h4 class="stroke">Gregory M. Green, Max Planck Institute for Astronomy, Heidelberg</h4>
-            <h4 class="stroke">Queen's University, Kingston, 27 August 2025</h4>
+            <h4 class="stroke">Queen's University, Kingston, Ontario, 27 August 2025</h4>
             <div class="multicol" style="gap:40%;">
               <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="left" style="width:30%; filter:contrast(0.5) brightness(1.2);"></img>
               <img data-src="../media/logos/MPIA_horizontal.svg" class="right" style="width:30%; filter:contrast(0.5) brightness(1.0);"></img>
@@ -394,7 +401,7 @@
             </div>
           </section>
 
-          <section class="stroke" data-background-video="../media/gaia/gaia_proper_motion_on_sky_h264.mp4" data-background-video-loop data-background-size="contain">
+          <section class="stroke-superthick" data-background-video="../media/gaia/gaia_proper_motion_on_sky_h264.mp4" data-background-video-loop data-background-size="contain">
             <h3>Gaia is revolutionizing our picture of the Milky Way</h3>
             <p class="fragment">Kinematic measurements of tens of millions of stars.</p>
             <p class="fragment">An unprecedented dataset for exploring Galactic dynamics.</p>
@@ -718,7 +725,7 @@
             <div class="vcenter">
               <img data-src="../media/deep_potential/barred_nbody_true_rho_x_y_t80.svg" class="full-width"></img>
             </div>
-            <div class="wide noncompact">
+            <div class="wide noncompact v-center">
               <div class="fragment">
                 <h3>Real galaxies are not stationary.</h3>
                 <p class="fragment">
@@ -755,7 +762,7 @@
           </section>
           
           <section class="multirow">
-            <h3>Test on $N$-body simulation of a barred galaxy</h3>
+            <h3>Test on N-body simulation of a barred galaxy</h3>
             <img data-src="../media/deep_potential/barred_nbody_timesteps_background.svg"></img>
             <p><a href="https://ui.adsabs.harvard.edu/abs/2024MNRAS.52712284K/abstract">Kalda, Green &amp; Ghosh (2024)</a></p>
           </section>
@@ -862,7 +869,68 @@
               </ul>
             </div>
           </section>
+        </section>
+
+        <section>
+          <section class="v-center">
+            <h1>Prospects</h1>
+          </section>
           
+          <section class="multicol">
+            <div>
+              <img data-src="../media/deep_potential/barred_nbody_timesteps_background_rot90.svg" class="stretch-to-fill"></img>
+            </div>
+            <div class="widest v-center">
+              <h2>Laundry list of improvements</h2>
+              <ul>
+                <li class="fragment">Go beyond 1&nbsp;kpc.</li>
+                <li class="fragment">Use multiple stellar populations.</li>
+                <li class="fragment">Automatically determine selection function.</li>
+                <li class="fragment">De-convolve observational uncertainties.</li>
+                <li class="fragment">Missing data (<em>e.g.</em>, no radial velocities)?</li>
+                <li class="fragment">&ctdot;</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="multicol" data-background-image="../media/gaia/Gaia_EDR3_nsrc_cartesian_2k_pale.jpg">
+            <div class="v-center" style="margin-right:20px; overflow:visible;">
+              <img style="transform:rotate(45deg) translateY(-12%);" data-src="../media/gaia/gaia_spacecraft.png"></img>
+            </div>
+            <div class="widest noncompact multirow space-evenly">
+              <div>
+                <h3>Gaia data will get even better</h3>
+                <ul>
+                  <li class="fragment">DR3 (June 2022): 34 months of data.</li>
+                  <li class="fragment">DR4 (late 2026): 66 months of data, many more raw spectra.</li>
+                  <li class="fragment">DR5 (2030?): 120 months of data.</li>
+                </ul>
+              </div>
+              <div class="fragment">
+                <h4>Error scalings with survey time:</h4>
+                <p>
+                  $\sigma_{\varpi} \propto T^{-1/2}$. DR5 parallax errors ~50% of DR3.
+                </p>
+                <p>
+                  $\sigma_{\mu} \propto T^{-3/2}$. DR5 proper-motion errors ~15% of DR3.
+                </p>
+              </div>
+            </div>
+            <div class="footer">
+              <p class="attribution" style="opacity:50%;"><a href="https://sci.esa.int/s/8D04j58">ESA/Gaia/DPAC; A. Moitinho and M. Barros</a>, <a href="https://esahubble.org/images/heic1719f/">ESA/ATG medialab</a></p>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section class="multicol">
+            <div>
+              <img data-src="../media/deep_potential/barred_nbody_timesteps_background_rot90.svg" class="stretch-to-fill"></img>
+            </div>
+            <div class="widest v-center">
+              <h1>Questions?</h1>
+            </div>
+          </section>
         </section>
 
       </div> <!--slides-->
