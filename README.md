@@ -25,6 +25,7 @@ Table of Contents
 * [Interstellar Institute 7 (2025)](presentations/beyond_Rv_ii7.html): Dust beyond R(V) - variations in the optical extinction curve that are orthogonal to R(V).
 * [Queen's University - Deep Potential (2025)](presentations/deep_potential_queens_2025y08m.html): Application of Deep Potential to the Milky Way (<1 kpc).
 * [ASIAA - Dust with Gaia (2025)](presentations/asiaa_dust_2025y09m.html): What is interstellar dust? What we've learned from Gaia.
+* [Toruń - Dust beyond R(V) (2025)](presentations/beyond_Rv_torun.html): Dust beyond R(V) - variations in the optical extinction curve that are orthogonal to R(V).
 
 Initial setup
 -------------
