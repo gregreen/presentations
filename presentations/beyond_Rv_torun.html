@@ -427,6 +427,17 @@
       color: white;
       opacity: 70%;
     }
+
+    /* Accordion fragments: expand / collapse */
+    .reveal .slides .fragment.accordion:not(.current-visible):not(.visible) {
+      flex: 0 0 0;
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+      opacity: 0;
+      transform: scale(0);
+      transition: flex 480ms ease, opacity 480ms ease, padding 480ms ease, margin 480ms ease, transform 480ms ease;
+    }
   </style>
 
   <!--
@@ -727,7 +738,7 @@
             </div>
           </section>
 
-          <section class="multirow" data-transition="slide-in none-out">
+          <section class="multicol">
             <div class="r-stack">
               <img class="fragment fade-out" data-fragment-index=1 data-src="../media/beyond_rv/skymap_features_zoomin_with_extcurve_m6_cropped_3up.svg"></img>
               <img class="fragment current-visible" data-fragment-index=1 data-src="../media/beyond_rv/skymap_features_zoomin_with_extcurve_m5_cropped_3up.svg"></img>
@@ -736,13 +747,8 @@
               <img class="fragment current-visible" data-fragment-index=4 data-src="../media/beyond_rv/skymap_features_zoomin_with_extcurve_m1.svg"></img>
               <img class="fragment" data-fragment-index=5 data-src="../media/beyond_rv/skymap_features_zoomin_with_extcurve.svg"></img>
             </div>
-          </section>
-
-          <section class="multicol" data-transition="none-in slide-out">
-            <div class="multirow">
-              <img data-src="../media/beyond_rv/skymap_features_zoomin_with_extcurve.svg"></img>
-            </div>
-            <div class="v-center noncompact">
+            
+            <div class="v-center noncompact fragment accordion">
               <h4>R(V) does not explain all variations in the extinction curve</h4>
             </div>
           </section>
@@ -771,15 +777,7 @@
             </div>
           </section>
 
-          <section class="multirow" data-transition="slide-in none-out">
-            <div class="compact no-expand">
-              <h3>&ldquo;Residuals&rdquo; in feature strengths</h3>
-              <p>after subtraction of correlation with R(V)</p>
-            </div>
-            <img data-src="../media/beyond_rv/skymap_delta_features_darkbg_2panel.svg"></img>
-          </section>
-
-          <section class="multicol" data-transition="none-in slide-out">
+          <section class="multicol">
             <div class="multirow wider">
               <div class="compact no-expand">
                 <h3>&ldquo;Residuals&rdquo; in feature strengths</h3>
@@ -787,7 +785,7 @@
               </div>
               <img data-src="../media/beyond_rv/skymap_delta_features_darkbg_2panel.svg"></img>
             </div>
-            <div class="v-center noncompact">
+            <div class="v-center noncompact fragment accordion">
               <h4>Effect of the interstellar radiation field near ρ Ophiuchus?</h4>
             </div>
           </section>
