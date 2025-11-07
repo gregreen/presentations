@@ -1,0 +1,98 @@
+#survey-plot-container {
+  width: 100%;
+  flex-basis: auto;
+  flex-grow: 1;
+  margin: 20px auto;
+  /* border: 1px solid #555; */
+}
+
+#survey-plot-container svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.axis-label {
+  font-size: clamp(12px, 2.5vw, 48px);
+  font-weight: bold;
+  fill: #e0e0e0;
+}
+
+.point {
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: clamp(2px, 0.3vw, 4px);
+  r: clamp(4px, 0.6vw, 8px);
+}
+
+.point-label {
+  font-size: clamp(14px, 2vw, 28px);
+  pointer-events: none;
+  font-family: sans-serif;
+  fill: rgb(180, 220, 255);
+}
+
+/* Minor grid styling */
+.grid-minor line {
+  stroke: #333;
+  stroke-width: 0.5px;
+  opacity: 0.1;
+  shape-rendering: crispEdges;
+}
+
+.grid-minor path {
+  stroke-width: 0;
+}
+
+/* Major grid styling */
+.grid-major line {
+  stroke: #555;
+  stroke-width: 1px;
+  opacity: 0.3;
+  shape-rendering: crispEdges;
+}
+
+.grid-major path {
+  stroke-width: 0;
+}
+
+/* Axis line styling */
+.x-axis path,
+.y-axis path {
+  stroke: #ccc;
+  stroke-width: 2px;
+}
+
+/* Major tick styling */
+.x-axis-major line,
+.y-axis-major line {
+  stroke: #ccc;
+  stroke-width: 2px;
+}
+
+.x-axis-major text,
+.y-axis-major text {
+  fill: #ddd;
+  font-size: clamp(12px, 1.8vw, 32px);
+  font-weight: bold;
+}
+
+/* Minor tick styling */
+.x-axis-minor line,
+.y-axis-minor line {
+  stroke: #888;
+  stroke-width: 1px;
+}
+
+.x-axis-minor text,
+.y-axis-minor text {
+  fill: #999;
+  font-size: clamp(8px, 1vw, 12px);
+  opacity: 0.6;
+}
+
+.reveal .slides section {
+  display: flex !important;
+  width: 100% !important;
+  height: 100% !important;
+  flex-direction: column;
+}
