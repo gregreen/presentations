@@ -514,20 +514,36 @@
         -->
 
         <!-- Title -->
-        <section class="v-expand-center stroke">
-          <div>
-            <h1>Measuring the Milky Way's Mass with Gaia</h1>
-          </div>
-          <img class="full-width" data-src="../media/deep_potential/barred_nbody_timesteps_background.svg"></img>
-          <div>
-            <h4>Gregory M. Green, Max Planck Institute for Astronomy, Heidelberg</h4>
-            <h4>Astro Data Science Discussion Group</h4>
-            <h4>Cambridge University, 24 November 2025</h4>
-            <div class="multicol" style="gap:40%;">
-              <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="left" style="width:30%; filter:contrast(0.5) brightness(1.2);"></img>
-              <img data-src="../media/logos/MPIA_horizontal.svg" class="right" style="width:30%; filter:contrast(0.5) brightness(1.0);"></img>
+        <section>
+          <section data-background-video="../media/gaia/gaia_proper_motion_on_sky_h264.mp4" class="v-expand-center stroke-superthick" data-background-video-loop data-background-size="cover">
+            <div>
+              <h1>Measuring the Milky Way's Mass with Gaia</h1>
             </div>
-          </div>
+            <div>
+              <h4>Gregory M. Green, Max Planck Institute for Astronomy, Heidelberg</h4>
+              <h4>Astro Data Science Discussion Group</h4>
+              <h4>Cambridge University, 24 November 2025</h4>
+              <div class="multicol" style="gap:40%;">
+                <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="left" style="width:30%; filter:contrast(0.5) brightness(2.0);"></img>
+                <img data-src="../media/logos/MPIA_horizontal.svg" class="right" style="width:30%; filter:contrast(0.5) brightness(1.7);"></img>
+              </div>
+            </div>
+          </section>
+          <!-- <section class="v-expand-center stroke">
+            <div>
+              <h1>Measuring the Milky Way's Mass with Gaia</h1>
+            </div>
+            <img class="full-width" data-src="../media/deep_potential/barred_nbody_timesteps_background.svg"></img>
+            <div>
+              <h4>Gregory M. Green, Max Planck Institute for Astronomy, Heidelberg</h4>
+              <h4>Astro Data Science Discussion Group</h4>
+              <h4>Cambridge University, 24 November 2025</h4>
+              <div class="multicol" style="gap:40%;">
+                <img data-src="../media/logos/AvH-Logo_horizontal.svg" class="left" style="width:30%; filter:contrast(0.5) brightness(1.2);"></img>
+                <img data-src="../media/logos/MPIA_horizontal.svg" class="right" style="width:30%; filter:contrast(0.5) brightness(1.0);"></img>
+              </div>
+            </div>
+          </section> -->
         </section>
 
         <!-- Why? -->
@@ -551,10 +567,12 @@
             </div>
           </section>
 
-          <section class="stroke-superthick" data-background-video="../media/gaia/gaia_proper_motion_on_sky_h264.mp4" data-background-video-loop data-background-size="contain">
-            <h3>Gaia is revolutionizing our picture of the Milky Way</h3>
-            <p class="fragment">Kinematic measurements of tens of millions of stars.</p>
-            <p class="fragment">An unprecedented dataset for exploring Galactic dynamics.</p>
+          <section class="stroke-superthick v-expand-center" data-background-video="../media/gaia/esa_proper_motion.mp4" data-background-video-loop data-background-size="cover">
+            <h3>Gaia is revolutionizing our view of the Milky Way</h3>
+            <p>Parallaxes, proper motions &amp; radial velocities (<em>i.e.</em>, 6D phase-space coordinates) for tens of millions of stars.</p>
+            <div class="footer">
+              <p class="attribution left stroke"><a href="https://www.esa.int/ESA_Multimedia/Videos/2018/04/Parallax_and_proper_motion">ESA/Gaia/DPAC</a></p>
+            </div>
           </section>
         </section>
 
@@ -569,7 +587,7 @@
               <video class="stretch-to-fill left bottom" data-src="../media/gaia/gaia_proper_motion_on_sky_h264.mp4" loop data-autoplay muted></video>
               <p class="attribution"><a href="https://sci.esa.int/web/gaia/-/60233-parallax-and-proper-motion-on-the-sky">ESA/Gaia/DPAC, CC BY-SA 3.0 IGO</a></p>
             </div>
-            <div class="multirow v-center">
+            <div class="multirow v-center noncompact">
               <p class="fragment">
                 Gaia is delivering a snapshot of stellar positions and velocities: $\left\{ \vec{x} , \vec{v} \right\}$
               </p>
@@ -634,11 +652,11 @@
                     $$
                   </p>
                 </div>
-                <div class="fragment" data-fragment-index=6>
+                <div class="fragment noncompact" data-fragment-index=6>
                   <p>
                     $\mathcal{H}$ determines how a distribution function $f\left(q,p\right)$ will change over time.
                   </p>
-                  <p class="fragment" data-fragment-index=7>
+                  <p class="fragment noncompact" data-fragment-index=7>
                     Collisionless Boltzmann Equation (CBE):
                     $$
                       \frac{\mathrm{d}f}{\mathrm{d}t}
@@ -895,7 +913,7 @@
                 </p>
               </div>
               <div class="fragment">
-                <h3>Stationarity <em>in a rotating frame</em>.</h3>
+                <h3>Stationarity <em>in a rotating frame</em>:</h3>
                 <p class="fragment">
                   $$
                   \frac{\partial f}{\partial t}
@@ -925,12 +943,37 @@
 
           <section class="multirow">
             <div class="r-stack no-expand">
-              <h3 class="fragment fade-out" data-fragment-index=1>Accelerations: $\vec{a} = -\nabla \Phi$</h3>
-              <h3 class="fragment" data-fragment-index=1>Density: $\rho = \nabla^2 \Phi / \left(4\pi G\right)$</h3>
+              <h3 class="fragment fade-out" data-fragment-index=1>Distribution function (in space)</h3>
+              <h3 class="fragment current-visible" data-fragment-index=1>Distribution function (in velocity)</h3>
+              <h3 class="fragment current-visible" data-fragment-index=2>Accelerations: $\vec{a} = -\nabla \Phi$</h3>
+              <h3 class="fragment" data-fragment-index=3>Density: $\rho = \nabla^2 \Phi / \left(4\pi G\right)$</h3>
             </div>
             <div class="r-stack">
-              <img data-src="../media/deep_potential/barred_nbody_true_vs_model_acc_t80_x.svg" class="fragment fade-out" data-fragment-index=1></img>
-              <img data-src="../media/deep_potential/barred_nbody_true_vs_model_rho_x_y_t80.svg" class="fragment" data-fragment-index=1></img>
+              <img data-src="../media/deep_potential/barred_nbody_DF_marginal_x_y_t80.svg" class="fragment fade-out" data-fragment-index=1></img>
+              <img data-src="../media/deep_potential/barred_nbody_DF_marginal_vR_vT_t80.svg" class="fragment current-visible" data-fragment-index=1></img>
+              <img data-src="../media/deep_potential/barred_nbody_true_vs_model_acc_t80_x.svg" class="fragment current-visible" data-fragment-index=2></img>
+              <img data-src="../media/deep_potential/barred_nbody_true_vs_model_rho_x_y_t80.svg" class="fragment" data-fragment-index=3></img>
+            </div>
+            <div class="footer">
+              <p class="attribution left"><a href="https://ui.adsabs.harvard.edu/abs/2024MNRAS.52712284K/abstract">Kalda, Green &amp; Ghosh (2024)</a></p>
+            </div>
+          </section>
+
+          <section class="multicol">
+            <div class="r-stack wide">
+              <img data-src="../media/deep_potential/barred_nbody_dlnf_dt_x_y_t80_lab.svg" class="fragment fade-out" data-fragment-index=1></img>
+              <img data-src="../media/deep_potential/barred_nbody_dlnf_dt_x_y_t80_rot.svg" class="fragment" data-fragment-index=1></img>
+            </div>
+            <div class="v-center no-expand noncompact">
+              <h3>Residual non-stationarity</h3>
+              <div class="r-stack">
+                <h4 class="fragment fade-out" data-fragment-index=1>in the &ldquo;lab&rdquo; frame</h4>
+                <h4 class="fragment" data-fragment-index=1>in the &ldquo;rotating&rdquo; frame</h4>
+              </div>
+              <p>&thickapprox; 1 / (timescale for distribution function to change)</p>
+            </div>
+            <div class="footer">
+              <p class="attribution right"><a href="https://ui.adsabs.harvard.edu/abs/2024MNRAS.52712284K/abstract">Kalda, Green &amp; Ghosh (2024)</a></p>
             </div>
           </section>
         </section>
@@ -1060,28 +1103,29 @@
         <section>
           <section class="v-center">
             <div>
-              <h1>Application</h1>
-              <h4 class="fragment">Milky Way, &lt;1&nbsp;kpc</h4>
+              <h1>Application to the Milky Way</h1>
+              <h2>&lt;1&nbsp;kpc</h2>
             </div>
           </section>
 
           <section class="multicol">
-            <div class="multirow v-center">
-              <img data-src="../media/deep_potential/kalda2025_count_dist_M_1000pc.svg"</img>
-              <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2025arXiv250703742K/abstract">Kalda &amp; Green (2025)</a></p>
+            <div class="multirow v-center wide">
+              <img data-src="../media/deep_potential/kalda2025_count_dist_M_1000pc.svg"></img>
             </div>
             <div class="v-center noncompact">
-              <h2>Data</h2>
+              <h1>Data</h1>
               <p>Volume-complete, single-population stellar sample.</p>
               <p class="fragment">6D position + velocity measurements from Gaia.</p>
               <p class="fragment">5.6 million stars within 1&nbsp;kpc of the Sun.</p>
+            </div>
+            <div class="footer">
+              <p class="attribution left"><a href="https://ui.adsabs.harvard.edu/abs/2025arXiv250703742K/abstract">Kalda &amp; Green (2025)</a></p>
             </div>
           </section>
 
           <section class="multicol">
             <div class="multirow v-center wider">
-              <img data-src="../media/deep_potential/kalda2025_completeness_mollweide_1000pc_binned.svg"</img>
-              <p class="attribution"><a href="https://ui.adsabs.harvard.edu/abs/2025arXiv250703742K/abstract">Kalda &amp; Green (2025)</a></p>
+              <img data-src="../media/deep_potential/kalda2025_completeness_mollweide_1000pc_binned.svg"></img>
             </div>
             <div class="v-center noncompact">
               <h3>Completeness</h3>
@@ -1089,25 +1133,42 @@
               <p>&rArr; Model Gaia survey completeness.</p>
               <p class="fragment">Dust matters a lot!</p>
             </div>
+            <div class="footer">
+              <p class="attribution left"><a href="https://ui.adsabs.harvard.edu/abs/2025arXiv250703742K/abstract">Kalda &amp; Green (2025)</a></p>
+            </div>
           </section>
 
           <section class="multirow">
             <h3>Distribution function</h3>
+            <div class="r-stack no-expand">
+              <h4 class="fragment fade-out" data-fragment-index=1>Face-on view of the Galaxy (Sun at center)</h4>
+              <h4 class="fragment current-visible" data-fragment-index=1>Velocity projection</h4>
+              <h4 class="fragment" data-fragment-index=2>Sky projection (from the Earth/Sun)</h4>
+            </div>
             <div class="r-stack">
               <img data-src="../media/deep_potential/kalda2025_DF_marginal_xy.svg" class="fragment fade-out" data-fragment-index=1></img>
               <img data-src="../media/deep_potential/kalda2025_DF_marginal_vRvphi.svg" class="fragment current-visible" data-fragment-index=1></img>
               <img data-src="../media/deep_potential/kalda2025_DF_marginal_phib.svg" class="fragment" data-fragment-index=2></img>
+            </div>
+            <div class="footer">
+              <p class="attribution left"><a href="https://ui.adsabs.harvard.edu/abs/2025arXiv250703742K/abstract">Kalda &amp; Green (2025)</a></p>
             </div>
           </section>
 
           <section class="multirow">
             <h3>Inferred acceleration</h3>
             <img data-src="../media/deep_potential/kalda2025_2d_acc_integrated.svg"></img>
+            <div class="footer">
+              <p class="attribution left"><a href="https://ui.adsabs.harvard.edu/abs/2025arXiv250703742K/abstract">Kalda &amp; Green (2025)</a></p>
+            </div>
           </section>
 
           <section class="multirow">
             <h3>Inferred density</h3>
             <img data-src="../media/deep_potential/kalda2025_2d_rho_integrated.svg"></img>
+            <div class="footer">
+              <p class="attribution left"><a href="https://ui.adsabs.harvard.edu/abs/2025arXiv250703742K/abstract">Kalda &amp; Green (2025)</a></p>
+            </div>
           </section>
 
           <section class="multicol">
@@ -1117,6 +1178,9 @@
             <div class="v-center noncompact">
               <h3>Parametric vs. Non&#8209;parameteric</h3>
               <p>We can also fit parametric (analytic) potentials.</p>
+            </div>
+            <div class="footer">
+              <p class="attribution left"><a href="https://ui.adsabs.harvard.edu/abs/2025arXiv250703742K/abstract">Kalda &amp; Green (2025)</a></p>
             </div>
           </section>
 
@@ -1128,6 +1192,9 @@
               <h3>Non-stationarity</h3>
               <p>In general, no completely stationary solution exists.</p>
               <p class="fragment" data-fragment-index="1">The &ldquo;phase spiral&rdquo; appears in the non-stationarity.</p>
+            </div>
+            <div class="footer">
+              <p class="attribution left"><a href="https://ui.adsabs.harvard.edu/abs/2025arXiv250703742K/abstract">Kalda &amp; Green (2025)</a></p>
             </div>
           </section>
 
@@ -1154,7 +1221,7 @@
           <section class="v-center">
             <div>
               <h1>New developments</h1>
-              <h3 class="fragment">(work in progress)</h3>
+              <h3>(work in progress)</h3>
             </div>
           </section>
 
@@ -1228,12 +1295,19 @@
 
         <!-- Questions -->
         <section>
-          <section class="multicol">
+          <!-- <section class="multicol">
             <div>
               <img data-src="../media/deep_potential/barred_nbody_timesteps_background_rot90.svg" class="stretch-to-fill"></img>
             </div>
             <div class="widest v-center">
               <h1>Questions?</h1>
+            </div>
+          </section> -->
+
+          <section data-background-video="../media/gaia/gaia_orbit.webm" data-background-video-loop data-background-size="cover" class="stroke-superthick">
+            <h1>Questions?</h1>
+            <div class="footer">
+              <p class="attribution left"><a href="https://sci.esa.int/s/8kqENMw">(video credit: ESA - C. Carreau/ATG medialab)</a></p>
             </div>
           </section>
         </section>
