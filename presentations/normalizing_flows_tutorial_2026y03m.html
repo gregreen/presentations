@@ -1,0 +1,990 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Milky Way Dust and Dynamics</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="icon" href="../icon.ico">
+
+    <link rel="stylesheet" href="../css/noto_sans_fonts.css">
+    <link rel="stylesheet" href="../css/jost_font.css">
+    <link rel="stylesheet" href="../revealjs/dist/reveal.css">
+    <link rel="stylesheet" href="../revealjs/dist/theme/night.css" id="theme">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="../revealjs/plugin/highlight/monokai.css" id="highlight-theme">
+
+    <!-- Custom CSS files go here -->
+
+    <!--<script src="../js/d3.min.js" charset="utf-8"></script>-->
+    <!--<script src="https://d3js.org/d3.v7.min.js"></script>-->
+
+    <style>
+    /* Override theme variables */
+    :root {
+      --r-heading-font: 'Jost', sans-serif;
+      --r-heading-font-weight: 600;
+      --r-main-font: 'Noto Sans', sans-serif;
+      --r-background-color: #000;
+      --r-main-font-size: 30px;
+      --r-heading1-size: 4.00em;
+      --r-heading2-size: 2.83em;
+      --r-heading3-size: 2.00em;
+      --r-heading4-size: 1.41em;
+      --r-heading-margin: 0.8em;
+      --r-block-margin: 0.5em;
+      --r-link-color: #f3d7ac;
+      --r-link-color-hover: #ffcc7d;
+    }
+
+    .reveal {
+      background: linear-gradient(90deg, #010204, #00172c);
+    }
+
+    /* Adjust the base size at different breakpoints */
+    @media (max-width: 1536px) {
+      :root {
+        --r-main-font-size: 24px; /* Slightly smaller base on tablets */
+      }
+    }
+
+    @media (max-width: 1024px) {
+      :root {
+        --r-main-font-size: 20px; /* Slightly smaller base on tablets */
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --r-main-font-size: 18px; /* Slightly smaller base on tablets */
+      }
+    }
+
+    @media (max-width: 480px) {
+      :root {
+        --r-main-font-size: 14px; /* Smaller base on phones */
+      }
+    }
+
+    /* Text element margins */
+    .reveal :is(h1, h2, h3, h4) {
+      margin: var(--r-heading-margin) 0 var(--r-heading-margin) 0;
+    }
+
+    .reveal .compact :is(h1, h2, h3, h4) {
+      margin: 0 0 calc(var(--r-heading-margin)*0.5) 0;
+    }
+    .reveal .compact p {
+      margin: calc(var(--r-block-margin)*0.5) 0;
+    }
+
+    .reveal .noncompact :is(h1, h2, h3, h4) {
+      margin: calc(var(--r-heading-margin)*4) 0 calc(var(--r-heading-margin)*4) 0;
+    }
+    .reveal .noncompact p {
+      margin: calc(var(--r-block-margin)*4) 0;
+    }
+
+    /* Lists */
+    .reveal ul, .reveal ol {
+      max-width: 70%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    /* List element spacing */
+    .reveal li {
+      margin-bottom: 0.5em;
+    }
+    .reveal .compact li {
+      margin-bottom: 0.2em;
+    }
+    .reveal .noncompact li {
+      margin-bottom: 1.0em;
+    }
+
+    /* Print settings */
+
+    /* Slide controls (arrows): make less prominent */
+    aside.controls {
+      opacity: 0.3;
+      transform: scale(0.5);
+    }
+
+    /* Multi-column layout */
+    .multicol,
+    .reveal .slides section.multicol {
+      display: flex;
+      flex-direction: row;
+      gap: 1.0rem;
+      min-height: 0;
+    }
+    .multicol.compact, .compact .multicol {
+      gap: 0.5rem;
+    }
+    .multicol > * {
+      flex: 1;
+    }
+    .multicol > .wide {
+      flex: 1.44;
+    }
+    .multicol > .wider {
+      flex: 2.08;
+    }
+    .multicol > .widest {
+      flex: 3;
+    }
+    .multicol > .v-center {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    .multicol > div, .multirow > div {
+      overflow: hidden;
+    }
+
+    .reveal section .r-stack > .v-center,
+    .reveal section.v-center > * {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    section {
+      display: flex !important;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    section > div {
+      max-height: 100%;
+    }
+
+    section > .multicol {
+      flex: 1;
+    }
+
+    .reveal img, .reveal video {
+      width: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      min-height: 0;
+      object-fit: contain;
+      margin: 0;
+    }
+
+    /* Invert / brighten images */
+    .reveal video.invert, .reveal img.invert {
+      filter: invert(1) hue-rotate(180deg);
+    }
+    .reveal video.invert.brighten, .reveal img.invert.brighten {
+      filter: invert(1) hue-rotate(180deg) brightness(1.5);
+    }
+    .reveal video.brighten, .reveal img.brighten {
+      filter: brightness(1.5);
+    }
+
+    /* Multi-row layout */
+    .multirow {
+      display: flex !important;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .multirow.compact, .compact .multirow {
+      gap: 0.3rem;
+    }
+    .multirow > * {
+      flex: 1;
+    }
+    .multirow > .tall {
+      flex: 1.44;
+    }
+    .multirow > .taller {
+      flex: 2.08;
+    }
+    .multirow > .tallest {
+      flex: 3;
+    }
+    .multirow > :is(h1, h2, h3, h4, p) {
+      flex: 0 0 auto;
+    }
+    .multirow > .no-expand { /* Don't grow or shrink */
+      flex: 0 0 auto;
+    }
+    .multirow > .shrink-no-expand { /* Shrink to fit content, but don't grow */
+      flex: 0 1 auto;
+    }
+
+    /* Layout with content evenly spaced in vertical direction */
+    .multirow.space-evenly {
+      justify-content: space-evenly;
+    }
+    .multirow.space-evenly > * {
+      flex: 0 0 auto;
+    }
+
+    /* Layout with content pushed to top and bottom */
+    .v-expand-center {
+      display: flex !important;
+      flex-direction: column;
+      height: 100%;
+      justify-content: space-between;
+    }
+
+    /* Header and Footer */
+    section.has-footer, section.has-header {
+      height: 100%;
+      display: flex !important;
+      flex-direction: column;
+      justify-content: center;
+    }
+    div.footer {
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: row;
+    }
+    div.header {
+      position: absolute;
+      top: 0px;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: row;
+    }
+    div.footer .left, div.header .left, .multicol .left {
+      margin-right: auto;
+    }
+    div.footer .center, div.header .center, .multicol .center {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    div.footer .right, div.header .right, .multicol .right {
+      margin-left: auto;
+    }
+    p.left, p.right, p.center {
+      flex-grow: 0;
+    }
+
+    /* Attribution text */
+    .reveal .attribution {
+      font-size: 0.7em;
+      color: #aaa;
+      margin-top: 0;
+    }
+    .reveal .attribution a {
+      color: #ddf;
+    }
+
+    /* Text styling */
+    .stroke {
+      -webkit-text-stroke: 1px black;
+      paint-order: stroke fill;
+    }
+    h1.stroke, .stroke h1 {
+      -webkit-text-stroke: 5px black;
+      paint-order: stroke fill;
+    }
+    h2.stroke, .stroke h2 {
+      -webkit-text-stroke: 2px black;
+      paint-order: stroke fill;
+    }
+    h3.stroke, .stroke h3 {
+      -webkit-text-stroke: 3px black;
+      paint-order: stroke fill;
+    }
+    h4.stroke, .stroke h4 {
+      -webkit-text-stroke: 2px black;
+      paint-order: stroke fill;
+    }
+    p.stroke, .stroke p, span.stroke, .stroke span {
+      -webkit-text-stroke: 1px black;
+      paint-order: stroke fill;
+    }
+
+    .stroke-superthick {
+      -webkit-text-stroke: 10px black !important;
+      paint-order: stroke fill;
+    }
+
+    .blur-bg {
+      backdrop-filter: blur(10px);
+    }
+
+    .reveal .dark {
+      color: black;
+    }
+
+    /* Put borders around each element, to show the layout */
+    .show-layout * {
+      border: cyan;
+      border-style: dotted;
+    }
+
+    /* Uncomment below to show all layouts */
+    /* section.present div {
+      border: 1px dotted rgba(0, 255, 255, 0.5)
+    }
+    section.present {
+      border: 2px solid rgba(255, 0, 0, 0.5)
+    }
+    section.present img {
+      border: 1px dashed rgba(0, 255, 0, 0.5)
+    }
+    section.present :is(h1, h2, h3, h4, p, span, a) {
+      border: 1px groove rgba(255, 255, 0, 0.5)
+    } */
+
+    /* Image/video sizing */
+    img.full-height, video.full-height {
+      height: 100%;
+      width: auto;
+      max-width: none;
+    }
+
+    img.full-width, video.full-width {
+      width: 100%;
+      height: auto;
+      max-height: none;
+    }
+
+    img.stretch-to-fill, video.stretch-to-fill {
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      object-fit: cover;
+      object-position: var(--x, center) var(--y, center);
+    }
+    img.stretch-to-fill.left, video.stretch-to-fill.left {
+      --x: left;
+    }
+    img.stretch-to-fill.right, video.stretch-to-fill.right {
+      --x: right;
+    }
+    img.stretch-to-fill.bottom, video.stretch-to-fill.bottom {
+      --y: bottom;
+    }
+    img.stretch-to-fill.top, video.stretch-to-fill.top {
+      --y: top;
+    }
+
+    /* Code blocks */
+    .reveal pre.code-wrapper {
+      width: fit-content;
+    }
+    .reveal pre {
+      font-size: 0.75em;
+    }
+
+    /* Invisible elements that trigger fragment events */
+    .fragment-helper {
+      position: absolute;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Custom color definitions */
+    .reveal section .star-color :is(*) {
+      color: #99ccff !important;
+    }
+    .reveal section .model-color :is(*) {
+      color: #ff6767 !important;
+    }
+    .reveal section .faint-color :is(*) {
+      color: rgb(30%, 30%, 30%);
+    }
+    .reveal section .normal-color :is(*) {
+      color: white;
+    }
+
+    /* Image grid */
+    .image-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .image-grid .grid-item {
+      flex: 1 1 28%;  /* Grow, shrink, basis */
+      max-width: 35%;
+      position: relative;
+      margin: 2px;
+      /*border: solid white 1px;*/
+    }
+
+    .image-grid .item-title {
+      font-size: 1em;
+      margin-top: 0.5rem;
+      margin-bottom: 0.2rem;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .image-grid .grid-item img {
+      width: 100%;
+      height: 25vh;
+      object-fit: cover;
+      margin-bottom: 0.7em;
+      margin-top: 0.2rem;
+    }
+
+    .image-grid .image-caption {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      margin: 0;
+      padding: 0em 0.2rem;
+      font-size: 0.7em;
+    }
+
+    .image-grid .image-caption a {
+      font-size: 1em;
+      color: white;
+      opacity: 50%;
+    }
+
+    .image-grid .image-caption a:hover {
+      font-size: 1em;
+      color: white;
+      opacity: 70%;
+    }
+
+    .round-image {
+      border-radius: 50%;
+      object-fit: cover;
+      aspect-ratio: 1 / 1;
+    }
+
+    /* Accordion fragments: expand / collapse */
+    .reveal .slides .fragment.accordion:not(.current-visible):not(.visible) {
+      /* Hidden state */
+      flex: 0 0 0;
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+      opacity: 0;
+      transform: scale(0);
+      /* Contraction */
+      transition: flex 750ms ease,
+                  opacity 750ms ease,
+                  padding 750ms ease,
+                  margin 750ms ease,
+                  transform 750ms ease;
+    }
+    .reveal .slides .fragment.accordion {
+      /* Expansion */
+      transition: flex 750ms ease,
+                  opacity 750ms cubic-bezier(0.5, 0.0, 0.9, 0.0),
+                  padding 750ms ease,
+                  margin 750ms ease,
+                  transform 750ms ease;
+    }
+
+    div.backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      filter: blur(1rem);
+      z-index: -1;
+    }
+
+    .reveal .slides .broad-shadow :is(h1, h2, h3, h4, p, span),
+    .reveal .slides .broad-shadow:is(h1, h2, h3, h4, p, span) {
+      text-shadow:  0.0em  0.0em 1.0em black,
+                    1.0em  0.0em 1.0em black,
+                    0.8em  0.8em 1.0em black,
+                    0.0em  1.0em 1.0em black,
+                   -0.8em  0.8em 1.0em black,
+                   -1.0em  0.0em 1.0em black,
+                   -0.8em -0.8em 1.0em black,
+                    0.0em -1.0em 1.0em black,
+                    0.8em -0.8em 1.0em black !important;
+
+    }
+
+    #survey-plot-highlight-box {
+      fill: rgba(0, 183, 255, 0.1);
+      stroke: rgba(0, 183, 255, 0.2);
+      stroke-dasharray: 6 4;
+      transition: opacity 300ms ease;
+    }
+    #survey-plot-highlight-label {
+      fill: rgba(0, 183, 255, 0.4);
+      font-size: 1em;
+    }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="reveal">
+      <div class="slides">
+
+        <!--
+
+          Title: Normalizing Flows
+
+          Format: 45-minute online presentation, with a mix of slides and notebook demonstrations that the viewers can access.
+
+          Target audience: Astrophysicists interested in learning more about machine learning.
+
+          My goal: The audience should have a basic understanding of what normalizing flows are, how they work and what they're useful for. The tutorial should be practical enough that students can start working with normalizing flows right away after seeing the presentation.
+
+          The basic outline of the tutorial is as follows:
+
+          1. Motivation: Why model distributions?
+            a. Examples of distributions in astrophysics.
+            b. What AI researchers were interested in (much higher-dimensional objects like images).
+            c. What we want to be able to do with distributions: sample, evaluate, ask "does this population follow this distribution?" Maybe take gradients?
+            d. Variational inference. Flexible parameterization of the space of possible probability density functions.
+            e. Simulation-based inference.
+
+          2. Sampling from a 1D distribution
+            a. Inverting the cumulative probability. Doesn't work for >1 dimension.
+            b. For >1 dimension: Kernel Density Estimation, Gaussian Mixture Models. Curse of dimensionality. Tuning (e.g., kernel bandwidth).
+
+          3. Discrete normalizing flows
+            a. Theory.
+            b. RealNVP.
+            c. Limitations of these discrete models.
+
+          4. Continuous normalizing flows
+            a. The limit of adding more transformations -> continuous.
+            b. Analogy to physics: trajectories through vector fields. Invertibility (Lifshitz continuity).
+            c. FFJORD.
+            d. Kinetic and Jacobian regularization.
+            e. The problem of training time.
+            f. Flow Matching.
+
+          5. Conditional normalizing flows
+            a. Motivation: Simulation-based inference
+            b. Simple worked example with conditional Flow Matching.
+
+          6. Example use in astrophysics: Deep Potential (Green, Ting & Kamdar 2023).
+
+        -->
+
+        <!-- Title -->
+        <section>
+          <section class="v-expand-center stroke-superthick">
+            <div>
+              <h1>Normalizing Flows</h1>
+            </div>
+            <div style="position: relative;">
+              <img data-src="../media/logos/westlake_round.png" style="position:absolute; left:0; top:0; height:100%; width:auto; object-fit:unset;">
+              <h4>Gregory M. Green, Westlake University, Hangzhou</h4>
+              <h4>AI/ML Science & Technology Interest Group</h4>
+              <h4>16 March 2026</h4>
+            </div>
+          </section>
+        </section>
+
+        <!-- 1. Motivation: Why model distributions? -->
+        <section>
+          <section class="compact">
+            <h2>Motivation: Why model distributions?</h2>
+            <h4 class="fragment">Distributions in astrophysics:</h4>
+            <ul>
+              <li class="fragment">Physical distributions: initial mass function, stellar metallicity distribution, ...</li>
+              <li class="fragment">Observational uncertainties: Gaussian errors, Poisson noise, ...</li>
+              <li class="fragment">Statistical inference: Likelihoods, posteriors, priors, ...</li>
+            </ul>
+            <h4 class="fragment">What AI researchers are interested in: much higher-dimensional objects.</h4>
+            <ul>
+              <li class="fragment">Images: Every pixel is a dimension.</li>
+              <li class="fragment">Language: Sequences of words or tokens.</li>
+            </ul>
+            <div class="compact">
+              <p class="fragment">&ldquo;The quick brown fox jumps over the lazy ...&rdquo;</p>
+              <p class="fragment">&rArr; p(next word = X) for all possible words X.</p>
+            </div>
+          </section>
+
+          <section>
+            <h2>What we want to do with distributions</h2>
+            <ul>
+              <li class="fragment">Sample from the distribution.</li>
+              <li class="fragment">Evaluate the probability density at a given point.</li>
+              <li class="fragment">Ask whether a given dataset follows a given distribution (&ldquo;Is the CMB Gaussian?&rdquo;).</li>
+              <li class="fragment">More advanced: Compute gradients of the probability with respect to the parameters.</li>
+            </ul>
+          </section>
+
+          <section class="compact">
+            <h2>Modeling distributions: Variational inference</h2>
+            <p class="fragment">Posterior distribution: $p(\theta \mid D)$, where $\theta$ are model parameters and $D$ is the observed data.</p>
+            <p class="fragment">Instead of trying to directly compute the posterior everywhere, approximate it using a class of simple distributions:
+              $$
+                p(\theta \mid D) \approx q(\theta) \, .
+              $$
+            </p>
+            <p class="fragment">For example, $q(\theta)$ could be a Gaussian with mean and covariance to be determined.</p>
+            <p class="fragment">Minimize some measure of the difference between $p(\theta \mid D)$ and $q(\theta)$.</p>
+            <p class="fragment">The class of distributions used for $q(\theta)$ should be flexible enough to capture complex posterior distributions, but it should be easy to work with (<em>i.e.</em>, evaluation, sampling, marginalization).</p>
+          </section>
+
+          <!--
+          <section>
+            <h1>Modeling distributions: Simulation-based inference</h1>
+            <p class="fragment">Let's say we have machinery that can simulate data, given some model parameters $\theta$. It might be very expensive to run this machinery (<em>e.g.</em>, a cosmological simulation).</p>
+            <p class="fragment">Now we observe some data $D$, and want to perform inference on the parameters $\theta$.</p>
+            <p class="fragment">We often (maybe even usually) don't have an explicit likelihood function $p(D \mid \theta)$.</p>
+            <p class="fragment">One idea: generate many instances of the mock data $D$ for one or many values of $\theta$, and then empirically learn the smooth likelihood $p(D \mid \theta)$.</p>
+          </section>
+          -->
+        </section>
+
+        <section>
+          <section class="compact">
+            <h2>Sampling from a 1D distribution</h2>
+            <div class="multicol v-center">
+              <div>
+                <p class="fragment">In 1D, we can sample from a distribution by inverting the cumulative probability function:</p>
+                <p class="fragment">
+                  First, model the cumulative distribution function (CDF):
+                  $$
+                    P(x) = \int_{-\infty}^x p(x') dx' \, .
+                  $$
+                </p>
+                <p class="fragment">
+                  Then, sample a uniform random variable $u \sim \mathrm{U}(0, 1)$, and apply the inverse CDF:
+                  $$
+                    F^{-1}(u) \sim p(x) \, .
+                  $$
+                </p>
+              </div>
+              <div class="multirow fragment">
+                <video data-src="../media/statistics/sampling_1d.mp4" data-autoplay muted loop="loop"></video>
+              </div>
+            </div>
+            <p class="fragment">However, this doesn't work in higher dimensions: There is no such thing as a multivariate CDF (because vectors can't be ordered).</p>
+          </section>
+
+          <section>
+            <h2>Sampling from a >1D distribution</h2>
+            <p class="fragment">Kernel Density Estimation (KDE): Smooth over the points with a kernel function (<em>e.g.</em>, a Gaussian).</p>
+            <p class="fragment">Gaussian Mixture Models (GMMs): Model the distribution as a sum of Gaussians.</p>
+            <p class="fragment">Curse of dimensionality: The number of samples needed to accurately model the distribution grows exponentially with the number of dimensions.</p>
+            <p class="fragment">Tuning: KDEs require tuning a bandwidth parameter. GMMs require tuning the number of components.</p>
+          </section>
+        </section>
+
+        <section>
+          <section class="multicol">
+            <div class="multirow v-center">
+              <h2>Normalizing flows</h2>
+            </div>
+            <div class="multirow wider">
+              <video data-src="../media/deep_potential/trajectories_moons_grid_loop_1600.mp4" data-autoplay muted loop="loop"></video>
+            </div>
+          </section>
+
+          <section class="compact">
+            <h2>Normalizing flows: Theory</h2>
+            <p class="fragment">Idea: Start with a simple distribution (<em>e.g.</em>, a Gaussian), and apply an invertible coordinate transformation $F$.</p>
+            <p class="fragment">Sampling: Sample from the simple distribution, and apply the transformations to the sample:
+              $$
+                \vec{x} \sim \mathcal{N}(\vec{0}, \mathbb{1}) \, . \\
+                \vec{y} = F(\vec{x}) \sim p_y(\vec{y}) \, .
+              $$
+            </p>
+            <p class="fragment">Density evaluation: Apply the inverse transformation and use the change-of-variables formula:
+              $$
+              \begin{align}
+                p_y(\vec{y})
+                &=
+                  p_x(\vec{x})
+                  \left| \det \left( \frac{\partial \vec{x}}{\partial \vec{y}} \right) \right|
+                  
+                =
+                  \mathcal{N}(F^{-1}(\vec{y}) \mid \vec{0}, \mathbb{1})
+                  \left| \det \left( \frac{\partial F^{-1}(\vec{y})}{\partial \vec{y}} \right) \right| \, .
+                \end{align}
+              $$
+            </p>
+            <p class="fragment">The transformation $F$ should be as flexible as possible, while remaining invertible and allowing easy computation of the Jacobian determinant.</p>
+          </section>
+
+          <section class="compact">
+            <h2>Training a normalizing flow</h2>
+            <p class="fragment">Let's say the transformation $F$ depends on some parameters $\varphi$.</p>
+            <p class="fragment">Poisson likelihood of a set of observed points $\vec{y}$:
+              $$
+              \begin{align}
+                \ln \mathcal{L}(\varphi)
+                &= \sum_{i=1}^N \ln p_y(\vec{y}_i \mid \varphi) \\
+                &= \sum_{i=1}^N \left\{
+                     \ln p_x(F_\varphi^{-1}(\vec{y}_i))
+                     + \ln \left| \det \left( \frac{\partial F_\varphi^{-1}(\vec{y}_i)}{\partial \vec{y}_i} \right) \right|
+                     \,
+                   \right\}
+                \, .
+              \end{align}
+              $$
+              Maximize this likelihood w.r.t. $\varphi$ to find the best-fitting transformation.
+            </p>
+            <p class="fragment">Normal machine-learning workflow: stochastic gradient descent on batches of observed points $\vec{y}$.</p>
+          </section>
+
+          <section class="compact">
+            <h2>Discrete normalizing flows</h2>
+            <p class="fragment">Idea: Chain together many simple invertible transformations:
+              $$
+                F = f_n \circ f_{n-1} \circ \cdots \circ f_2 \circ f_1 \, .
+              $$
+            </p>
+            <p class="fragment">With enough transformations, we can hopefully approximate any arbitrarily complicated distribution.</p>
+            <p class="fragment">The inverse is easy to construct:
+              $$
+                F^{-1} = f_1^{-1} \circ f_2^{-1} \circ \cdots \circ f_{n-1}^{-1} \circ f_n^{-1} \, .
+              $$
+            </p>
+            <p class="fragment">The Jacobian determinant is the product of the individual Jacobian determinants:
+              $$
+                \left| \det \left( \frac{\partial F}{\partial \vec{x}} \right) \right|
+                =
+                \prod_{i=1}^n
+                \left| \det \left( \frac{\partial f_i}{\partial \vec{x}_{i-1}} \right) \right| \, .
+              $$
+            </p>
+            <p class="fragment">There are many classes of simple transformations one could choose.</p>
+          </section>
+
+          <section class="multirow compact">
+            <div class="multicol">
+              <div class="v-center">
+                <h3>Real NVP</h3>
+                <p>&ldquo;Affine coupling layer&rdquo;</p>
+                <p>Split the input vector $\vec{x}$ into two parts</em>:
+                  $$
+                  \begin{align}
+                    \vec{x}
+                    = \begin{pmatrix}
+                        \vec{x}_{1: d} \\
+                        \vec{x}_{d+1: D}
+                      \end{pmatrix}
+                  \end{align}
+                  $$
+                </p>
+                <p>Then, shift and scale only the second part, based on the first part:
+                  $$
+                  \begin{align}
+                    \vec{y}
+                    = \begin{pmatrix}
+                        \vec{x}_{1: d} \\
+                        \vec{x}_{d+1: D} \odot \exp \left[s\left(\vec{x}_{1: d}\right)\right]+t\left(\vec{x}_{1: d}\right)
+                      \end{pmatrix}
+                  \end{align}
+                  $$
+                </p>
+                <p>The functions $s$ and $t$, the <em>scale</em> and <em>translation</em> functions, determine the transformation.</p>
+              </div>
+              <div class="v-center fragment">
+                <div class="fragment">
+                  <h4>Invertibility:</h4>
+                  <p>The shift and scale can be undone, because $\vec{x}_{1: d}$ is preserved and can be used to compute the inverse transformation.</p>
+                </div>
+                <div class="fragment">
+                  <h4>Jacobian:</h4>
+                  <p>The Jacobian of this transformation is lower-triangular:
+                    $$
+                      \frac{\partial y}{\partial x^T}
+                        = \left[\begin{array}{cc}
+                            \mathbb{1}_d & 0 \\
+                            \frac{\partial y_{d+1: D}}{\partial x_{1: d}^T} & \operatorname{diag}\left(\exp \left[s\left(x_{1: d}\right)\right]\right)
+                          \end{array}\right]
+                      \, .
+                    $$
+                  </p>
+                  <p>&rArr; Its determinant is simply the product of the diagonal elements:
+                    $$
+                      \operatorname{det}\left(\frac{\partial y}{\partial x^T}\right)
+                        = \prod_{i=1}^{D-d} \exp \left[s\left(x_{1: d}\right)_i\right]
+                      \, .
+                    $$
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="footer">
+              <p style="max-width: 70%; text-align:left;"><a href="https://arxiv.org/abs/1605.08803">Dinh <em>et al.</em> (2016), "Density estimation using Real NVP", arXiv:1605.08803</a>.</p>
+            </div>
+          </section>
+
+          <section>
+            <h1>Real NVP: Demo!</h1>
+          </section>
+        </section>
+
+        <section>
+
+          <section class="compact">
+            <h3>Continuous normalizing flows</h3>
+            <p class="fragment">What if we chain together ever more transformations, and make each transformation &ldquo;smaller&rdquo;?</p>
+            <p class="fragment">Infinitesimal transformation: $\vec{z}_{i+1} = \vec{z}_i + \vec{v}(\vec{z}_i, t_i) \Delta t$.</p>
+            <p class="fragment">Continuous limit:
+              $
+              \begin{align}
+                \frac{d\vec{z}}{dt} = \vec{v}(\vec{z}, t) \, .
+              \end{align}
+              $
+            </p>
+            <p class="fragment">Start with $\vec{z}(0) = \vec{x}$, and integrate the ODE to obtain $\vec{y} \equiv \vec{z}(1)$.</p>
+
+            <p class="fragment">Invertibility: integrate the ODE backwards in time.</p>
+
+            <p class="fragment">Jacobian:
+              $$
+              \begin{align}
+                \ln p_y(\vec{y}) = \ln p_x(\vec{x}) - \int_0^1 \operatorname{Tr} \left( \frac{\partial \vec{v}}{\partial \vec{z}(t')} \right) dt' \, .
+              \end{align}
+              $$
+            </p>
+
+            <div class="footer" style="max-width: 70%; display:block;">
+              <p style="text-align:left;"><a href="https://arxiv.org/abs/1806.07366">Chen <em>et al.</em> (2018), "Neural Ordinary Differential Equations", arXiv:1806.07366</a>.</p>
+              <p style="text-align:left;"><a href="https://arxiv.org/abs/1810.01367">Grathwohl <em>et al.</em> (2018), "FFJORD: Free-form Continuous Dynamics for Scalable Reversible Generative Models", arXiv:1810.01367.</a>.</p>
+            </div>
+          </section>
+
+          <section class="compact">
+            <h2>Training continuous normalizing flows</h2>
+
+            <h4 class="fragment">Method 1: Straightforward approach</h4>
+            <p class="fragment">Maximize the Poisson likelihood, as with discrete normalizing flows. Requires integrating the ODE for every sample.</p>
+
+            <h4 class="fragment">Method 2: &ldquo;Flow Matching&rdquo;</h4>
+            <p class="fragment">It turns out one can learn the vector field $\vec{v}$ directly by pairing random samples from the observed data $\vec{y}$ and the base distribution $\vec{x}$, and encouraging straight paths between them. No ODE integration required!</p>
+
+            <div class="footer" style="max-width: 70%; display:block;">
+              <p style="text-align:left;"><a href="https://arxiv.org/abs/2210.02747">Lipman <em>et al.</em> (2022), "Flow Matching for Generative Modeling", arXiv:2210.02747</a>.</p>
+            </div>
+          </section>
+
+          <section>
+            <h1>Continuous normalizing flows: Demo!</h1>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Conditional normalizing flows</h2>
+
+            <p class="fragment">Let's say we have a cosmological simulation that produces mock data $D$ for a given set of model parameters $\theta$ (such as the &Lambda;CDM parameters).</p>
+            <p class="fragment">We want to know the likelihood $p(D \mid \theta)$ so that we can infer $\theta$ from real-world data.</p>
+            <p class="fragment">Idea: Run many cosmological simulations with different values of $\theta$, and then learn $p(D \mid \theta)$ as a <em>conditional</em> normalizing flow.</p>
+            <p class="fragment">Now, the transformation inside the normalizing flow will depend on $\theta$.</p>
+            <p class="fragment">This is not difficult to implement!</p>
+            <h4 class="fragment">Demo.</h4>
+          </section>
+        </section>
+
+        <section>
+          <section class="multirow compact" data-background-color="black">
+            <h2>Example usage: Deep Potential</h2>
+            <p>Learning the gravitational potential from 6D phase-space observations of stars.</p>
+            <img data-src="../media/deep_potential/deep_potential_explanatory_figure.svg">
+            <div class="footer">
+              <p class="attribution">(<a href="https://ui.adsabs.harvard.edu/abs/2020arXiv201104673G/abstract">Green &amp; Ting 2020</a>; <a href="https://ui.adsabs.harvard.edu/abs/2023ApJ...942...26G/abstract">Green, Ting &amp; Kamdar 2023</a>)</p>
+            </div>
+          </section>
+        </section>
+
+      </div> <!--slides-->
+    </div> <!--reveal-->
+
+    <script src="../revealjs/dist/reveal.js"></script>
+    <script src="../revealjs/plugin/math/math.js"></script>
+    <script src="../revealjs/plugin/notes/notes.js"></script>
+    <script src="../revealjs/plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        disableLayout: false,
+        /*
+        width: 960,
+        height: 700,
+        */
+        width: "100%",
+        height: "100%",
+        //width: 1244,
+        //height: 700,
+
+        history: true,
+        transition: 'linear',
+        //slideNumber: 'h.v',
+
+        /*
+        math: {
+          // mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          TeX: {
+            Macros: {
+              R: '\\mathbb{R}',
+              set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+            }
+          }
+        },
+        */
+        plugins: [ RevealMath.MathJax3 ],
+        mathjax3: {
+          //mathjax: "https://cdn.jsdelivr.net/npm/mathjax@4.0.0-beta.7/tex-mml-chtml.js",
+          mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-chtml.js",
+          //mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-chtml-nofont.js",
+          //mathjax: "../js/mathjax-4.0.0-beta.7/tex-mml-svg-nofont.js",
+          loader: {load: ['[tex]/html','[tex]/cancel','[tex]/color']},
+          tex: {packages: {'[+]': ['html','cancel','color']}},
+          //chtml: {
+          //  fontURL: "../js/mathjax-4.0.0-beta.7/output/chtml/fonts/woff-v2"
+          //}
+        },
+
+        sortFragmentsOnSync: false,
+
+        pdfMaxPagesPerSlide: 1,
+
+        plugins: [ RevealMath.MathJax3, RevealNotes, RevealHighlight ]
+      });
+    </script>
+
+    <script>
+      // In print mode, set "top:0" for every slide.
+      // Revealjs sets many erroneous "top" values. Setting them to 0
+      // makes the slides render reasonably well (but not completely correctly).
+      if(window.location.search.match(/print-pdf/gi)) {
+        Reveal.addEventListener('ready', function() {
+          setTimeout(() => {
+            console.log('Fixing slides for printing ...');
+            document.querySelectorAll('.slides section').forEach(slide => {
+              slide.style.cssText = 'top:0 !important; left:0 !important; position:relative !important;';
+            });
+          }, 5000);
+        });
+      }
+    </script>
+
+    <!-- jQuery -->
+    <script src="../js/jquery-3.6.1.min.js"></script>
+    <!-- d3 -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>-->
+
+    <!-- Custom scripts go here -->
+    <script src="js/stars_and_dust_plot_v7.js"></script>
+    <script src="js/Rv_grain_animation.js"></script>
+    <script src="js/survey_n_specres.js"></script>
+    <link rel="stylesheet" href="js/survey_n_specres.css">
+
+  </body>
+</html>
