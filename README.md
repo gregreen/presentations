@@ -28,6 +28,8 @@ Table of Contents
 * [Toruń - Dust beyond R(V) (2025)](presentations/beyond_Rv_torun.html): Dust beyond R(V) - variations in the optical extinction curve that are orthogonal to R(V).
 * [HJAC - Dust with Gaia (2025)](presentations/hjac_dust_2025y10m.html): What is interstellar dust? What we've learned from Gaia.
 * [PanDust25 - 3D extinction mapping (2025)](presentations/pandust25_tucson_2025y11m.html): Overview of 3D extinction mapping.
+* [EAS2026 - Deep Potential (2026)](presentations/deep_potential_eas_2026y06m.html): Mapping the Milky Way's Mass Distribution with Gaia DR4.
+* [Sexten - Deep Potential (2026)](presentations/deep_potential_sexten_2026y07m.html): Relation of Deep Potential to the Jeans Method.
 
 Initial setup
 -------------
