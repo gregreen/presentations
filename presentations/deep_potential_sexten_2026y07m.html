@@ -642,9 +642,14 @@
                 \frac{\mathrm{d}f}{\mathrm{d}t}
                 =
                 \frac{\partial f}{\partial t}
-                \,
+                \hspace{-1.7em}
+                \class{fragment}{
+                  \color{red}
+                  \cancelto{0}{\phantom{\frac{\partial f}{\partial t}}}
+                }
+                \hspace{-0.3em}
                 +
-                \!\!\!
+                \!\!
                 \sum_{\mathrm{dimension}\ i} \!
                 \left(
                   v_i \, \frac{\partial f}{\partial x_i}
@@ -1083,7 +1088,22 @@
           </section>
 
           <section class="multirow v-center space-evenly">
-            <h2>Can we avoid modeling the selection function altogether?</h2>
+            <h3>Can we avoid modeling the selection function altogether?</h3>
+            <p class="fragment">$
+              f\left(\vec{x},\vec{v}\right) =
+              \hspace{-1.1em}
+              \underbrace{
+                p\left(\vec{v}\mid\vec{x}\right)
+              }_{
+                \mathrm{velocity\ distribution}
+              }
+              \hspace{-2em}
+              \overbrace{
+                n\left(\vec{x}\right)
+              }^{
+                \mathrm{tracer\ density}
+              }
+            $</p>
             <p class="fragment">Use only information from $p\left(\vec{v}\mid\vec{x}\right)$, and infer the true density of tracers $n\left(\vec{x}\right)$.</p>
             <p class="fragment">
               $$
