@@ -290,6 +290,14 @@
       flex-grow: 0;
     }
 
+    /* Pull an element flush with the left edge of the window. */
+    /* reveal's `margin` config (0.04) insets every slide by 2% of the
+       viewport on each side, so a -2vw margin cancels that inset. */
+    .reveal .flush-left {
+      text-align: left;
+      margin-left: -2vw;
+    }
+
     /* Attribution text */
     .reveal .attribution {
       font-size: 0.7em;
@@ -351,7 +359,7 @@
     }
 
     /* Uncomment below to show all layouts */
-    section.present div {
+    /* section.present div {
       border: 1px dotted rgba(0, 255, 255, 0.5)
     }
     section.present {
@@ -362,7 +370,7 @@
     }
     section.present :is(h1, h2, h3, h4, p, span, a) {
       border: 1px groove rgba(255, 255, 0, 0.5)
-    }
+    } */
 
     /* Image/video sizing */
     img.full-height, video.full-height {
@@ -507,11 +515,30 @@
     }
     .reveal .slides .fragment.accordion {
       /* Expansion */
+      /* The hidden state below uses `flex-basis: 0` while the expanded
+         state uses `flex-basis: auto` (see the `.multirow > .fragment
+         .accordion` rule further down). Intrinsic keywords like `auto`
+         are not interpolable by default, so `flex` would snap instead of
+         animating. `allow-keywords` makes the flex-basis interpolation
+         work, restoring the smooth 750ms expansion. */
+      interpolate-size: allow-keywords;
       transition: flex 750ms ease,
                   opacity 750ms cubic-bezier(0.5, 0.0, 0.9, 0.0),
                   padding 750ms ease,
                   margin 750ms ease,
                   transform 750ms ease;
+    }
+
+    /* An expanded accordion must reserve its natural height.
+       `.multirow > * { flex: 1 }` gives it `flex-basis: 0`, so its content
+       never counts toward the container's base sizes. The container then
+       has spare room, `.r-stack` is never asked to shrink, and the
+       accordion gets only the leftover space — its lower paragraphs are
+       clipped by `overflow: hidden`. A content-sized basis plus
+       `flex-shrink: 0` makes the r-stack above absorb the shortage
+       (and scale its images down). */
+    .reveal .multirow > .fragment.accordion {
+      flex: 1 0 auto;
     }
 
     div.backdrop {
@@ -616,7 +643,7 @@
             <div>
             </div>
             <div class="stroke-thick blur-bg" style="align-self: flex-start;">
-              <h2>Dark-matter distribution</h2>
+              <h3>Dark-matter distribution</h3>
               <p class="fragment">Homogeneous and isotropic on the largest scales.</p>
               <p class="fragment">ΛCDM does well at predicting structure to below cluster scales.</p>
               <p class="fragment">What about at sub-galactic scales?</p>
@@ -646,9 +673,9 @@
 
           <section class="stroke-superthick v-expand-center" data-background-video="../media/gaia/esa_proper_motion.mp4" data-background-video-loop data-background-video-muted data-background-size="cover">
             <h3>Gaia is revolutionizing our view of the Milky Way</h3>
+            <div>
             <p>Parallaxes, proper motions &amp; radial velocities (<em>i.e.</em>, 6D phase-space coordinates) for tens of millions of stars.</p>
-            <div class="footer">
-              <p class="attribution left stroke"><a href="https://www.esa.int/ESA_Multimedia/Videos/2018/04/Parallax_and_proper_motion">ESA/Gaia/DPAC</a></p>
+            <p class="attribution left stroke flush-left"><a href="https://www.esa.int/ESA_Multimedia/Videos/2018/04/Parallax_and_proper_motion">ESA/Gaia/DPAC</a></p>
             </div>
           </section>
         </section>
@@ -1611,7 +1638,7 @@
             <div class="v-center">
               <img data-src="../media/misc/Jeans_1922_Motions_of_the_Stars.jpg" style="filter:invert(1);"></img>
             </div>
-            <div class="v-center noncompact">
+            <div class="v-center wide">
               <h3>Jeans Modeling</h3>
               <p class="fragment">
                 Only uses velocity moments of the distribution function:
@@ -1748,13 +1775,23 @@
             </div>
           </section>
 
+          <section class="multicol">
+            <div class="multirow v-center wide">
+            <img data-src="../media/deep_potential/GDR3_rho_cylR_z_preliminary_2026y10m.png"></img>
+            </div>
+            <div class="multirow v-center">
+              <h3>Preliminary results for &lt;4 kpc.</h3>
+              <p class="attribution">(Kalda &amp; Green, <em>in prep.</em>)</p>
+            </div>
+          </section>
+
           <section class="multirow">
             <h3>Better normalizing flows</h3>
             <div class="r-stack">
               <img class="fragment fade-out" data-fragment-index="1" data-src="../media/deep_potential/kalda2025_FFJORD_DF_phi_cth.svg"></img>
               <img class="fragment" data-fragment-index="1" data-src="../media/deep_potential/flow_matching_DF_phi_cth.svg"></img>
             </div>
-            <div class="accordion fragment noncompact multirow" data-fragment-index="2">
+            <div class="accordion fragment multirow" data-fragment-index="2">
               <p>Better training procedure: &ldquo;flow matching&rdquo; &rArr; &gt;10x speedup</p>
               <p class="fragment" data-fragment-index="3">...even though we've quadrupled the model size.</p>
               <p class="fragment" data-fragment-index="4">Switch from simple &ldquo;multilayer perceptrons&rdquo; to &ldquo;ResNets&rdquo; with &gt;2x the depth.</p>
@@ -1774,7 +1811,7 @@
               <img data-src="../media/deep_potential/deconvolution_r_phi_iter05.png" class="fragment current-visible" data-fragment-index="9"></img>
               <img data-src="../media/deep_potential/deconvolution_r_phi_iter06.png" class="fragment current-visible" data-fragment-index="10"></img>
               <img data-src="../media/deep_potential/deconvolution_r_phi_iter07.png" class="fragment current-visible" data-fragment-index="11"></img>
-              <img data-src="../media/deep_potential/deconvolution_r_phi_iter00.png" class="fragment current-visible" data-fragment-index="12"></img>
+              <img data-src="../media/deep_potential/deconvolution_r_phi_iter00.png" class="fragment" data-fragment-index="12"></img>
             </div>
             <div class="multirow v-center">
               <h3>Deconvolving observational uncertainties</h3>
@@ -1786,16 +1823,6 @@
             </div>
             <div class="footer">
               <p class="attribution left">Kalda &amp; Green (<em>in prep.</em>)</p>
-            </div>
-          </section>
-
-          <section class="multicol">
-            <div class="multirow v-center wide">
-            <img data-src="../media/deep_potential/GDR3_rho_cylR_z_preliminary_2026y10m.png"></img>
-            </div>
-            <div class="multirow v-center">
-              <h3>Preliminary results for &lt;4 kpc.</h3>
-              <p class="attribution">(Kalda &amp; Green, <em>in prep.</em>)</p>
             </div>
           </section>
         </section>
@@ -1818,9 +1845,9 @@
               <div>
                 <h3>Gaia data will get even better</h3>
                 <ul>
-                  <li class="fragment">DR3 (June 2022): 34 months of data.</li>
-                  <li class="fragment">DR4 (December 2026): 66 months of data, many more raw spectra.</li>
-                  <li class="fragment">DR5 (2030?): 120 months of data.</li>
+                  <li class="fragment">DR3 (13 June 2022): 34 months of data.</li>
+                  <li class="fragment">DR4 (2 December 2026): 66 months of data, many more spectra.</li>
+                  <li class="fragment">DR5 (2031+): 126 months of data.</li>
                 </ul>
               </div>
               <div class="fragment">
